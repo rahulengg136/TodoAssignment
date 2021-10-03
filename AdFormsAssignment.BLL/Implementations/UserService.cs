@@ -2,9 +2,6 @@
 using AdFormAssignment.DAL.Entities;
 using AdFormsAssignment.BLL.Contracts;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace AdFormsAssignment.BLL.Implementations

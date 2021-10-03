@@ -7788,11 +7788,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Rahul\\source\\repos\\AdFormsAssignment\\AdFormsAssignment.BLL\\AdFormsAssignment.BLL.csproj",
+      "projectUniqueName": "C:\\Users\\Rahul\\source\\repos\\GitClone\\TodoAssignment\\AdFormsAssignment.BLL\\AdFormsAssignment.BLL.csproj",
       "projectName": "AdFormsAssignment.BLL",
-      "projectPath": "C:\\Users\\Rahul\\source\\repos\\AdFormsAssignment\\AdFormsAssignment.BLL\\AdFormsAssignment.BLL.csproj",
+      "projectPath": "C:\\Users\\Rahul\\source\\repos\\GitClone\\TodoAssignment\\AdFormsAssignment.BLL\\AdFormsAssignment.BLL.csproj",
       "packagesPath": "C:\\Users\\Rahul\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Rahul\\source\\repos\\AdFormsAssignment\\AdFormsAssignment.BLL\\obj\\",
+      "outputPath": "C:\\Users\\Rahul\\source\\repos\\GitClone\\TodoAssignment\\AdFormsAssignment.BLL\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\Rahul\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -7809,8 +7809,8 @@
         "netcoreapp3.1": {
           "targetAlias": "netcoreapp3.1",
           "projectReferences": {
-            "C:\\Users\\Rahul\\source\\repos\\AdFormsAssignment\\AdFormAssignment.DAL\\AdFormAssignment.DAL.csproj": {
-              "projectPath": "C:\\Users\\Rahul\\source\\repos\\AdFormsAssignment\\AdFormAssignment.DAL\\AdFormAssignment.DAL.csproj"
+            "C:\\Users\\Rahul\\source\\repos\\GitClone\\TodoAssignment\\AdFormAssignment.DAL\\AdFormAssignment.DAL.csproj": {
+              "projectPath": "C:\\Users\\Rahul\\source\\repos\\GitClone\\TodoAssignment\\AdFormAssignment.DAL\\AdFormAssignment.DAL.csproj"
             }
           }
         }

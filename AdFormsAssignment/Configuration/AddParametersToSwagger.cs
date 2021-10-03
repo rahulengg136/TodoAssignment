@@ -1,10 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc.Controllers;
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.SwaggerGen;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace AdFormsAssignment
 {
@@ -20,25 +17,13 @@ namespace AdFormsAssignment
             {
                 operation.Parameters.Add(new OpenApiParameter()
                 {
-                    Name = "x-correlation-id",
-                    In = ParameterLocation.Header,
-                    Description = "Corrrelation ID",
-                    Required = true
-                });
-                operation.Parameters.Add(new OpenApiParameter()
-                {
-                    Name = "accept",
+                    Name = "Accept",
                     In = ParameterLocation.Header,
                     Description = "",
-                    Required = true
+                    Required = false,
+                    
                 });
-                operation.Parameters.Add(new OpenApiParameter()
-                {
-                    Name = "content-location",
-                    In = ParameterLocation.Header,
-                    Description = "",
-                    Required = true
-                });
+             
 
             }
         }

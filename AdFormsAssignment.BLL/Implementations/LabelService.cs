@@ -1,12 +1,8 @@
 ﻿using AdFormAssignment.DAL.Contracts;
 using AdFormAssignment.DAL.Entities;
 using AdFormsAssignment.BLL.Contracts;
-using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.Logging;
 using Serilog;
-using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace AdFormsAssignment.BLL.Implementations

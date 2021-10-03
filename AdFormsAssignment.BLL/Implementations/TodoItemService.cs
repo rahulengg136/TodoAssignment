@@ -3,9 +3,7 @@ using AdFormAssignment.DAL.Entities;
 using AdFormsAssignment.BLL.Contracts;
 using Microsoft.AspNetCore.JsonPatch;
 using Serilog;
-using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace AdFormsAssignment.BLL.Implementations

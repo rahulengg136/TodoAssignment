@@ -51,31 +51,6 @@
           "buildTransitive/netcoreapp3.0/EntityFramework.targets": {}
         }
       },
-      "Microsoft.AspNet.WebApi.Client/5.2.7": {
-        "type": "package",
-        "dependencies": {
-          "Newtonsoft.Json": "10.0.1",
-          "Newtonsoft.Json.Bson": "1.0.1"
-        },
-        "compile": {
-          "lib/netstandard2.0/System.Net.Http.Formatting.dll": {}
-        },
-        "runtime": {
-          "lib/netstandard2.0/System.Net.Http.Formatting.dll": {}
-        }
-      },
-      "Microsoft.AspNet.WebApi.Core/5.2.7": {
-        "type": "package",
-        "dependencies": {
-          "Microsoft.AspNet.WebApi.Client": "5.2.7"
-        },
-        "compile": {
-          "lib/net45/System.Web.Http.dll": {}
-        },
-        "runtime": {
-          "lib/net45/System.Web.Http.dll": {}
-        }
-      },
       "Microsoft.AspNetCore.Authentication/2.2.0": {
         "type": "package",
         "dependencies": {
@@ -2465,37 +2440,6 @@
         "tools/netcoreapp3.0/any/ef6.dll",
         "tools/netcoreapp3.0/any/ef6.pdb",
         "tools/netcoreapp3.0/any/ef6.runtimeconfig.json"
-      ]
-    },
-    "Microsoft.AspNet.WebApi.Client/5.2.7": {
-      "sha512": "/76fAHknzvFqbznS6Uj2sOyE9rJB3PltY+f53TH8dX9RiGhk02EhuFCWljSj5nnqKaTsmma8DFR50OGyQ4yJ1g==",
-      "type": "package",
-      "path": "microsoft.aspnet.webapi.client/5.2.7",
-      "files": [
-        ".nupkg.metadata",
-        ".signature.p7s",
-        "lib/net45/System.Net.Http.Formatting.dll",
-        "lib/net45/System.Net.Http.Formatting.xml",
-        "lib/netstandard2.0/System.Net.Http.Formatting.dll",
-        "lib/netstandard2.0/System.Net.Http.Formatting.xml",
-        "lib/portable-wp8+netcore45+net45+wp81+wpa81/System.Net.Http.Formatting.dll",
-        "lib/portable-wp8+netcore45+net45+wp81+wpa81/System.Net.Http.Formatting.xml",
-        "microsoft.aspnet.webapi.client.5.2.7.nupkg.sha512",
-        "microsoft.aspnet.webapi.client.nuspec"
-      ]
-    },
-    "Microsoft.AspNet.WebApi.Core/5.2.7": {
-      "sha512": "gM2QzApnHdy1FbKUJ/ROGJSm69P2G+HMoVd/t5Vq1O/zZ5TI4IKC9PX6nUfRt/NHgebZOIWHpB4/4K4inuy4yQ==",
-      "type": "package",
-      "path": "microsoft.aspnet.webapi.core/5.2.7",
-      "files": [
-        ".nupkg.metadata",
-        ".signature.p7s",
-        "Content/web.config.transform",
-        "lib/net45/System.Web.Http.dll",
-        "lib/net45/System.Web.Http.xml",
-        "microsoft.aspnet.webapi.core.5.2.7.nupkg.sha512",
-        "microsoft.aspnet.webapi.core.nuspec"
       ]
     },
     "Microsoft.AspNetCore.Authentication/2.2.0": {
@@ -7944,7 +7888,6 @@
       "AutoMapper >= 10.1.1",
       "AutoMapper.Extensions.Microsoft.DependencyInjection >= 8.1.1",
       "EntityFramework >= 6.4.4",
-      "Microsoft.AspNet.WebApi.Core >= 5.2.7",
       "Microsoft.AspNetCore.Authentication >= 2.2.0",
       "Microsoft.AspNetCore.Authentication.JwtBearer >= 3.1.19",
       "Microsoft.AspNetCore.JsonPatch >= 5.0.10",
@@ -7965,11 +7908,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Rahul\\source\\repos\\AdFormsAssignment\\AdFormsAssignment\\AdFormsAssignment.csproj",
+      "projectUniqueName": "C:\\Users\\Rahul\\source\\repos\\GitClone\\TodoAssignment\\AdFormsAssignment\\AdFormsAssignment.csproj",
       "projectName": "AdFormsAssignment",
-      "projectPath": "C:\\Users\\Rahul\\source\\repos\\AdFormsAssignment\\AdFormsAssignment\\AdFormsAssignment.csproj",
+      "projectPath": "C:\\Users\\Rahul\\source\\repos\\GitClone\\TodoAssignment\\AdFormsAssignment\\AdFormsAssignment.csproj",
       "packagesPath": "C:\\Users\\Rahul\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Rahul\\source\\repos\\AdFormsAssignment\\AdFormsAssignment\\obj\\",
+      "outputPath": "C:\\Users\\Rahul\\source\\repos\\GitClone\\TodoAssignment\\AdFormsAssignment\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\Rahul\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -7986,11 +7929,11 @@
         "netcoreapp3.1": {
           "targetAlias": "netcoreapp3.1",
           "projectReferences": {
-            "C:\\Users\\Rahul\\source\\repos\\AdFormsAssignment\\AdFormAssignment.DAL\\AdFormAssignment.DAL.csproj": {
-              "projectPath": "C:\\Users\\Rahul\\source\\repos\\AdFormsAssignment\\AdFormAssignment.DAL\\AdFormAssignment.DAL.csproj"
+            "C:\\Users\\Rahul\\source\\repos\\GitClone\\TodoAssignment\\AdFormAssignment.DAL\\AdFormAssignment.DAL.csproj": {
+              "projectPath": "C:\\Users\\Rahul\\source\\repos\\GitClone\\TodoAssignment\\AdFormAssignment.DAL\\AdFormAssignment.DAL.csproj"
             },
-            "C:\\Users\\Rahul\\source\\repos\\AdFormsAssignment\\AdFormsAssignment.BLL\\AdFormsAssignment.BLL.csproj": {
-              "projectPath": "C:\\Users\\Rahul\\source\\repos\\AdFormsAssignment\\AdFormsAssignment.BLL\\AdFormsAssignment.BLL.csproj"
+            "C:\\Users\\Rahul\\source\\repos\\GitClone\\TodoAssignment\\AdFormsAssignment.BLL\\AdFormsAssignment.BLL.csproj": {
+              "projectPath": "C:\\Users\\Rahul\\source\\repos\\GitClone\\TodoAssignment\\AdFormsAssignment.BLL\\AdFormsAssignment.BLL.csproj"
             }
           }
         }
@@ -8016,10 +7959,6 @@
           "EntityFramework": {
             "target": "Package",
             "version": "[6.4.4, )"
-          },
-          "Microsoft.AspNet.WebApi.Core": {
-            "target": "Package",
-            "version": "[5.2.7, )"
           },
           "Microsoft.AspNetCore.Authentication": {
             "target": "Package",
@@ -8091,17 +8030,5 @@
         "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.400\\RuntimeIdentifierGraph.json"
       }
     }
-  },
-  "logs": [
-    {
-      "code": "NU1701",
-      "level": "Warning",
-      "warningLevel": 1,
-      "message": "Package 'Microsoft.AspNet.WebApi.Core 5.2.7' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8' instead of the project target framework '.NETCoreApp,Version=v3.1'. This package may not be fully compatible with your project.",
-      "libraryId": "Microsoft.AspNet.WebApi.Core",
-      "targetGraphs": [
-        ".NETCoreApp,Version=v3.1"
-      ]
-    }
-  ]
+  }
 }

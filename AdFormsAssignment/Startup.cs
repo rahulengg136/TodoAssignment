@@ -6,22 +6,19 @@ using AdFormsAssignment.BLL;
 using AdFormsAssignment.BLL.Contracts;
 using AdFormsAssignment.BLL.Implementations;
 using AdFormsAssignment.CustomMiddlewares;
+using AdFormsAssignment.Security;
+using CorrelationId.CorrelationIdWork;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System;
-using System.IO;
-using System.Reflection;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.IdentityModel.Tokens;
 using System.Text;
-using AdFormsAssignment.Security;
-using CorrelationId.CorrelationIdWork;
 
 namespace AdFormsAssignment
 {
@@ -37,7 +34,13 @@ namespace AdFormsAssignment
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers().AddNewtonsoftJson();
+            services.AddControllers(
+                options =>
+                {
+                    options.RespectBrowserAcceptHeader = true;
+
+                }
+                ).AddNewtonsoftJson();
 
             //authentication work
             var key = "todo-assignment-token-private-key";
@@ -63,7 +66,7 @@ namespace AdFormsAssignment
             // swagger work
             services.AddSwaggerGen(options =>
             {
-              //  options.OperationFilter<AddParametersToSwagger>();
+                options.OperationFilter<AddParametersToSwagger>();
                 options.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo
                 {
                     Title = "Swagger API",

@@ -1,12 +1,10 @@
 ﻿using AdFormAssignment.DAL.Entities;
-using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace AdFormAssignment.DAL.Contracts
 {
-   public interface ILabelDAL
+    public interface ILabelDAL
     {
         Task<int> CreateLabel(tblLabel label);
         Task<tblLabel> GetSingleLabel(int labelId);

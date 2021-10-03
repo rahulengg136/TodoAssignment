@@ -6,14 +6,13 @@ using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 using Serilog;
 using Serilog.Context;
 using System;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
-using MicrosoftJson= System.Text.Json.JsonSerializer;
+using MicrosoftJson = System.Text.Json.JsonSerializer;
 
 namespace AdFormsAssignment.Controllers
 {

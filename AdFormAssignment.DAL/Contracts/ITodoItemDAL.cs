@@ -1,8 +1,6 @@
 ﻿using AdFormAssignment.DAL.Entities;
 using Microsoft.AspNetCore.JsonPatch;
-using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace AdFormAssignment.DAL.Contracts
