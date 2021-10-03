@@ -16,6 +16,9 @@ using MicrosoftJson = System.Text.Json.JsonSerializer;
 
 namespace AdFormsAssignment.Controllers
 {
+    /// <summary>
+    /// This controller deals with CRUD operations of to-do lists
+    /// </summary>
     [Authorize]
     [Route("api/v1/[controller]/")]
     [ApiController]
@@ -23,12 +26,24 @@ namespace AdFormsAssignment.Controllers
     {
         private readonly ITodoListService _toDoService;
         private readonly IMapper _mapper;
+        /// <summary>
+        /// To do list controller
+        /// </summary>
+        /// <param name="toDoService">to-do service instance</param>
+        /// <param name="mapper">Automapper instance</param>
         public TODOListController(ITodoListService toDoService, IMapper mapper)
         {
             _toDoService = toDoService;
             _mapper = mapper;
         }
 
+        /// <summary>
+        /// This method filters  list of task-list 
+        /// </summary>
+        /// <param name="pageNumber">Page number</param>
+        /// <param name="pageSize">Page size</param>
+        /// <param name="SearchText">Search text</param>
+        /// <returns></returns>
         [HttpGet("allLists/{pageNumber}/{pageSize}")]
         public async Task<IActionResult> GetAllTaskLists(int pageNumber, int pageSize, string SearchText)
         {
@@ -55,6 +70,11 @@ namespace AdFormsAssignment.Controllers
                 }
             }
         }
+        /// <summary>
+        /// This method gives details of single to-do list
+        /// </summary>
+        /// <param name="todoListId">Todo list id</param>
+        /// <returns></returns>
         [HttpGet("{todoListId}")]
         public async Task<IActionResult> GetTodoList(int todoListId)
         {
@@ -81,7 +101,11 @@ namespace AdFormsAssignment.Controllers
                 }
             }
         }
-
+        /// <summary>
+        /// This method creates new to-do list
+        /// </summary>
+        /// <param name="todoList">list information</param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<IActionResult> CreateList([FromBody] TodoListDto todoList)
         {
@@ -106,7 +130,11 @@ namespace AdFormsAssignment.Controllers
                 }
             }
         }
-
+        /// <summary>
+        /// This method deletes a todo list
+        /// </summary>
+        /// <param name="todoListId">todo list id</param>
+        /// <returns></returns>
         [HttpDelete("{todoListId}")]
         public async Task<IActionResult> DeleteTodoList(int todoListId)
         {
@@ -137,6 +165,12 @@ namespace AdFormsAssignment.Controllers
                 }
             }
         }
+        /// <summary>
+        /// This method updates to-do list
+        /// </summary>
+        /// <param name="todoListId">Todo list id</param>
+        /// <param name="todoList">Updated details of list</param>
+        /// <returns></returns>
         [HttpPut("{todoListId}")]
         public async Task<IActionResult> UpdateTodoList(int todoListId, [FromBody] TodoListDto todoList)
         {
@@ -163,6 +197,12 @@ namespace AdFormsAssignment.Controllers
 
 
         }
+        /// <summary>
+        /// This method patches a todo list
+        /// </summary>
+        /// <param name="todoListId">todo list id</param>
+        /// <param name="todoList">Patches information</param>
+        /// <returns></returns>
         [HttpPatch("{todoListId}")]
         public async Task<IActionResult> UpdateTodoListPatch(int todoListId, [FromBody] JsonPatchDocument todoList)
         {

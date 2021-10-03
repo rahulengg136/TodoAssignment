@@ -7,11 +7,18 @@ using System.Threading.Tasks;
 
 namespace AdFormsAssignment.CustomMiddlewares
 {
+    /// <summary>
+    /// Middleware that logs request and response
+    /// </summary>
     public class LogRequestResponseMiddleware
     {
         private readonly RequestDelegate _next;
         private readonly ILogger<LogRequestResponseMiddleware> _logger;
         private readonly Microsoft.IO.RecyclableMemoryStreamManager _recyclableMemoryStreamManager;
+
+        /// <summary>
+        /// Middleware that logs request and response
+        /// </summary>
         public LogRequestResponseMiddleware(RequestDelegate next,
                                                 ILoggerFactory loggerFactory)
         {
@@ -21,6 +28,11 @@ namespace AdFormsAssignment.CustomMiddlewares
             _recyclableMemoryStreamManager = new Microsoft.IO.RecyclableMemoryStreamManager();
         }
 
+        /// <summary>
+        /// Invoke method of the middleware
+        /// </summary>
+        /// <param name="context">Current Http Context</param>
+        /// <returns></returns>
         public async Task Invoke(HttpContext context)
         {
             await LogRequest(context);
@@ -101,8 +113,16 @@ namespace AdFormsAssignment.CustomMiddlewares
             await responseBody.CopyToAsync(originalBodyStream);
         }
     }
+    /// <summary>
+    /// Using the middleware
+    /// </summary>
     public static class RequestResponseLoggingMiddlewareExtensions
     {
+        /// <summary>
+        /// Setting up logging-request-response middleware to the application
+        /// </summary>
+        /// <param name="builder"></param>
+        /// <returns></returns>
         public static IApplicationBuilder UseRequestResponseLogging(this IApplicationBuilder builder)
         {
             return builder.UseMiddleware<LogRequestResponseMiddleware>();

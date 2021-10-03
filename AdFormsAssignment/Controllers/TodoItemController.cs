@@ -16,6 +16,9 @@ using MicrosoftJson = System.Text.Json.JsonSerializer;
 
 namespace AdFormsAssignment.Controllers
 {
+    /// <summary>
+    /// This controller deals with CRUD operations of to-do item
+    /// </summary>
     [Authorize]
     [Route("api/v1/[controller]/")]
     [ApiController]
@@ -23,12 +26,23 @@ namespace AdFormsAssignment.Controllers
     {
         private readonly ITodoItemService _toDoService;
         private readonly IMapper _mapper;
+        /// <summary>
+        /// To do item controller
+        /// </summary>
+        /// <param name="toDoService"> To-Do service instance</param>
+        /// <param name="mapper">Automapper instance</param>
         public TodoItemController(ITodoItemService toDoService, IMapper mapper)
         {
             _toDoService = toDoService;
             _mapper = mapper;
         }
-
+        /// <summary>
+        /// This method gives list of filtered task items
+        /// </summary>
+        /// <param name="pageNumber">Page number</param>
+        /// <param name="pageSize">Page size</param>
+        /// <param name="SearchText">Any text that may present in description</param>
+        /// <returns></returns>
         [HttpGet("allItems/{pageNumber}/{pageSize}")]
         public async Task<IActionResult> GetAllTaskItems(int pageNumber, int pageSize, string SearchText)
         {
@@ -51,6 +65,11 @@ namespace AdFormsAssignment.Controllers
                 }
             }
         }
+        /// <summary>
+        /// This method returns detail of a single to-do item
+        /// </summary>
+        /// <param name="todoItemId">To-Do item unique id</param>
+        /// <returns></returns>
         [HttpGet("{todoItemId}")]
         public async Task<IActionResult> GetTodoItem(int todoItemId)
         {
@@ -76,7 +95,11 @@ namespace AdFormsAssignment.Controllers
                 }
             }
         }
-
+        /// <summary>
+        /// This method creates a new to-do item
+        /// </summary>
+        /// <param name="todoItem">New item data</param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<IActionResult> CreateTodoItem([FromBody] TodoItemDto todoItem)
         {
@@ -100,7 +123,11 @@ namespace AdFormsAssignment.Controllers
                 }
             }
         }
-
+        /// <summary>
+        /// This method deletes to do item
+        /// </summary>
+        /// <param name="todoItemId">to-do item unique id</param>
+        /// <returns></returns>
         [HttpDelete("{todoItemId}")]
         public async Task<IActionResult> DeleteTodoItem(int todoItemId)
         {
@@ -121,6 +148,12 @@ namespace AdFormsAssignment.Controllers
                 }
             }
         }
+        /// <summary>
+        /// This method updates any existing to-do item
+        /// </summary>
+        /// <param name="todoItemId">Unique to-do item id</param>
+        /// <param name="todoItem">Item data</param>
+        /// <returns></returns>
         [HttpPut("{todoItemId}")]
         public async Task<IActionResult> UpdateTodoItem(int todoItemId, [FromBody] TodoItemDto todoItem)
         {
@@ -145,6 +178,12 @@ namespace AdFormsAssignment.Controllers
             }
 
             }
+        /// <summary>
+        /// This method patches a record
+        /// </summary>
+        /// <param name="todoItemId">Unique to-do item id</param>
+        /// <param name="todoItem">Patches info</param>
+        /// <returns></returns>
             [HttpPatch("{todoItemId}")]
             public async Task<IActionResult> UpdateTodoItemPatch(int todoItemId, [FromBody] JsonPatchDocument todoItem)
             {

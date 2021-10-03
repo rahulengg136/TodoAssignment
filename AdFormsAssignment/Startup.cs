@@ -18,20 +18,36 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System;
+using System.IO;
+using System.Reflection;
 using System.Text;
 
 namespace AdFormsAssignment
 {
+    /// <summary>
+    /// Start up class
+    /// </summary>
     public class Startup
     {
+        /// <summary>
+        /// Start up constructor
+        /// </summary>
+        /// <param name="configuration"></param>
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
         }
 
+        /// <summary>
+        /// Configuration
+        /// </summary>
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
+        /// <summary>
+        /// This method gets called by the runtime. Use this method to add services to the container.
+        /// </summary>
+        /// <param name="services"></param>
+      
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers(
@@ -66,13 +82,16 @@ namespace AdFormsAssignment
             // swagger work
             services.AddSwaggerGen(options =>
             {
-                options.OperationFilter<AddParametersToSwagger>();
+               // options.OperationFilter<AddParametersToSwagger>();
                 options.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo
                 {
                     Title = "Swagger API",
                     Description = "API for swagger",
                     Version = "v1"
                 });
+                var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+                var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+                options.IncludeXmlComments(xmlPath);
 
                 options.AddSecurityDefinition("Bearer", new Microsoft.OpenApi.Models.OpenApiSecurityScheme
                 {
@@ -118,8 +137,11 @@ namespace AdFormsAssignment
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
         }
-
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+        /// <summary>
+        /// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+        /// </summary>
+        /// <param name="app"> Application builder</param>
+        /// <param name="env"> Host environment</param>
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             //var path = Directory.GetCurrentDirectory();

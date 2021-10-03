@@ -7,10 +7,17 @@ using System.Text;
 
 namespace AdFormsAssignment.Security
 {
+    /// <summary>
+    /// Class that provides a token
+    /// </summary>
     public class JwtAuth : IJwtAuth
     {
         private readonly string _key;
         //private readonly IUserService _userService;
+       /// <summary>
+       /// Constructor takes key that helps in generating unique token for different clients
+       /// </summary>
+       /// <param name="key">A string value</param>
         public JwtAuth(string key 
             //IUserService userService
             )
@@ -18,6 +25,12 @@ namespace AdFormsAssignment.Security
             _key = key;
             //_userService = userService;
         }
+        /// <summary>
+        /// This method check user and provides token
+        /// </summary>
+        /// <param name="username">Username</param>
+        /// <param name="password">Password</param>
+        /// <returns></returns>
         public string Authentication(string username, string password)
         {
             //  var user = _userService.CheckUser(username, password);

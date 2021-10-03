@@ -5,9 +5,16 @@ using System.Collections.Generic;
 
 namespace AdFormsAssignment
 {
+    /// <summary>
+    /// Class that add parameters to swagger request
+    /// </summary>
     public class AddParametersToSwagger : IOperationFilter
     {
-        //headers in swagger
+     /// <summary>
+     /// Written Apply method
+     /// </summary>
+     /// <param name="operation"></param>
+     /// <param name="context"></param>
         public void Apply(OpenApiOperation operation, OperationFilterContext context)
         {
             if (operation.Parameters == null) operation.Parameters = new List<OpenApiParameter>();
@@ -21,9 +28,9 @@ namespace AdFormsAssignment
                     In = ParameterLocation.Header,
                     Description = "",
                     Required = false,
-                    
+
                 });
-             
+
 
             }
         }

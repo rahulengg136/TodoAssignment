@@ -15,6 +15,9 @@ using MicrosoftJson = System.Text.Json.JsonSerializer;
 
 namespace AdFormsAssignment.Controllers
 {
+    /// <summary>
+    /// Controller that Read, Create, Delete labels
+    /// </summary>
     [Authorize]
     [Route("api/v1/[controller]")]
     [ApiController]
@@ -23,12 +26,23 @@ namespace AdFormsAssignment.Controllers
         private readonly ILabelService _labelService;
         private readonly IMapper _mapper;
 
+        /// <summary>
+        /// Label controller
+        /// </summary>
+        /// <param name="labelService">Label service</param>
+        /// <param name="mapper">Auto mapper</param>
         public LabelController(ILabelService labelService, IMapper mapper)
         {
             _labelService = labelService;
             _mapper = mapper;
         }
-
+        /// <summary>
+        /// This method returns list of labels based on the few search criteria and paging
+        /// </summary>
+        /// <param name="pageNumber">Page number</param>
+        /// <param name="pageSize"> Page size- This will be the number of records accessable at one time</param>
+        /// <param name="SearchText">Any substring that may present in label name</param>
+        /// <returns></returns>
         [HttpGet("allLabels/{pageNumber}/{pageSize}")]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
@@ -54,6 +68,11 @@ namespace AdFormsAssignment.Controllers
                 }
             }
         }
+        /// <summary>
+        /// This method gives details of a single label
+        /// </summary>
+        /// <param name="labelId">Unique label id</param>
+        /// <returns></returns>
         [HttpGet("{labelId}")]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
@@ -86,7 +105,11 @@ namespace AdFormsAssignment.Controllers
                 }
             }
         }
-
+        /// <summary>
+        /// This method is to create a new label
+        /// </summary>
+        /// <param name="labelDto">Label info in json format should be posted</param>
+        /// <returns></returns>
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status201Created)]
@@ -112,7 +135,11 @@ namespace AdFormsAssignment.Controllers
                 }
             }
         }
-
+        /// <summary>
+        /// This method is to delete a label
+        /// </summary>
+        /// <param name="labelId">Label id that needs to be deleted</param>
+        /// <returns></returns>
         [HttpDelete("{labelId}")]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status200OK)]

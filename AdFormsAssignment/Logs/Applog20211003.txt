@@ -318,3 +318,19 @@
 03 Oct 2021 03:49:53 PM [INF] Scope: {"Correlation Id":"7c7715a0-b5c1-4f4f-989a-e3bf29f07469"} Going to hit database
 
 03 Oct 2021 03:49:54 PM [INF] Scope: {"Correlation Id":"7c7715a0-b5c1-4f4f-989a-e3bf29f07469"} Filtered labels: [{"LabelId":8,"LabelName":"final label"},{"LabelId":9,"LabelName":"long ruun"}]
+
+03 Oct 2021 04:00:39 PM [INF] Scope: {} Application started
+
+03 Oct 2021 04:04:05 PM [INF] Scope: {} Application started
+
+03 Oct 2021 04:05:23 PM [INF] Scope: {} Application started
+
+03 Oct 2021 04:07:44 PM [INF] Scope: {} Application started
+
+03 Oct 2021 04:08:38 PM [INF] Scope: {} Application started
+
+03 Oct 2021 04:11:58 PM [INF] Scope: {} Application started
+
+03 Oct 2021 04:19:42 PM [INF] Scope: {} Application started
+
+03 Oct 2021 04:20:41 PM [INF] Scope: {} Application started

@@ -7,17 +7,30 @@ using System.Threading.Tasks;
 
 namespace CorrelationId.CorrelationIdWork
 {
+    /// <summary>
+    /// Middle ware that appends correlation id to a request header
+    /// </summary>
     public class CorrelationMiddleware
     {
         private const string CorrelationIdHeaderKey = "X-Correlation-ID";
         private readonly RequestDelegate _next;
         private readonly ILogger _logger;
+        /// <summary>
+        /// Middle ware that appends correlation id to a request header
+        /// </summary>
+        /// <param name="next"></param>
+        /// <param name="loggerFactory"></param>
         public CorrelationMiddleware(RequestDelegate next,
         ILoggerFactory loggerFactory)
         {
             _next = next ?? throw new ArgumentNullException(nameof(next));
             _logger = loggerFactory.CreateLogger<CorrelationMiddleware>();
         }
+        /// <summary>
+        /// Invoke method of correlation id middleware
+        /// </summary>
+        /// <param name="httpContext"></param>
+        /// <returns></returns>
         public async Task Invoke(HttpContext httpContext)
         {
             string correlationId = null;
