@@ -342,3 +342,91 @@
 03 Oct 2021 04:46:26 PM [INF] Scope: {"Correlation Id":"6daee6e7-0cfe-49f0-848b-c986ba26fad1"} Going to hit database
 
 03 Oct 2021 04:46:28 PM [INF] Scope: {"Correlation Id":"6daee6e7-0cfe-49f0-848b-c986ba26fad1"} Filtered labels: [{"LabelId":8,"LabelName":"final label"},{"LabelId":9,"LabelName":"long ruun"}]
+
+03 Oct 2021 04:58:50 PM [INF] Scope: {} Application started
+
+03 Oct 2021 05:00:22 PM [INF] Scope: {"Correlation Id":"2876ef4d-e2a7-4c54-9b56-906e5d2168dd"} Going to hit DAL method
+
+03 Oct 2021 05:00:22 PM [INF] Scope: {"Correlation Id":"2876ef4d-e2a7-4c54-9b56-906e5d2168dd"} Going to hit database
+
+03 Oct 2021 05:00:25 PM [INF] Scope: {"Correlation Id":"2876ef4d-e2a7-4c54-9b56-906e5d2168dd"} Filtered labels: [{"LabelId":8,"LabelName":"final label"},{"LabelId":9,"LabelName":"long ruun"}]
+
+03 Oct 2021 05:00:31 PM [INF] Scope: {"Correlation Id":"a81c4c54-4bd7-4665-9c8b-7577efd3b2e5"} Going to hit DAL method
+
+03 Oct 2021 05:00:31 PM [INF] Scope: {"Correlation Id":"a81c4c54-4bd7-4665-9c8b-7577efd3b2e5"} Going to hit database
+
+03 Oct 2021 05:00:31 PM [INF] Scope: {"Correlation Id":"a81c4c54-4bd7-4665-9c8b-7577efd3b2e5"} Filtered labels: []
+
+03 Oct 2021 05:01:52 PM [INF] Scope: {} Application started
+
+03 Oct 2021 05:02:09 PM [INF] Scope: {"Correlation Id":"8ecb684c-1a9e-44f3-a455-b1a81ddef78e"} Going to hit DAL method
+
+03 Oct 2021 05:02:09 PM [INF] Scope: {"Correlation Id":"8ecb684c-1a9e-44f3-a455-b1a81ddef78e"} Going to hit database
+
+03 Oct 2021 05:02:10 PM [INF] Scope: {"Correlation Id":"8ecb684c-1a9e-44f3-a455-b1a81ddef78e"} Filtered labels: [{"LabelId":8,"LabelName":"final label"},{"LabelId":9,"LabelName":"long ruun"}]
+
+03 Oct 2021 05:02:14 PM [INF] Scope: {"Correlation Id":"ebba9e4c-c9d2-480b-a405-88cedc5d9ecf"} Going to hit DAL method
+
+03 Oct 2021 05:02:14 PM [INF] Scope: {"Correlation Id":"ebba9e4c-c9d2-480b-a405-88cedc5d9ecf"} Going to hit database
+
+03 Oct 2021 05:02:15 PM [INF] Scope: {"Correlation Id":"ebba9e4c-c9d2-480b-a405-88cedc5d9ecf"} Filtered labels: []
+
+03 Oct 2021 05:02:52 PM [INF] Scope: {} Application started
+
+03 Oct 2021 05:03:03 PM [INF] Scope: {"Correlation Id":"a2e21f85-dd9e-4cdc-8c9c-ab68c105c83b"} Going to hit DAL method
+
+03 Oct 2021 05:03:03 PM [INF] Scope: {"Correlation Id":"a2e21f85-dd9e-4cdc-8c9c-ab68c105c83b"} Going to hit database
+
+03 Oct 2021 05:03:05 PM [INF] Scope: {"Correlation Id":"a2e21f85-dd9e-4cdc-8c9c-ab68c105c83b"} Filtered labels: [{"LabelId":8,"LabelName":"final label"},{"LabelId":9,"LabelName":"long ruun"}]
+
+03 Oct 2021 05:03:58 PM [INF] Scope: {"Correlation Id":"135d9264-5977-4da0-b88f-7d8510309196"} Going to hit DAL method
+
+03 Oct 2021 05:03:58 PM [INF] Scope: {"Correlation Id":"135d9264-5977-4da0-b88f-7d8510309196"} Going to hit database
+
+03 Oct 2021 05:03:58 PM [INF] Scope: {"Correlation Id":"135d9264-5977-4da0-b88f-7d8510309196"} Filtered labels: [{"LabelId":9,"LabelName":"long ruun"}]
+
+03 Oct 2021 05:04:04 PM [INF] Scope: {"Correlation Id":"62bce611-a8c8-4032-9ec4-a35b366df3d6"} Going to hit DAL method
+
+03 Oct 2021 05:04:04 PM [INF] Scope: {"Correlation Id":"62bce611-a8c8-4032-9ec4-a35b366df3d6"} Going to hit database
+
+03 Oct 2021 05:04:04 PM [INF] Scope: {"Correlation Id":"62bce611-a8c8-4032-9ec4-a35b366df3d6"} Filtered labels: []
+
+03 Oct 2021 05:21:13 PM [INF] Scope: {} Application started
+
+03 Oct 2021 05:21:48 PM [INF] Scope: {"Correlation Id":"e4e2bc6e-9bf3-4926-a3c9-6f127604af94"} Going to hit DAL method
+
+03 Oct 2021 05:21:48 PM [INF] Scope: {"Correlation Id":"e4e2bc6e-9bf3-4926-a3c9-6f127604af94"} Going to hit database
+
+03 Oct 2021 05:21:51 PM [INF] Scope: {"Correlation Id":"e4e2bc6e-9bf3-4926-a3c9-6f127604af94"} Filtered todo items :[{"TodoItemId":2,"Description":"descr","TodoListId":1,"ExpectedDate":"2021-10-02T08:37:13.363","LabelId":1,"UserId":3},{"TodoItemId":3,"Description":"descr","TodoListId":1,"ExpectedDate":"2021-10-02T08:37:13.363","LabelId":1,"UserId":3},{"TodoItemId":4,"Description":"desxzczxccr","TodoListId":1,"ExpectedDate":"2021-10-02T08:37:13.363","LabelId":1,"UserId":3},{"TodoItemId":5,"Description":"desxzczxcxcxzccr","TodoListId":1,"ExpectedDate":"2021-10-02T08:37:13.363","LabelId":1,"UserId":3}]
+
+03 Oct 2021 05:22:04 PM [INF] Scope: {"Correlation Id":"e7004cba-3aa3-4819-b836-1a2067a25ebf"} Going to hit DAL method
+
+03 Oct 2021 05:22:04 PM [INF] Scope: {"Correlation Id":"e7004cba-3aa3-4819-b836-1a2067a25ebf"} Going to hit database
+
+03 Oct 2021 05:22:04 PM [INF] Scope: {"Correlation Id":"e7004cba-3aa3-4819-b836-1a2067a25ebf"} Filtered todo items :[{"TodoItemId":2,"Description":"descr","TodoListId":1,"ExpectedDate":"2021-10-02T08:37:13.363","LabelId":1,"UserId":3},{"TodoItemId":3,"Description":"descr","TodoListId":1,"ExpectedDate":"2021-10-02T08:37:13.363","LabelId":1,"UserId":3}]
+
+03 Oct 2021 05:22:13 PM [INF] Scope: {"Correlation Id":"ea17530b-205e-493f-b3f3-232d6b62a65b"} Going to hit DAL method
+
+03 Oct 2021 05:22:13 PM [INF] Scope: {"Correlation Id":"ea17530b-205e-493f-b3f3-232d6b62a65b"} Going to hit database
+
+03 Oct 2021 05:22:13 PM [INF] Scope: {"Correlation Id":"ea17530b-205e-493f-b3f3-232d6b62a65b"} Filtered todo items :[{"TodoItemId":4,"Description":"desxzczxccr","TodoListId":1,"ExpectedDate":"2021-10-02T08:37:13.363","LabelId":1,"UserId":3},{"TodoItemId":5,"Description":"desxzczxcxcxzccr","TodoListId":1,"ExpectedDate":"2021-10-02T08:37:13.363","LabelId":1,"UserId":3}]
+
+03 Oct 2021 05:22:35 PM [INF] Scope: {"Correlation Id":"05ca3862-93d4-43a1-bbb2-09f125caeae5"} Going to hit DAL method
+
+03 Oct 2021 05:22:35 PM [INF] Scope: {"Correlation Id":"05ca3862-93d4-43a1-bbb2-09f125caeae5"} Going to hit database
+
+03 Oct 2021 05:22:35 PM [INF] Scope: {"Correlation Id":"05ca3862-93d4-43a1-bbb2-09f125caeae5"} Going to hit DAL method
+
+03 Oct 2021 05:22:35 PM [INF] Scope: {"Correlation Id":"05ca3862-93d4-43a1-bbb2-09f125caeae5"} Going to hit database
+
+03 Oct 2021 05:22:35 PM [INF] Scope: {"Correlation Id":"05ca3862-93d4-43a1-bbb2-09f125caeae5"} Record deleted successfully : 4
+
+03 Oct 2021 05:22:44 PM [INF] Scope: {"Correlation Id":"6b8e697d-c734-4216-acb3-9ee0695d57ee"} Going to hit DAL method
+
+03 Oct 2021 05:22:44 PM [INF] Scope: {"Correlation Id":"6b8e697d-c734-4216-acb3-9ee0695d57ee"} Going to hit database
+
+03 Oct 2021 05:22:44 PM [INF] Scope: {"Correlation Id":"6b8e697d-c734-4216-acb3-9ee0695d57ee"} Filtered todo items :[{"TodoItemId":2,"Description":"descr","TodoListId":1,"ExpectedDate":"2021-10-02T08:37:13.363","LabelId":1,"UserId":3},{"TodoItemId":3,"Description":"descr","TodoListId":1,"ExpectedDate":"2021-10-02T08:37:13.363","LabelId":1,"UserId":3},{"TodoItemId":5,"Description":"desxzczxcxcxzccr","TodoListId":1,"ExpectedDate":"2021-10-02T08:37:13.363","LabelId":1,"UserId":3}]
+
+03 Oct 2021 05:22:52 PM [INF] Scope: {"Correlation Id":"ec3a4944-9064-4b72-b243-1e52d054fc38"} Going to hit DAL method
+
+03 Oct 2021 05:22:52 PM [INF] Scope: {"Correlation Id":"ec3a4944-9064-4b72-b243-1e52d054fc38"} Going to hit database

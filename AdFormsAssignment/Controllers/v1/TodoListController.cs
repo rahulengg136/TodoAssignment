@@ -4,6 +4,7 @@ using AdFormsAssignment.BLL.Contracts;
 using AdFormsAssignment.DTO;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using Serilog;
@@ -45,6 +46,9 @@ namespace AdFormsAssignment.Controllers
         /// <param name="SearchText">Search text</param>
         /// <returns></returns>
         [HttpGet("allLists/{pageNumber}/{pageSize}")]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IActionResult> GetAllTaskLists(int pageNumber, int pageSize, string SearchText)
         {
             using (LogContext.PushProperty("Correlation Id", RequestInfo.GetCorrelationId(HttpContext.Request)))
@@ -76,6 +80,10 @@ namespace AdFormsAssignment.Controllers
         /// <param name="todoListId">Todo list id</param>
         /// <returns></returns>
         [HttpGet("{todoListId}")]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> GetTodoList(int todoListId)
         {
             using (LogContext.PushProperty("Correlation Id", RequestInfo.GetCorrelationId(HttpContext.Request)))
@@ -92,7 +100,9 @@ namespace AdFormsAssignment.Controllers
                     {
                         return Ok(list);
                     }
-                    else { return NoContent(); }
+                    else {
+                        return NoContent();
+                    }
                 }
                 catch (Exception exp)
                 {
@@ -107,6 +117,9 @@ namespace AdFormsAssignment.Controllers
         /// <param name="todoList">list information</param>
         /// <returns></returns>
         [HttpPost]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> CreateList([FromBody] TodoListDto todoList)
         {
             using (LogContext.PushProperty("Correlation Id", RequestInfo.GetCorrelationId(HttpContext.Request)))
@@ -136,6 +149,10 @@ namespace AdFormsAssignment.Controllers
         /// <param name="todoListId">todo list id</param>
         /// <returns></returns>
         [HttpDelete("{todoListId}")]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+
         public async Task<IActionResult> DeleteTodoList(int todoListId)
         {
             using (LogContext.PushProperty("Correlation Id", RequestInfo.GetCorrelationId(HttpContext.Request)))
@@ -172,6 +189,9 @@ namespace AdFormsAssignment.Controllers
         /// <param name="todoList">Updated details of list</param>
         /// <returns></returns>
         [HttpPut("{todoListId}")]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> UpdateTodoList(int todoListId, [FromBody] TodoListDto todoList)
         {
             using (LogContext.PushProperty("Correlation Id", RequestInfo.GetCorrelationId(HttpContext.Request)))
@@ -183,10 +203,19 @@ namespace AdFormsAssignment.Controllers
                 }
                 try
                 {
-                    var list = _mapper.Map<tblTodoList>(todoList);
-                    await _toDoService.UpdateToDoList(list, todoListId);
-                    Log.Information($"Updated todo list {MicrosoftJson.Serialize(todoList)}");
-                    return Ok();
+                    var existingList = await _toDoService.GetToDoList(todoListId, int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value));
+
+                    if (existingList == null)
+                    {
+                        return BadRequest("Resource not found with this unique id");
+                    }
+                    else
+                    {
+                        var list = _mapper.Map<tblTodoList>(todoList);
+                        await _toDoService.UpdateToDoList(list, todoListId);
+                        Log.Information($"Updated todo list {MicrosoftJson.Serialize(todoList)}");
+                        return Ok();
+                    }
                 }
                 catch (Exception exp)
                 {
@@ -204,6 +233,9 @@ namespace AdFormsAssignment.Controllers
         /// <param name="todoList">Patches information</param>
         /// <returns></returns>
         [HttpPatch("{todoListId}")]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> UpdateTodoListPatch(int todoListId, [FromBody] JsonPatchDocument todoList)
         {
             using (LogContext.PushProperty("Correlation Id", RequestInfo.GetCorrelationId(HttpContext.Request)))
@@ -214,9 +246,18 @@ namespace AdFormsAssignment.Controllers
                 }
                 try
                 {
-                    await _toDoService.UpdatePatchTodoList(todoList, todoListId);
-                    Log.Information($"Update todo list id {todoListId} with patch {MicrosoftJson.Serialize(todoList)}");
-                    return Ok();
+                    var existingList = await _toDoService.GetToDoList(todoListId, int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value));
+
+                    if (existingList == null)
+                    {
+                        return BadRequest("Resource not found with this unique id");
+                    }
+                    else
+                    {
+                        await _toDoService.UpdatePatchTodoList(todoList, todoListId);
+                        Log.Information($"Update todo list id {todoListId} with patch {MicrosoftJson.Serialize(todoList)}");
+                        return Ok();
+                    }
                 }
                 catch (Exception exp)
                 {

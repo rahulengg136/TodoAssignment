@@ -4,6 +4,7 @@ using AdFormsAssignment.BLL.Contracts;
 using AdFormsAssignment.DTO;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using Serilog;
@@ -44,6 +45,9 @@ namespace AdFormsAssignment.Controllers
         /// <param name="SearchText">Any text that may present in description</param>
         /// <returns></returns>
         [HttpGet("allItems/{pageNumber}/{pageSize}")]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IActionResult> GetAllTaskItems(int pageNumber, int pageSize, string SearchText)
         {
             using (LogContext.PushProperty("Correlation Id", RequestInfo.GetCorrelationId(HttpContext.Request)))
@@ -71,6 +75,11 @@ namespace AdFormsAssignment.Controllers
         /// <param name="todoItemId">To-Do item unique id</param>
         /// <returns></returns>
         [HttpGet("{todoItemId}")]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+
         public async Task<IActionResult> GetTodoItem(int todoItemId)
         {
             using (LogContext.PushProperty("Correlation Id", RequestInfo.GetCorrelationId(HttpContext.Request)))
@@ -101,6 +110,9 @@ namespace AdFormsAssignment.Controllers
         /// <param name="todoItem">New item data</param>
         /// <returns></returns>
         [HttpPost]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status201Created)]
         public async Task<IActionResult> CreateTodoItem([FromBody] TodoItemDto todoItem)
         {
             using (LogContext.PushProperty("Correlation Id", RequestInfo.GetCorrelationId(HttpContext.Request)))
@@ -129,6 +141,12 @@ namespace AdFormsAssignment.Controllers
         /// <param name="todoItemId">to-do item unique id</param>
         /// <returns></returns>
         [HttpDelete("{todoItemId}")]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+
+
+
         public async Task<IActionResult> DeleteTodoItem(int todoItemId)
         {
             using (LogContext.PushProperty("Correlation Id", RequestInfo.GetCorrelationId(HttpContext.Request)))
@@ -137,9 +155,17 @@ namespace AdFormsAssignment.Controllers
                     return BadRequest(new { message = "To do item id cannot be zero" });
                 try
                 {
-                    await _toDoService.DeleteTodoItem(todoItemId);
-                    Log.Information($"Record deleted successfully : {todoItemId}");
-                    return Ok(todoItemId);
+                    var existingTodoItem = await _toDoService.GetToDoItem(todoItemId, int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value));
+                    if (existingTodoItem == null)
+                    {
+                        return BadRequest("Resource not found with this unique id");
+                    }
+                    else
+                    {
+                        await _toDoService.DeleteTodoItem(todoItemId);
+                        Log.Information($"Record deleted successfully : {todoItemId}");
+                        return Ok(todoItemId);
+                    }
                 }
                 catch (Exception exp)
                 {
@@ -155,6 +181,10 @@ namespace AdFormsAssignment.Controllers
         /// <param name="todoItem">Item data</param>
         /// <returns></returns>
         [HttpPut("{todoItemId}")]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+
         public async Task<IActionResult> UpdateTodoItem(int todoItemId, [FromBody] TodoItemDto todoItem)
         {
             using (LogContext.PushProperty("Correlation Id", RequestInfo.GetCorrelationId(HttpContext.Request)))
@@ -165,10 +195,19 @@ namespace AdFormsAssignment.Controllers
                 }
                 try
                 {
-                    var item = _mapper.Map<tblTodoItem>(todoItem);
-                    await _toDoService.UpdateToDoItem(item, todoItemId);
-                    Log.Information($"Record updated successfully. New record looks like: {MicrosoftJson.Serialize(item)}");
-                    return Ok();
+
+                    var existingTodoItem = await _toDoService.GetToDoItem(todoItemId, int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value));
+                    if (existingTodoItem == null)
+                    {
+                        return BadRequest("Resource not found with this unique id");
+                    }
+                    else
+                    {
+                        var item = _mapper.Map<tblTodoItem>(todoItem);
+                        await _toDoService.UpdateToDoItem(item, todoItemId);
+                        Log.Information($"Record updated successfully. New record looks like: {MicrosoftJson.Serialize(item)}");
+                        return Ok();
+                    }
                 }
                 catch (Exception exp)
                 {
@@ -177,16 +216,20 @@ namespace AdFormsAssignment.Controllers
                 }
             }
 
-            }
+        }
         /// <summary>
         /// This method patches a record
         /// </summary>
         /// <param name="todoItemId">Unique to-do item id</param>
         /// <param name="todoItem">Patches info</param>
         /// <returns></returns>
-            [HttpPatch("{todoItemId}")]
-            public async Task<IActionResult> UpdateTodoItemPatch(int todoItemId, [FromBody] JsonPatchDocument todoItem)
-            {
+        [HttpPatch("{todoItemId}")]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+
+        public async Task<IActionResult> UpdateTodoItemPatch(int todoItemId, [FromBody] JsonPatchDocument todoItem)
+        {
             using (LogContext.PushProperty("Correlation Id", RequestInfo.GetCorrelationId(HttpContext.Request)))
             {
                 if (todoItemId == 0)
@@ -195,9 +238,18 @@ namespace AdFormsAssignment.Controllers
                 }
                 try
                 {
-                    await _toDoService.UpdatePatchTodoItem(todoItem, todoItemId);
-                    Log.Information($"Record patched successfully. Info was: {MicrosoftJson.Serialize(todoItem.Operations)}");
-                    return Ok();
+
+                    var existingTodoItem = await _toDoService.GetToDoItem(todoItemId, int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value));
+                    if (existingTodoItem == null)
+                    {
+                        return BadRequest("Resource not found with this unique id");
+                    }
+                    else
+                    {
+                        await _toDoService.UpdatePatchTodoItem(todoItem, todoItemId);
+                        Log.Information($"Record patched successfully. Info was: {MicrosoftJson.Serialize(todoItem.Operations)}");
+                        return Ok();
+                    }
                 }
                 catch (Exception exp)
                 {
@@ -205,8 +257,8 @@ namespace AdFormsAssignment.Controllers
                     return StatusCode(500, exp.ToString());
                 }
             }
-            }
-
-
         }
+
+
     }
+}
