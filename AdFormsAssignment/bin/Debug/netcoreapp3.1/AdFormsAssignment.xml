@@ -1,0 +1,428 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>AdFormsAssignment</name>
+    </assembly>
+    <members>
+        <member name="T:AdFormsAssignment.AutoMapper.AutoMapperProfile">
+            <summary>
+            Automapper profile
+            </summary>
+        </member>
+        <member name="M:AdFormsAssignment.AutoMapper.AutoMapperProfile.#ctor">
+            <summary>
+            All required mapping configurations
+            </summary>
+        </member>
+        <member name="T:AdFormsAssignment.AddParametersToSwagger">
+            <summary>
+            Class that add parameters to swagger request
+            </summary>
+        </member>
+        <member name="M:AdFormsAssignment.AddParametersToSwagger.Apply(Microsoft.OpenApi.Models.OpenApiOperation,Swashbuckle.AspNetCore.SwaggerGen.OperationFilterContext)">
+            <summary>
+            Written Apply method
+            </summary>
+            <param name="operation"></param>
+            <param name="context"></param>
+        </member>
+        <member name="T:AdFormsAssignment.Controllers.LabelController">
+            <summary>
+            Controller that Read, Create, Delete labels
+            </summary>
+        </member>
+        <member name="M:AdFormsAssignment.Controllers.LabelController.#ctor(AdFormsAssignment.BLL.Contracts.ILabelService,AutoMapper.IMapper)">
+            <summary>
+            Label controller
+            </summary>
+            <param name="labelService">Label service</param>
+            <param name="mapper">Auto mapper</param>
+        </member>
+        <member name="M:AdFormsAssignment.Controllers.LabelController.GetAllLabels(System.Int32,System.Int32,System.String)">
+            <summary>
+            This method returns list of labels based on the few search criteria and paging
+            </summary>
+            <param name="pageNumber">Page number</param>
+            <param name="pageSize"> Page size- This will be the number of records accessable at one time</param>
+            <param name="SearchText">Any substring that may present in label name</param>
+            <returns></returns>
+        </member>
+        <member name="M:AdFormsAssignment.Controllers.LabelController.GetSingleLabelInfo(System.Int32)">
+            <summary>
+            This method gives details of a single label
+            </summary>
+            <param name="labelId">Unique label id</param>
+            <returns></returns>
+        </member>
+        <member name="M:AdFormsAssignment.Controllers.LabelController.CreateLabel(AdFormsAssignment.DTO.LabelDto)">
+            <summary>
+            This method is to create a new label
+            </summary>
+            <param name="labelDto">Label info in json format should be posted</param>
+            <returns></returns>
+        </member>
+        <member name="M:AdFormsAssignment.Controllers.LabelController.DeleteTodoLabel(System.Int32)">
+            <summary>
+            This method is to delete a label
+            </summary>
+            <param name="labelId">Label id that needs to be deleted</param>
+            <returns></returns>
+        </member>
+        <member name="T:AdFormsAssignment.Controllers.LoginController">
+            <summary>
+            This controller performs taks related to login and Security
+            </summary>
+        </member>
+        <member name="M:AdFormsAssignment.Controllers.LoginController.#ctor(AdFormsAssignment.Security.IJwtAuth)">
+            <summary>
+            Login controller 
+            </summary>
+            <param name="jwtAuth"></param>
+        </member>
+        <member name="M:AdFormsAssignment.Controllers.LoginController.ValidateUser(AdFormsAssignment.DTO.UserDto)">
+            <summary>
+            This method validates user and provides token for 1 hour
+            </summary>
+            <param name="userCredential">Need to pass username and password in body</param>
+            <returns></returns>
+        </member>
+        <member name="T:AdFormsAssignment.Controllers.TodoItemController">
+            <summary>
+            This controller deals with CRUD operations of to-do item
+            </summary>
+        </member>
+        <member name="M:AdFormsAssignment.Controllers.TodoItemController.#ctor(AdFormsAssignment.BLL.Contracts.ITodoItemService,AutoMapper.IMapper)">
+            <summary>
+            To do item controller
+            </summary>
+            <param name="toDoService"> To-Do service instance</param>
+            <param name="mapper">Automapper instance</param>
+        </member>
+        <member name="M:AdFormsAssignment.Controllers.TodoItemController.GetAllTaskItems(System.Int32,System.Int32,System.String)">
+            <summary>
+            This method gives list of filtered task items
+            </summary>
+            <param name="pageNumber">Page number</param>
+            <param name="pageSize">Page size</param>
+            <param name="SearchText">Any text that may present in description</param>
+            <returns></returns>
+        </member>
+        <member name="M:AdFormsAssignment.Controllers.TodoItemController.GetTodoItem(System.Int32)">
+            <summary>
+            This method returns detail of a single to-do item
+            </summary>
+            <param name="todoItemId">To-Do item unique id</param>
+            <returns></returns>
+        </member>
+        <member name="M:AdFormsAssignment.Controllers.TodoItemController.CreateTodoItem(AdFormsAssignment.DTO.TodoItemDto)">
+            <summary>
+            This method creates a new to-do item
+            </summary>
+            <param name="todoItem">New item data</param>
+            <returns></returns>
+        </member>
+        <member name="M:AdFormsAssignment.Controllers.TodoItemController.DeleteTodoItem(System.Int32)">
+            <summary>
+            This method deletes to do item
+            </summary>
+            <param name="todoItemId">to-do item unique id</param>
+            <returns></returns>
+        </member>
+        <member name="M:AdFormsAssignment.Controllers.TodoItemController.UpdateTodoItem(System.Int32,AdFormsAssignment.DTO.TodoItemDto)">
+            <summary>
+            This method updates any existing to-do item
+            </summary>
+            <param name="todoItemId">Unique to-do item id</param>
+            <param name="todoItem">Item data</param>
+            <returns></returns>
+        </member>
+        <member name="M:AdFormsAssignment.Controllers.TodoItemController.UpdateTodoItemPatch(System.Int32,Microsoft.AspNetCore.JsonPatch.JsonPatchDocument)">
+            <summary>
+            This method patches a record
+            </summary>
+            <param name="todoItemId">Unique to-do item id</param>
+            <param name="todoItem">Patches info</param>
+            <returns></returns>
+        </member>
+        <member name="T:AdFormsAssignment.Controllers.TODOListController">
+            <summary>
+            This controller deals with CRUD operations of to-do lists
+            </summary>
+        </member>
+        <member name="M:AdFormsAssignment.Controllers.TODOListController.#ctor(AdFormsAssignment.BLL.Contracts.ITodoListService,AutoMapper.IMapper)">
+            <summary>
+            To do list controller
+            </summary>
+            <param name="toDoService">to-do service instance</param>
+            <param name="mapper">Automapper instance</param>
+        </member>
+        <member name="M:AdFormsAssignment.Controllers.TODOListController.GetAllTaskLists(System.Int32,System.Int32,System.String)">
+            <summary>
+            This method filters  list of task-list 
+            </summary>
+            <param name="pageNumber">Page number</param>
+            <param name="pageSize">Page size</param>
+            <param name="SearchText">Search text</param>
+            <returns></returns>
+        </member>
+        <member name="M:AdFormsAssignment.Controllers.TODOListController.GetTodoList(System.Int32)">
+            <summary>
+            This method gives details of single to-do list
+            </summary>
+            <param name="todoListId">Todo list id</param>
+            <returns></returns>
+        </member>
+        <member name="M:AdFormsAssignment.Controllers.TODOListController.CreateList(AdFormsAssignment.DTO.TodoListDto)">
+            <summary>
+            This method creates new to-do list
+            </summary>
+            <param name="todoList">list information</param>
+            <returns></returns>
+        </member>
+        <member name="M:AdFormsAssignment.Controllers.TODOListController.DeleteTodoList(System.Int32)">
+            <summary>
+            This method deletes a todo list
+            </summary>
+            <param name="todoListId">todo list id</param>
+            <returns></returns>
+        </member>
+        <member name="M:AdFormsAssignment.Controllers.TODOListController.UpdateTodoList(System.Int32,AdFormsAssignment.DTO.TodoListDto)">
+            <summary>
+            This method updates to-do list
+            </summary>
+            <param name="todoListId">Todo list id</param>
+            <param name="todoList">Updated details of list</param>
+            <returns></returns>
+        </member>
+        <member name="M:AdFormsAssignment.Controllers.TODOListController.UpdateTodoListPatch(System.Int32,Microsoft.AspNetCore.JsonPatch.JsonPatchDocument)">
+            <summary>
+            This method patches a todo list
+            </summary>
+            <param name="todoListId">todo list id</param>
+            <param name="todoList">Patches information</param>
+            <returns></returns>
+        </member>
+        <member name="T:AdFormsAssignment.CustomMiddlewares.LogRequestResponseMiddleware">
+            <summary>
+            Middleware that logs request and response
+            </summary>
+        </member>
+        <member name="M:AdFormsAssignment.CustomMiddlewares.LogRequestResponseMiddleware.#ctor(Microsoft.AspNetCore.Http.RequestDelegate,Microsoft.Extensions.Logging.ILoggerFactory)">
+            <summary>
+            Middleware that logs request and response
+            </summary>
+        </member>
+        <member name="M:AdFormsAssignment.CustomMiddlewares.LogRequestResponseMiddleware.Invoke(Microsoft.AspNetCore.Http.HttpContext)">
+            <summary>
+            Invoke method of the middleware
+            </summary>
+            <param name="context">Current Http Context</param>
+            <returns></returns>
+        </member>
+        <member name="T:AdFormsAssignment.CustomMiddlewares.RequestResponseLoggingMiddlewareExtensions">
+            <summary>
+            Using the middleware
+            </summary>
+        </member>
+        <member name="M:AdFormsAssignment.CustomMiddlewares.RequestResponseLoggingMiddlewareExtensions.UseRequestResponseLogging(Microsoft.AspNetCore.Builder.IApplicationBuilder)">
+            <summary>
+            Setting up logging-request-response middleware to the application
+            </summary>
+            <param name="builder"></param>
+            <returns></returns>
+        </member>
+        <member name="T:AdFormsAssignment.DTO.LabelDto">
+            <summary>
+            Label details 
+            </summary>
+        </member>
+        <member name="P:AdFormsAssignment.DTO.LabelDto.LabelId">
+            <summary>
+            Unique id of the label
+            </summary>
+        </member>
+        <member name="P:AdFormsAssignment.DTO.LabelDto.LabelName">
+            <summary>
+            Name of the label
+            </summary>
+        </member>
+        <member name="T:AdFormsAssignment.DTO.TodoItemDto">
+            <summary>
+            todo item details
+            </summary>
+        </member>
+        <member name="P:AdFormsAssignment.DTO.TodoItemDto.TodoId">
+            <summary>
+            Id
+            </summary>
+        </member>
+        <member name="P:AdFormsAssignment.DTO.TodoItemDto.Description">
+            <summary>
+            Description
+            </summary>
+        </member>
+        <member name="P:AdFormsAssignment.DTO.TodoItemDto.TodoListId">
+            <summary>
+            List id
+            </summary>
+        </member>
+        <member name="P:AdFormsAssignment.DTO.TodoItemDto.ExpectedDate">
+            <summary>
+            ExpectedDate
+            </summary>
+        </member>
+        <member name="P:AdFormsAssignment.DTO.TodoItemDto.LabelId">
+            <summary>
+            LabelId
+            </summary>
+        </member>
+        <member name="P:AdFormsAssignment.DTO.TodoItemDto.UserId">
+            <summary>
+            UserId
+            </summary>
+        </member>
+        <member name="T:AdFormsAssignment.DTO.TodoListDto">
+            <summary>
+            To do list information
+            </summary>
+        </member>
+        <member name="P:AdFormsAssignment.DTO.TodoListDto.TodoListId">
+            <summary>
+            List unique id
+            </summary>
+        </member>
+        <member name="P:AdFormsAssignment.DTO.TodoListDto.ExpectedDate">
+            <summary>
+            ExpectedDate
+            </summary>
+        </member>
+        <member name="P:AdFormsAssignment.DTO.TodoListDto.LabelId">
+            <summary>
+            LabelId
+            </summary>
+        </member>
+        <member name="P:AdFormsAssignment.DTO.TodoListDto.ListName">
+            <summary>
+            ListName
+            </summary>
+        </member>
+        <member name="P:AdFormsAssignment.DTO.TodoListDto.UserId">
+            <summary>
+            UserId
+            </summary>
+        </member>
+        <member name="T:AdFormsAssignment.DTO.UserDto">
+            <summary>
+            User details
+            </summary>
+        </member>
+        <member name="P:AdFormsAssignment.DTO.UserDto.UserName">
+            <summary>
+            User name
+            </summary>
+        </member>
+        <member name="P:AdFormsAssignment.DTO.UserDto.Password">
+            <summary>
+            Password
+            </summary>
+        </member>
+        <member name="T:AdFormsAssignment.Program">
+            <summary>
+            Program class of the application
+            </summary>
+        </member>
+        <member name="M:AdFormsAssignment.Program.Main(System.String[])">
+            <summary>
+            Main method
+            </summary>
+            <param name="args"></param>
+        </member>
+        <member name="M:AdFormsAssignment.Program.CreateHostBuilder(System.String[])">
+            <summary>
+            CreateHostBuilder method
+            </summary>
+            <param name="args"></param>
+            <returns></returns>
+        </member>
+        <member name="T:AdFormsAssignment.Security.IJwtAuth">
+            <summary>
+            Contract that deals with validation using JWT
+            </summary>
+        </member>
+        <member name="M:AdFormsAssignment.Security.IJwtAuth.Authentication(System.String,System.String)">
+            <summary>
+            Authentication method
+            </summary>
+            <param name="username">User name</param>
+            <param name="password">Password</param>
+            <returns></returns>
+        </member>
+        <member name="T:AdFormsAssignment.Security.JwtAuth">
+            <summary>
+            Class that provides a token
+            </summary>
+        </member>
+        <member name="M:AdFormsAssignment.Security.JwtAuth.#ctor(System.String)">
+            <summary>
+            Constructor takes key that helps in generating unique token for different clients
+            </summary>
+            <param name="key">A string value</param>
+        </member>
+        <member name="M:AdFormsAssignment.Security.JwtAuth.Authentication(System.String,System.String)">
+            <summary>
+            This method check user and provides token
+            </summary>
+            <param name="username">Username</param>
+            <param name="password">Password</param>
+            <returns></returns>
+        </member>
+        <member name="T:AdFormsAssignment.Startup">
+            <summary>
+            Start up class
+            </summary>
+        </member>
+        <member name="M:AdFormsAssignment.Startup.#ctor(Microsoft.Extensions.Configuration.IConfiguration)">
+            <summary>
+            Start up constructor
+            </summary>
+            <param name="configuration"></param>
+        </member>
+        <member name="P:AdFormsAssignment.Startup.Configuration">
+            <summary>
+            Configuration
+            </summary>
+        </member>
+        <member name="M:AdFormsAssignment.Startup.ConfigureServices(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            This method gets called by the runtime. Use this method to add services to the container.
+            </summary>
+            <param name="services"></param>
+        </member>
+        <member name="M:AdFormsAssignment.Startup.Configure(Microsoft.AspNetCore.Builder.IApplicationBuilder,Microsoft.AspNetCore.Hosting.IWebHostEnvironment)">
+            <summary>
+            This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+            </summary>
+            <param name="app"> Application builder</param>
+            <param name="env"> Host environment</param>
+        </member>
+        <member name="T:CorrelationId.CorrelationIdWork.CorrelationMiddleware">
+            <summary>
+            Middle ware that appends correlation id to a request header
+            </summary>
+        </member>
+        <member name="M:CorrelationId.CorrelationIdWork.CorrelationMiddleware.#ctor(Microsoft.AspNetCore.Http.RequestDelegate,Microsoft.Extensions.Logging.ILoggerFactory)">
+            <summary>
+            Middle ware that appends correlation id to a request header
+            </summary>
+            <param name="next"></param>
+            <param name="loggerFactory"></param>
+        </member>
+        <member name="M:CorrelationId.CorrelationIdWork.CorrelationMiddleware.Invoke(Microsoft.AspNetCore.Http.HttpContext)">
+            <summary>
+            Invoke method of correlation id middleware
+            </summary>
+            <param name="httpContext"></param>
+            <returns></returns>
+        </member>
+    </members>
+</doc>
