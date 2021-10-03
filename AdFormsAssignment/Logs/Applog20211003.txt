@@ -1,0 +1,30 @@
+
+03 Oct 2021 12:41:31 AM [INF] Scope: {} Application started
+
+03 Oct 2021 12:42:33 AM [INF] Scope: {"Correlation Id":"5291df43-ff0e-43bf-a0ba-13a7d29daab6"} Going to hit DAL method
+
+03 Oct 2021 12:42:33 AM [INF] Scope: {"Correlation Id":"5291df43-ff0e-43bf-a0ba-13a7d29daab6"} Going to hit database
+
+03 Oct 2021 12:42:34 AM [INF] Scope: {"Correlation Id":"5291df43-ff0e-43bf-a0ba-13a7d29daab6"} Record created successfully: {"LabelId":0,"LabelName":"final label"}
+
+03 Oct 2021 01:04:38 AM [INF] Scope: {} Application started
+
+03 Oct 2021 01:05:05 AM [INF] Scope: {"Correlation Id":"cdf98efd-c9e7-448c-9b23-7efc75cce8c4"} Going to hit DAL method
+
+03 Oct 2021 01:05:05 AM [INF] Scope: {"Correlation Id":"cdf98efd-c9e7-448c-9b23-7efc75cce8c4"} Going to hit database
+
+03 Oct 2021 01:05:06 AM [INF] Scope: {"Correlation Id":"cdf98efd-c9e7-448c-9b23-7efc75cce8c4"} Filtered labels: [{"LabelId":8,"LabelName":"final label"}]
+
+03 Oct 2021 01:05:45 AM [INF] Scope: {} Application started
+
+03 Oct 2021 01:08:40 AM [INF] Scope: {} Application started
+
+03 Oct 2021 01:09:22 AM [INF] Scope: {} Application started
+
+03 Oct 2021 01:09:51 AM [INF] Scope: {"Correlation Id":"7ccdebbf-2124-40e1-8200-8f1a13a3f464"} Going to hit DAL method
+
+03 Oct 2021 01:09:51 AM [INF] Scope: {"Correlation Id":"7ccdebbf-2124-40e1-8200-8f1a13a3f464"} Going to hit database
+
+03 Oct 2021 01:09:52 AM [INF] Scope: {"Correlation Id":"7ccdebbf-2124-40e1-8200-8f1a13a3f464"} Filtered labels: [{"LabelId":8,"LabelName":"final label"}]
+
+03 Oct 2021 11:34:42 AM [INF] Scope: {} Application started

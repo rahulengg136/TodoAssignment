@@ -1,0 +1,16 @@
+C:\Users\Rahul\source\repos\AdFormsAssignment\AdFormsAssignment.BLL\bin\Debug\netcoreapp3.1\AdFormsAssignment.BLL.deps.json
+C:\Users\Rahul\source\repos\AdFormsAssignment\AdFormsAssignment.BLL\bin\Debug\netcoreapp3.1\AdFormsAssignment.BLL.runtimeconfig.json
+C:\Users\Rahul\source\repos\AdFormsAssignment\AdFormsAssignment.BLL\bin\Debug\netcoreapp3.1\AdFormsAssignment.BLL.runtimeconfig.dev.json
+C:\Users\Rahul\source\repos\AdFormsAssignment\AdFormsAssignment.BLL\bin\Debug\netcoreapp3.1\AdFormsAssignment.BLL.dll
+C:\Users\Rahul\source\repos\AdFormsAssignment\AdFormsAssignment.BLL\bin\Debug\netcoreapp3.1\AdFormsAssignment.BLL.pdb
+C:\Users\Rahul\source\repos\AdFormsAssignment\AdFormsAssignment.BLL\bin\Debug\netcoreapp3.1\AdFormAssignment.DAL.dll
+C:\Users\Rahul\source\repos\AdFormsAssignment\AdFormsAssignment.BLL\bin\Debug\netcoreapp3.1\AdFormAssignment.DAL.pdb
+C:\Users\Rahul\source\repos\AdFormsAssignment\AdFormsAssignment.BLL\obj\Debug\netcoreapp3.1\AdFormsAssignment.BLL.csproj.AssemblyReference.cache
+C:\Users\Rahul\source\repos\AdFormsAssignment\AdFormsAssignment.BLL\obj\Debug\netcoreapp3.1\AdFormsAssignment.BLL.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Rahul\source\repos\AdFormsAssignment\AdFormsAssignment.BLL\obj\Debug\netcoreapp3.1\AdFormsAssignment.BLL.AssemblyInfoInputs.cache
+C:\Users\Rahul\source\repos\AdFormsAssignment\AdFormsAssignment.BLL\obj\Debug\netcoreapp3.1\AdFormsAssignment.BLL.AssemblyInfo.cs
+C:\Users\Rahul\source\repos\AdFormsAssignment\AdFormsAssignment.BLL\obj\Debug\netcoreapp3.1\AdFormsAssignment.BLL.csproj.CoreCompileInputs.cache
+C:\Users\Rahul\source\repos\AdFormsAssignment\AdFormsAssignment.BLL\obj\Debug\netcoreapp3.1\AdFormsAssignment.BLL.csproj.CopyComplete
+C:\Users\Rahul\source\repos\AdFormsAssignment\AdFormsAssignment.BLL\obj\Debug\netcoreapp3.1\AdFormsAssignment.BLL.dll
+C:\Users\Rahul\source\repos\AdFormsAssignment\AdFormsAssignment.BLL\obj\Debug\netcoreapp3.1\AdFormsAssignment.BLL.pdb
+C:\Users\Rahul\source\repos\AdFormsAssignment\AdFormsAssignment.BLL\obj\Debug\netcoreapp3.1\AdFormsAssignment.BLL.genruntimeconfig.cache
