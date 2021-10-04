@@ -51,21 +51,11 @@ namespace AdFormsAssignment.Controllers
         {
             using (LogContext.PushProperty("Correlation Id", RequestInfo.GetCorrelationId(HttpContext.Request)))
             {
-                try
-                {
                     var allLables = await _labelService.GetAllLabels(pageNumber, pageSize, SearchText);
                     Log.Information($"Filtered labels: {MicrosoftJson.Serialize(allLables)}");
                     if (allLables.Count() == 0)
                         return NoContent();
                     return Ok(allLables);
-
-
-                }
-                catch (Exception exp)
-                {
-                    Log.Error($"Exception in method :{MicrosoftJson.Serialize(exp.StackTrace)}");
-                    return StatusCode(500, exp.ToString());
-                }
             }
         }
         /// <summary>
@@ -84,8 +74,7 @@ namespace AdFormsAssignment.Controllers
             {
                 if (labelId == 0)
                     return BadRequest(new { message = "Label id cannot be zero" });
-                try
-                {
+             
                     var label = await _labelService.GetSingleLabelInfo(labelId);
                     Log.Information($"Found label: {MicrosoftJson.Serialize(label)}");
                     if (label != null)
@@ -97,12 +86,7 @@ namespace AdFormsAssignment.Controllers
                         return BadRequest("No resource found with this label id");
                     }
 
-                }
-                catch (Exception exp)
-                {
-                    Log.Error($"Exception in method :{MicrosoftJson.Serialize(exp.StackTrace)}");
-                    return StatusCode(500, exp.ToString());
-                }
+              
             }
         }
         /// <summary>
@@ -121,18 +105,12 @@ namespace AdFormsAssignment.Controllers
                 if (string.IsNullOrEmpty(labelDto.LabelName))
                     return BadRequest(new { message = "Label name cannot be null or empty" });
 
-                try
-                {
+              
                     var label = _mapper.Map<tblLabel>(labelDto);
                     int newRecordId = await _labelService.CreateLabel(label);
                     Log.Information($"Record created successfully: {MicrosoftJson.Serialize(labelDto)}");
                     return Created($"~/api/v1/label/{newRecordId}", labelDto);
-                }
-                catch (Exception exp)
-                {
-                    Log.Error($"Exception in method :{MicrosoftJson.Serialize(exp.StackTrace)}");
-                    return StatusCode(500, exp.ToString());
-                }
+              
             }
         }
         /// <summary>
@@ -150,8 +128,7 @@ namespace AdFormsAssignment.Controllers
             {
                 if (labelId == 0)
                     return BadRequest(new { message = "Label id cannot be zero" });
-                try
-                {
+              
                     var label = await _labelService.GetSingleLabelInfo(labelId);
                     if (label != null)
                     {
@@ -163,12 +140,7 @@ namespace AdFormsAssignment.Controllers
                     {
                         return BadRequest("No resource found with this label id");
                     }
-                }
-                catch (Exception exp)
-                {
-                    Log.Error($"Exception in method :{MicrosoftJson.Serialize(exp.StackTrace)}");
-                    return StatusCode(500, exp.ToString());
-                }
+              
             }
 
         }

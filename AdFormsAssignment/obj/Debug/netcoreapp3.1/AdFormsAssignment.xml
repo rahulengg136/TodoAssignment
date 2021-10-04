@@ -202,6 +202,24 @@
             <param name="todoList">Patches information</param>
             <returns></returns>
         </member>
+        <member name="T:AdFormsAssignment.CustomMiddlewares.ExceptionHandlingMiddleware">
+            <summary>
+            Exception handling middleware
+            </summary>
+        </member>
+        <member name="M:AdFormsAssignment.CustomMiddlewares.ExceptionHandlingMiddleware.#ctor(Microsoft.AspNetCore.Http.RequestDelegate)">
+            <summary>
+            Exception handling
+            </summary>
+            <param name="next"></param>
+        </member>
+        <member name="M:AdFormsAssignment.CustomMiddlewares.ExceptionHandlingMiddleware.Invoke(Microsoft.AspNetCore.Http.HttpContext)">
+            <summary>
+            Invoke method of middleware
+            </summary>
+            <param name="context"></param>
+            <returns></returns>
+        </member>
         <member name="T:AdFormsAssignment.CustomMiddlewares.LogRequestResponseMiddleware">
             <summary>
             Middleware that logs request and response

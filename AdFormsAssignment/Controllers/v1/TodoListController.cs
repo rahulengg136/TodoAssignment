@@ -53,8 +53,7 @@ namespace AdFormsAssignment.Controllers
         {
             using (LogContext.PushProperty("Correlation Id", RequestInfo.GetCorrelationId(HttpContext.Request)))
             {
-                try
-                {
+              
                     Log.Information($"Entered GetAllTaskLists method with pageNumber {pageNumber}, pageSize {pageSize}, searchText {SearchText}");
                     var allTodoLists = await _toDoService.GetAllTodoLists(pageNumber, pageSize, SearchText, int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value));
                     Log.Information($"List of filtered to dos :{MicrosoftJson.Serialize(allTodoLists)}");
@@ -66,12 +65,7 @@ namespace AdFormsAssignment.Controllers
                     {
                         return NoContent();
                     }
-                }
-                catch (Exception exp)
-                {
-                    Log.Error($"Exception in GetAllTaskLists method :{MicrosoftJson.Serialize(exp.StackTrace)}");
-                    return StatusCode(500, exp.ToString());
-                }
+              
             }
         }
         /// <summary>
@@ -92,8 +86,7 @@ namespace AdFormsAssignment.Controllers
                 {
                     return BadRequest(new { message = "To do list id cannot be zero" });
                 }
-                try
-                {
+               
                     var list = await _toDoService.GetToDoList(todoListId, int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value));
                     Log.Information($"Found todo list. list id {todoListId} , {MicrosoftJson.Serialize(list)}");
                     if (list != null)
@@ -103,12 +96,7 @@ namespace AdFormsAssignment.Controllers
                     else {
                         return NoContent();
                     }
-                }
-                catch (Exception exp)
-                {
-                    Log.Error($"Exception in GetTodoList method :{MicrosoftJson.Serialize(exp.StackTrace)}");
-                    return StatusCode(500, exp.ToString());
-                }
+              
             }
         }
         /// <summary>
@@ -129,18 +117,12 @@ namespace AdFormsAssignment.Controllers
                 {
                     return BadRequest(new { message = "List name and user id is mandatory" });
                 }
-                try
-                {
+              
                     var list = _mapper.Map<tblTodoList>(todoList);
                     int newRecordId = await _toDoService.CreateToDoList(list);
                     Log.Information($"Newly created todo list {MicrosoftJson.Serialize(todoList)}");
                     return Created($"~/api/v1/TODO/{newRecordId}", list);
-                }
-                catch (Exception exp)
-                {
-                    Log.Error($"Exception in CreateList method :{MicrosoftJson.Serialize(exp.StackTrace)}");
-                    return StatusCode(500, exp.ToString());
-                }
+               
             }
         }
         /// <summary>
@@ -159,8 +141,7 @@ namespace AdFormsAssignment.Controllers
             {
                 if (todoListId == 0)
                     return BadRequest(new { message = "To do list id cannot be zero" });
-                try
-                {
+              
                     var list = await _toDoService.GetToDoList(todoListId, int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value));
 
                     if (list == null)
@@ -174,12 +155,7 @@ namespace AdFormsAssignment.Controllers
                         return Ok();
                     }
 
-                }
-                catch (Exception exp)
-                {
-                    Log.Error($"Exception in DeleteTodoList method :{MicrosoftJson.Serialize(exp.StackTrace)}");
-                    return StatusCode(500, exp.ToString());
-                }
+               
             }
         }
         /// <summary>
@@ -201,8 +177,7 @@ namespace AdFormsAssignment.Controllers
                 {
                     return BadRequest(new { message = "to do list id cannot be zero. List name cannot be empty in body" });
                 }
-                try
-                {
+              
                     var existingList = await _toDoService.GetToDoList(todoListId, int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value));
 
                     if (existingList == null)
@@ -216,12 +191,7 @@ namespace AdFormsAssignment.Controllers
                         Log.Information($"Updated todo list {MicrosoftJson.Serialize(todoList)}");
                         return Ok();
                     }
-                }
-                catch (Exception exp)
-                {
-                    Log.Error($"Exception in UpdateTodoList method :{MicrosoftJson.Serialize(exp.StackTrace)}");
-                    return StatusCode(500, exp.ToString());
-                }
+              
             }
 
 
@@ -244,8 +214,7 @@ namespace AdFormsAssignment.Controllers
                 {
                     return BadRequest(new { message = "To do list id cannot be zero. There should be atleast one operation" });
                 }
-                try
-                {
+              
                     var existingList = await _toDoService.GetToDoList(todoListId, int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value));
 
                     if (existingList == null)
@@ -258,12 +227,7 @@ namespace AdFormsAssignment.Controllers
                         Log.Information($"Update todo list id {todoListId} with patch {MicrosoftJson.Serialize(todoList)}");
                         return Ok();
                     }
-                }
-                catch (Exception exp)
-                {
-                    Log.Error($"Exception in UpdateTodoList method :{MicrosoftJson.Serialize(exp.StackTrace)}");
-                    return StatusCode(500, exp.ToString());
-                }
+              
             }
 
         }

@@ -52,21 +52,15 @@ namespace AdFormsAssignment.Controllers
         {
             using (LogContext.PushProperty("Correlation Id", RequestInfo.GetCorrelationId(HttpContext.Request)))
             {
-                try
-                {
-                    var allTodoItems = await _toDoService.GetAllTodoItems(pageNumber, pageSize, SearchText, int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value));
-                    Log.Information($"Filtered todo items :{MicrosoftJson.Serialize(allTodoItems)}");
-                    if (allTodoItems.Count() > 0)
-                        return Ok(allTodoItems);
-                    else
-                        return NoContent();
 
-                }
-                catch (Exception exp)
-                {
-                    Log.Error($"Exception in method :{MicrosoftJson.Serialize(exp.StackTrace)}");
-                    return StatusCode(500, exp.ToString());
-                }
+                var allTodoItems = await _toDoService.GetAllTodoItems(pageNumber, pageSize, SearchText, int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value));
+                Log.Information($"Filtered todo items :{MicrosoftJson.Serialize(allTodoItems)}");
+                if (allTodoItems.Count() > 0)
+                    return Ok(allTodoItems);
+                else
+                    return NoContent();
+
+
             }
         }
         /// <summary>
@@ -88,20 +82,14 @@ namespace AdFormsAssignment.Controllers
                 {
                     return BadRequest(new { message = "To do item Id cannot be zero or null" });
                 }
-                try
-                {
-                    var todoItem = await _toDoService.GetToDoItem(todoItemId, int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value));
-                    Log.Information($"Filtered todo item :{MicrosoftJson.Serialize(todoItem)}");
-                    if (todoItem != null)
-                        return Ok(todoItem);
-                    else
-                        return NoContent();
-                }
-                catch (Exception exp)
-                {
-                    Log.Error($"Exception in method :{MicrosoftJson.Serialize(exp.StackTrace)}");
-                    return StatusCode(500, exp.ToString());
-                }
+
+                var todoItem = await _toDoService.GetToDoItem(todoItemId, int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value));
+                Log.Information($"Filtered todo item :{MicrosoftJson.Serialize(todoItem)}");
+                if (todoItem != null)
+                    return Ok(todoItem);
+                else
+                    return NoContent();
+
             }
         }
         /// <summary>
@@ -121,18 +109,12 @@ namespace AdFormsAssignment.Controllers
                 {
                     return BadRequest(new { message = "Description cannot be null or empty" });
                 }
-                try
-                {
-                    var item = _mapper.Map<tblTodoItem>(todoItem);
-                    int newRecordId = await _toDoService.CreateToDoItem(item);
-                    Log.Information($"Record created successfully :{MicrosoftJson.Serialize(item)}");
-                    return Created($"~/api/v1/TodoItem/{newRecordId}", item);
-                }
-                catch (Exception exp)
-                {
-                    Log.Error($"Exception in method :{MicrosoftJson.Serialize(exp.StackTrace)}");
-                    return StatusCode(500, exp.ToString());
-                }
+
+                var item = _mapper.Map<tblTodoItem>(todoItem);
+                int newRecordId = await _toDoService.CreateToDoItem(item);
+                Log.Information($"Record created successfully :{MicrosoftJson.Serialize(item)}");
+                return Created($"~/api/v1/TodoItem/{newRecordId}", item);
+
             }
         }
         /// <summary>
@@ -153,25 +135,19 @@ namespace AdFormsAssignment.Controllers
             {
                 if (todoItemId == 0)
                     return BadRequest(new { message = "To do item id cannot be zero" });
-                try
+
+                var existingTodoItem = await _toDoService.GetToDoItem(todoItemId, int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value));
+                if (existingTodoItem == null)
                 {
-                    var existingTodoItem = await _toDoService.GetToDoItem(todoItemId, int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value));
-                    if (existingTodoItem == null)
-                    {
-                        return BadRequest("Resource not found with this unique id");
-                    }
-                    else
-                    {
-                        await _toDoService.DeleteTodoItem(todoItemId);
-                        Log.Information($"Record deleted successfully : {todoItemId}");
-                        return Ok(todoItemId);
-                    }
+                    return BadRequest("Resource not found with this unique id");
                 }
-                catch (Exception exp)
+                else
                 {
-                    Log.Error($"Exception in method :{MicrosoftJson.Serialize(exp.StackTrace)}");
-                    return StatusCode(500, exp.ToString());
+                    await _toDoService.DeleteTodoItem(todoItemId);
+                    Log.Information($"Record deleted successfully : {todoItemId}");
+                    return Ok(todoItemId);
                 }
+
             }
         }
         /// <summary>
@@ -193,30 +169,24 @@ namespace AdFormsAssignment.Controllers
                 {
                     return BadRequest(new { message = "To do item id cannot be zero" });
                 }
-                try
-                {
 
-                    var existingTodoItem = await _toDoService.GetToDoItem(todoItemId, int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value));
-                    if (existingTodoItem == null)
-                    {
-                        return BadRequest("Resource not found with this unique id");
-                    }
-                    else
-                    {
-                        var item = _mapper.Map<tblTodoItem>(todoItem);
-                        await _toDoService.UpdateToDoItem(item, todoItemId);
-                        Log.Information($"Record updated successfully. New record looks like: {MicrosoftJson.Serialize(item)}");
-                        return Ok();
-                    }
-                }
-                catch (Exception exp)
+                var existingTodoItem = await _toDoService.GetToDoItem(todoItemId, int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value));
+                if (existingTodoItem == null)
                 {
-                    Log.Error($"Exception in method :{MicrosoftJson.Serialize(exp.StackTrace)}");
-                    return StatusCode(500, exp.ToString());
+                    return BadRequest("Resource not found with this unique id");
+                }
+                else
+                {
+                    var item = _mapper.Map<tblTodoItem>(todoItem);
+                    await _toDoService.UpdateToDoItem(item, todoItemId);
+                    Log.Information($"Record updated successfully. New record looks like: {MicrosoftJson.Serialize(item)}");
+                    return Ok();
                 }
             }
 
         }
+
+
         /// <summary>
         /// This method patches a record
         /// </summary>
@@ -236,29 +206,21 @@ namespace AdFormsAssignment.Controllers
                 {
                     return BadRequest(new { message = "To do item id cannot be zero" });
                 }
-                try
-                {
 
-                    var existingTodoItem = await _toDoService.GetToDoItem(todoItemId, int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value));
-                    if (existingTodoItem == null)
-                    {
-                        return BadRequest("Resource not found with this unique id");
-                    }
-                    else
-                    {
-                        await _toDoService.UpdatePatchTodoItem(todoItem, todoItemId);
-                        Log.Information($"Record patched successfully. Info was: {MicrosoftJson.Serialize(todoItem.Operations)}");
-                        return Ok();
-                    }
-                }
-                catch (Exception exp)
+
+                var existingTodoItem = await _toDoService.GetToDoItem(todoItemId, int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value));
+                if (existingTodoItem == null)
                 {
-                    Log.Error($"Exception in method :{MicrosoftJson.Serialize(exp.StackTrace)}");
-                    return StatusCode(500, exp.ToString());
+                    return BadRequest("Resource not found with this unique id");
+                }
+                else
+                {
+                    await _toDoService.UpdatePatchTodoItem(todoItem, todoItemId);
+                    Log.Information($"Record patched successfully. Info was: {MicrosoftJson.Serialize(todoItem.Operations)}");
+                    return Ok();
                 }
             }
         }
-
-
     }
 }
+

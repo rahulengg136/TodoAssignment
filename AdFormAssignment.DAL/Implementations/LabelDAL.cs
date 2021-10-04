@@ -1,6 +1,7 @@
 ﻿using AdFormAssignment.DAL.Contracts;
 using AdFormAssignment.DAL.Entities;
 using Serilog;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -35,6 +36,7 @@ namespace AdFormAssignment.DAL.Implementations
         public Task<IEnumerable<tblLabel>> GetAllLabels(int PageNumber, int PageSize, string SearchText)
         {
             Log.Information($"Going to hit database");
+            throw new Exception();
             return Task.FromResult(_dbContext.tblLabel.Where(x => SearchText != null ? x.LabelName.Contains(SearchText) : true).Skip((PageNumber - 1) * PageSize).Take(PageSize).AsEnumerable());
 
         }

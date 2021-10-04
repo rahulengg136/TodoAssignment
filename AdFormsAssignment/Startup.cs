@@ -153,6 +153,7 @@ namespace AdFormsAssignment
             }
             app.UseRequestResponseLogging();
             app.UseMiddleware<CorrelationMiddleware>();
+            app.UseMiddleware<ExceptionHandlingMiddleware>();
             app.UseHttpsRedirection();
 
             app.UseRouting();
