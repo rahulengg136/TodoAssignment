@@ -15,10 +15,10 @@ namespace AdFormsAssignment.Security
     {
         private readonly string _key;
 
-        private readonly List<tblUser> validUsers = new List<tblUser>(){
-            new tblUser { UserId = 1, UserName = "rahul", Password = "rahul123" },
-             new tblUser { UserId = 2, UserName = "ajay", Password = "ajay123" },
-              new tblUser { UserId = 3, UserName = "pooja", Password = "pooja123" } };
+        private readonly List<TblUser> validUsers = new List<TblUser>(){
+            new TblUser { UserId = 1, UserName = "rahul", Password = "rahul123" },
+             new TblUser { UserId = 2, UserName = "ajay", Password = "ajay123" },
+              new TblUser { UserId = 3, UserName = "pooja", Password = "pooja123" } };
 
 
         /// <summary>
@@ -39,7 +39,7 @@ namespace AdFormsAssignment.Security
         public string Authentication(string username, string password)
         {
 
-            tblUser user = validUsers.Find(x => x.UserName == username && x.Password == password);
+            TblUser user = validUsers.Find(x => x.UserName == username.ToLower().Replace(" ","") && x.Password == password.ToLower().Replace(" ", ""));
             if (user == null)
             {
                 return null;

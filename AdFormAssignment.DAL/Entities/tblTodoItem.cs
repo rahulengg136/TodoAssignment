@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace AdFormAssignment.DAL.Entities
 {
-    public class tblTodoItem
+    public class TblTodoItem
     {
         [Key]
         public int TodoItemId { get; set; }

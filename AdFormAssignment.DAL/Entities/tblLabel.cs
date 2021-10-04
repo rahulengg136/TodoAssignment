@@ -2,7 +2,7 @@
 
 namespace AdFormAssignment.DAL.Entities
 {
-    public class tblLabel
+    public class TblLabel
     {
         [Key]
         public int LabelId { get; set; }

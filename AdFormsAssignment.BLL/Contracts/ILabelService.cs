@@ -9,9 +9,9 @@ namespace AdFormsAssignment.BLL.Contracts
     /// </summary>
     public interface ILabelService
     {
-        Task<int> CreateLabel(tblLabel label);
-        Task<tblLabel> GetSingleLabelInfo(int labelId);
-        Task<IEnumerable<tblLabel>> GetAllLabels(int PageNumber, int PageSize, string SearchText);
+        Task<int> CreateLabel(TblLabel label);
+        Task<TblLabel> GetSingleLabelInfo(int labelId);
+        Task<IEnumerable<TblLabel>> GetAllLabels(int PageNumber, int PageSize, string SearchText);
         Task<int> DeleteLabel(int labelId);
     }
 }

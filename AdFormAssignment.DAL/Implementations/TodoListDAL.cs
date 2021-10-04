@@ -10,26 +10,26 @@ using System.Threading.Tasks;
 
 namespace AdFormAssignment.DAL
 {
-    public class TodoListDAL : ITodoListDAL
+    public class TodoListDal : ITodoListDal
     {
         private readonly MyProjectContext _dbContext;
-        public TodoListDAL(MyProjectContext dbContext)
+        public TodoListDal(MyProjectContext dbContext)
         {
             _dbContext = dbContext;
         }
 
-        public Task<tblTodoList> GetTodoList(int todoListId, int userId)
+        public Task<TblTodoList> GetTodoList(int todoListId, int userId)
         {
             return Task.FromResult(_dbContext.tblTodoList.SingleOrDefault(x => x.TodoListId == todoListId && x.UserId == userId));
         }
 
-        public Task<IEnumerable<tblTodoList>> GetAllTodoLists(int PageNumber, int PageSize, string SearchText, int userId)
+        public Task<IEnumerable<TblTodoList>> GetAllTodoLists(int PageNumber, int PageSize, string SearchText, int userId)
         {
             Log.Information("Going to hit database");
-            return Task.FromResult(_dbContext.tblTodoList.Where(x => (SearchText != null ? x.ListName.Contains(SearchText) : true) && x.UserId == userId).Skip((PageNumber - 1) * PageSize).Take(PageSize).AsEnumerable());
+            return Task.FromResult(_dbContext.tblTodoList.Where(x => ((SearchText == null) || x.ListName.Contains(SearchText)) && x.UserId == userId).Skip((PageNumber - 1) * PageSize).Take(PageSize).AsEnumerable());
         }
 
-        public async Task<int> CreateTodoList(tblTodoList todoList)
+        public async Task<int> CreateTodoList(TblTodoList todoList)
         {
             Log.Information("Going to hit database");
             _dbContext.tblTodoList.Add(todoList);
@@ -46,7 +46,7 @@ namespace AdFormAssignment.DAL
 
         }
 
-        public async Task<int> UpdateTodoList(tblTodoList todoList, int todoListId)
+        public async Task<int> UpdateTodoList(TblTodoList todoList, int todoListId)
         {
             Log.Information("Going to hit database");
             var existingRecord = _dbContext.tblTodoList.Single(x => x.TodoListId == todoListId);

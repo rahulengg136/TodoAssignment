@@ -5,15 +5,18 @@ using AdFormAssignment.DAL.Implementations;
 using AdFormsAssignment.BLL;
 using AdFormsAssignment.BLL.Contracts;
 using AdFormsAssignment.BLL.Implementations;
+using AdFormsAssignment.Configuration;
 using AdFormsAssignment.CustomMiddlewares;
 using AdFormsAssignment.Security;
 using CorrelationId.CorrelationIdWork;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc.ApplicationModels;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
@@ -82,7 +85,6 @@ namespace AdFormsAssignment
             // swagger work
             services.AddSwaggerGen(options =>
             {
-               // options.OperationFilter<AddParametersToSwagger>();
                 options.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo
                 {
                     Title = "Swagger API",
@@ -123,16 +125,17 @@ namespace AdFormsAssignment
             services.AddDbContext<MyProjectContext>(options => options.UseSqlServer(ConnectionString));
 
             // registering services
-            services.AddScoped<ITodoListDAL, TodoListDAL>();
-            services.AddScoped<ITodoItemDAL, TodoItemDAL>();
+            services.AddScoped<ITodoListDal, TodoListDal>();
+            services.AddScoped<ITodoItemDal, TodoItemDal>();
             services.AddScoped<ILabelDAL, LabelDAL>();
-            services.AddScoped<IUserDAL, UserDAL>();
+            services.AddScoped<IUserDal, UserDal>();
 
             services.AddScoped<ITodoListService, ToDoListService>();
             services.AddScoped<ITodoItemService, TodoItemService>();
             services.AddScoped<ILabelService, LabelService>();
             services.AddScoped<IUserService, UserService>();
 
+            services.TryAddEnumerable(ServiceDescriptor.Transient<IApplicationModelProvider, ProduceResponseTypeModelProvider>());
             //auto mapper
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
@@ -144,9 +147,6 @@ namespace AdFormsAssignment
         /// <param name="env"> Host environment</param>
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            //var path = Directory.GetCurrentDirectory();
-            //loggerFactory.AddFile($"{path}\\Logs\\Log.txt");
-
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();

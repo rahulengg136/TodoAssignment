@@ -9,6 +9,8 @@ using Microsoft.AspNetCore.Mvc;
 using Serilog;
 using Serilog.Context;
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using MicrosoftJson = System.Text.Json.JsonSerializer;
@@ -43,10 +45,10 @@ namespace AdFormsAssignment.Controllers
         /// <param name="pageSize"> Page size- This will be the number of records accessable at one time</param>
         /// <param name="SearchText">Any substring that may present in label name</param>
         /// <returns></returns>
-        [HttpGet("allLabels/{pageNumber}/{pageSize}")]
+        [HttpGet("Labels")]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
-        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(IEnumerable<ReadLabelDto>), 200)]
         public async Task<IActionResult> GetAllLabels(int pageNumber, int pageSize, string SearchText)
         {
             using (LogContext.PushProperty("Correlation Id", RequestInfo.GetCorrelationId(HttpContext.Request)))
@@ -55,7 +57,7 @@ namespace AdFormsAssignment.Controllers
                     Log.Information($"Filtered labels: {MicrosoftJson.Serialize(allLables)}");
                     if (allLables.Count() == 0)
                         return NoContent();
-                    return Ok(allLables);
+                    return Ok(_mapper.Map<IEnumerable<ReadLabelDto>>(allLables));
             }
         }
         /// <summary>
@@ -66,8 +68,8 @@ namespace AdFormsAssignment.Controllers
         [HttpGet("{labelId}")]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(string), 400)]
+        [ProducesResponseType(typeof(ReadLabelDto), 200)]
         public async Task<IActionResult> GetSingleLabelInfo(int labelId)
         {
             using (LogContext.PushProperty("Correlation Id", RequestInfo.GetCorrelationId(HttpContext.Request)))
@@ -79,7 +81,7 @@ namespace AdFormsAssignment.Controllers
                     Log.Information($"Found label: {MicrosoftJson.Serialize(label)}");
                     if (label != null)
                     {
-                        return Ok(label);
+                        return Ok(_mapper.Map<ReadLabelDto>(label));
                     }
                     else
                     {
@@ -96,9 +98,9 @@ namespace AdFormsAssignment.Controllers
         /// <returns></returns>
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        [ProducesResponseType(StatusCodes.Status201Created)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> CreateLabel([FromBody] LabelDto labelDto)
+        [ProducesResponseType(typeof(ReadLabelDto), 201)]
+        [ProducesResponseType(typeof(string), 400)]
+        public async Task<IActionResult> CreateLabel([FromBody] CreateLabelDto labelDto)
         {
             using (LogContext.PushProperty("Correlation Id", RequestInfo.GetCorrelationId(HttpContext.Request)))
             {
@@ -106,10 +108,10 @@ namespace AdFormsAssignment.Controllers
                     return BadRequest(new { message = "Label name cannot be null or empty" });
 
               
-                    var label = _mapper.Map<tblLabel>(labelDto);
+                    var label = _mapper.Map<TblLabel>(labelDto);
                     int newRecordId = await _labelService.CreateLabel(label);
                     Log.Information($"Record created successfully: {MicrosoftJson.Serialize(labelDto)}");
-                    return Created($"~/api/v1/label/{newRecordId}", labelDto);
+                    return Created($"~/api/v1/label/{newRecordId}", _mapper.Map<ReadLabelDto>(label));
               
             }
         }
@@ -121,7 +123,7 @@ namespace AdFormsAssignment.Controllers
         [HttpDelete("{labelId}")]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(string), 400)]
         public async Task<IActionResult> DeleteTodoLabel(int labelId)
         {
             using (LogContext.PushProperty("Correlation Id", RequestInfo.GetCorrelationId(HttpContext.Request)))

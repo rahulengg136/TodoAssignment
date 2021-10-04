@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
 using Serilog;
+using System;
 
 namespace AdFormsAssignment
 {
@@ -16,8 +17,16 @@ namespace AdFormsAssignment
         public static void Main(string[] args)
         {
             ConfigureLogger();
+
             Serilog.Log.Information("Application started");
-            CreateHostBuilder(args).Build().Run();
+            try
+            {
+                CreateHostBuilder(args).Build().Run();
+            }
+            catch(Exception exp)
+            {
+                Log.Error($"Something went wrong in starting the app . Message {exp.Message}. Stacktrace : {exp.StackTrace}");
+            }
         }
 
         private static void ConfigureLogger()

@@ -5,14 +5,14 @@ using System.Threading.Tasks;
 
 namespace AdFormAssignment.DAL.Implementations
 {
-    public class UserDAL : IUserDAL
+    public class UserDal : IUserDal
     {
         private readonly MyProjectContext _dbContext;
-        public UserDAL(MyProjectContext dbContext)
+        public UserDal(MyProjectContext dbContext)
         {
             _dbContext = dbContext;
         }
-        public Task<tblUser> CheckUser(string username, string password)
+        public Task<TblUser> CheckUser(string username, string password)
         {
             var user = Task.FromResult(_dbContext.tblUser.SingleOrDefault(x => x.UserName == username && x.Password == password));
             return user;

@@ -26,6 +26,28 @@
             <param name="operation"></param>
             <param name="context"></param>
         </member>
+        <member name="T:AdFormsAssignment.Configuration.ProduceResponseTypeModelProvider">
+            <summary>
+            Class to add response codes at global level 
+            </summary>
+        </member>
+        <member name="P:AdFormsAssignment.Configuration.ProduceResponseTypeModelProvider.Order">
+            <summary>
+            For sequence of execution
+            </summary>
+        </member>
+        <member name="M:AdFormsAssignment.Configuration.ProduceResponseTypeModelProvider.OnProvidersExecuted(Microsoft.AspNetCore.Mvc.ApplicationModels.ApplicationModelProviderContext)">
+            <summary>
+            Constructor
+            </summary>
+            <param name="context"></param>
+        </member>
+        <member name="M:AdFormsAssignment.Configuration.ProduceResponseTypeModelProvider.OnProvidersExecuting(Microsoft.AspNetCore.Mvc.ApplicationModels.ApplicationModelProviderContext)">
+            <summary>
+            Method to add status code for all methods in application
+            </summary>
+            <param name="context"></param>
+        </member>
         <member name="T:AdFormsAssignment.Controllers.LabelController">
             <summary>
             Controller that Read, Create, Delete labels
@@ -54,7 +76,7 @@
             <param name="labelId">Unique label id</param>
             <returns></returns>
         </member>
-        <member name="M:AdFormsAssignment.Controllers.LabelController.CreateLabel(AdFormsAssignment.DTO.LabelDto)">
+        <member name="M:AdFormsAssignment.Controllers.LabelController.CreateLabel(AdFormsAssignment.DTO.CreateLabelDto)">
             <summary>
             This method is to create a new label
             </summary>
@@ -79,26 +101,26 @@
             </summary>
             <param name="jwtAuth"></param>
         </member>
-        <member name="M:AdFormsAssignment.Controllers.LoginController.ValidateUser(AdFormsAssignment.DTO.UserDto)">
+        <member name="M:AdFormsAssignment.Controllers.LoginController.ValidateUser(AdFormsAssignment.DTO.PostDto.UserDto)">
             <summary>
             This method validates user and provides token for 1 hour
             </summary>
             <param name="userCredential">Need to pass username and password in body</param>
             <returns></returns>
         </member>
-        <member name="T:AdFormsAssignment.Controllers.TodoItemController">
+        <member name="T:AdFormsAssignment.Controllers.ToDoItemController">
             <summary>
             This controller deals with CRUD operations of to-do item
             </summary>
         </member>
-        <member name="M:AdFormsAssignment.Controllers.TodoItemController.#ctor(AdFormsAssignment.BLL.Contracts.ITodoItemService,AutoMapper.IMapper)">
+        <member name="M:AdFormsAssignment.Controllers.ToDoItemController.#ctor(AdFormsAssignment.BLL.Contracts.ITodoItemService,AutoMapper.IMapper)">
             <summary>
             To do item controller
             </summary>
             <param name="toDoService"> To-Do service instance</param>
             <param name="mapper">Automapper instance</param>
         </member>
-        <member name="M:AdFormsAssignment.Controllers.TodoItemController.GetAllTaskItems(System.Int32,System.Int32,System.String)">
+        <member name="M:AdFormsAssignment.Controllers.ToDoItemController.GetAllTaskItems(System.Int32,System.Int32,System.String)">
             <summary>
             This method gives list of filtered task items
             </summary>
@@ -107,28 +129,28 @@
             <param name="SearchText">Any text that may present in description</param>
             <returns></returns>
         </member>
-        <member name="M:AdFormsAssignment.Controllers.TodoItemController.GetTodoItem(System.Int32)">
+        <member name="M:AdFormsAssignment.Controllers.ToDoItemController.GetTodoItem(System.Int32)">
             <summary>
             This method returns detail of a single to-do item
             </summary>
             <param name="todoItemId">To-Do item unique id</param>
             <returns></returns>
         </member>
-        <member name="M:AdFormsAssignment.Controllers.TodoItemController.CreateTodoItem(AdFormsAssignment.DTO.TodoItemDto)">
+        <member name="M:AdFormsAssignment.Controllers.ToDoItemController.CreateTodoItem(AdFormsAssignment.DTO.CreateTodoItemDto)">
             <summary>
             This method creates a new to-do item
             </summary>
             <param name="todoItem">New item data</param>
             <returns></returns>
         </member>
-        <member name="M:AdFormsAssignment.Controllers.TodoItemController.DeleteTodoItem(System.Int32)">
+        <member name="M:AdFormsAssignment.Controllers.ToDoItemController.DeleteTodoItem(System.Int32)">
             <summary>
             This method deletes to do item
             </summary>
             <param name="todoItemId">to-do item unique id</param>
             <returns></returns>
         </member>
-        <member name="M:AdFormsAssignment.Controllers.TodoItemController.UpdateTodoItem(System.Int32,AdFormsAssignment.DTO.TodoItemDto)">
+        <member name="M:AdFormsAssignment.Controllers.ToDoItemController.UpdateTodoItem(System.Int32,AdFormsAssignment.DTO.UpdateTodoItemDto)">
             <summary>
             This method updates any existing to-do item
             </summary>
@@ -136,7 +158,7 @@
             <param name="todoItem">Item data</param>
             <returns></returns>
         </member>
-        <member name="M:AdFormsAssignment.Controllers.TodoItemController.UpdateTodoItemPatch(System.Int32,Microsoft.AspNetCore.JsonPatch.JsonPatchDocument)">
+        <member name="M:AdFormsAssignment.Controllers.ToDoItemController.UpdateTodoItemPatch(System.Int32,Microsoft.AspNetCore.JsonPatch.JsonPatchDocument)">
             <summary>
             This method patches a record
             </summary>
@@ -144,19 +166,19 @@
             <param name="todoItem">Patches info</param>
             <returns></returns>
         </member>
-        <member name="T:AdFormsAssignment.Controllers.TODOListController">
+        <member name="T:AdFormsAssignment.Controllers.ToDoListController">
             <summary>
             This controller deals with CRUD operations of to-do lists
             </summary>
         </member>
-        <member name="M:AdFormsAssignment.Controllers.TODOListController.#ctor(AdFormsAssignment.BLL.Contracts.ITodoListService,AutoMapper.IMapper)">
+        <member name="M:AdFormsAssignment.Controllers.ToDoListController.#ctor(AdFormsAssignment.BLL.Contracts.ITodoListService,AutoMapper.IMapper)">
             <summary>
             To do list controller
             </summary>
             <param name="toDoService">to-do service instance</param>
             <param name="mapper">Automapper instance</param>
         </member>
-        <member name="M:AdFormsAssignment.Controllers.TODOListController.GetAllTaskLists(System.Int32,System.Int32,System.String)">
+        <member name="M:AdFormsAssignment.Controllers.ToDoListController.GetAllTaskLists(System.Int32,System.Int32,System.String)">
             <summary>
             This method filters  list of task-list 
             </summary>
@@ -165,40 +187,40 @@
             <param name="SearchText">Search text</param>
             <returns></returns>
         </member>
-        <member name="M:AdFormsAssignment.Controllers.TODOListController.GetTodoList(System.Int32)">
+        <member name="M:AdFormsAssignment.Controllers.ToDoListController.GetTodoList(System.Int32)">
             <summary>
             This method gives details of single to-do list
             </summary>
-            <param name="todoListId">Todo list id</param>
+            <param name="todoListId">To-do list id</param>
             <returns></returns>
         </member>
-        <member name="M:AdFormsAssignment.Controllers.TODOListController.CreateList(AdFormsAssignment.DTO.TodoListDto)">
+        <member name="M:AdFormsAssignment.Controllers.ToDoListController.CreateList(AdFormsAssignment.DTO.CreateTodoListDto)">
             <summary>
             This method creates new to-do list
             </summary>
             <param name="todoList">list information</param>
             <returns></returns>
         </member>
-        <member name="M:AdFormsAssignment.Controllers.TODOListController.DeleteTodoList(System.Int32)">
+        <member name="M:AdFormsAssignment.Controllers.ToDoListController.DeleteTodoList(System.Int32)">
             <summary>
-            This method deletes a todo list
+            This method deletes a to-do list
             </summary>
-            <param name="todoListId">todo list id</param>
+            <param name="todoListId">to-do list id</param>
             <returns></returns>
         </member>
-        <member name="M:AdFormsAssignment.Controllers.TODOListController.UpdateTodoList(System.Int32,AdFormsAssignment.DTO.TodoListDto)">
+        <member name="M:AdFormsAssignment.Controllers.ToDoListController.UpdateTodoList(System.Int32,AdFormsAssignment.DTO.UpdateTodoListDto)">
             <summary>
             This method updates to-do list
             </summary>
-            <param name="todoListId">Todo list id</param>
+            <param name="todoListId">To-do list id</param>
             <param name="todoList">Updated details of list</param>
             <returns></returns>
         </member>
-        <member name="M:AdFormsAssignment.Controllers.TODOListController.UpdateTodoListPatch(System.Int32,Microsoft.AspNetCore.JsonPatch.JsonPatchDocument)">
+        <member name="M:AdFormsAssignment.Controllers.ToDoListController.UpdateTodoListPatch(System.Int32,Microsoft.AspNetCore.JsonPatch.JsonPatchDocument)">
             <summary>
-            This method patches a todo list
+            This method patches a to-do list
             </summary>
-            <param name="todoListId">todo list id</param>
+            <param name="todoListId">to-do list id</param>
             <param name="todoList">Patches information</param>
             <returns></returns>
         </member>
@@ -249,97 +271,137 @@
             <param name="builder"></param>
             <returns></returns>
         </member>
-        <member name="T:AdFormsAssignment.DTO.LabelDto">
+        <member name="T:AdFormsAssignment.DTO.ReadLabelDto">
             <summary>
             Label details 
             </summary>
         </member>
-        <member name="P:AdFormsAssignment.DTO.LabelDto.LabelId">
+        <member name="P:AdFormsAssignment.DTO.ReadLabelDto.LabelId">
             <summary>
             Unique id of the label
             </summary>
         </member>
-        <member name="P:AdFormsAssignment.DTO.LabelDto.LabelName">
+        <member name="T:AdFormsAssignment.DTO.ReadTodoItemDto">
             <summary>
-            Name of the label
+            to-do item details
             </summary>
         </member>
-        <member name="T:AdFormsAssignment.DTO.TodoItemDto">
-            <summary>
-            todo item details
-            </summary>
-        </member>
-        <member name="P:AdFormsAssignment.DTO.TodoItemDto.TodoId">
+        <member name="P:AdFormsAssignment.DTO.ReadTodoItemDto.TodoItemId">
             <summary>
             Id
             </summary>
         </member>
-        <member name="P:AdFormsAssignment.DTO.TodoItemDto.Description">
+        <member name="P:AdFormsAssignment.DTO.ReadTodoItemDto.TodoListName">
             <summary>
-            Description
+            List name
             </summary>
         </member>
-        <member name="P:AdFormsAssignment.DTO.TodoItemDto.TodoListId">
+        <member name="P:AdFormsAssignment.DTO.ReadTodoItemDto.LabelName">
             <summary>
-            List id
+            Label name
             </summary>
         </member>
-        <member name="P:AdFormsAssignment.DTO.TodoItemDto.ExpectedDate">
-            <summary>
-            ExpectedDate
-            </summary>
-        </member>
-        <member name="P:AdFormsAssignment.DTO.TodoItemDto.LabelId">
-            <summary>
-            LabelId
-            </summary>
-        </member>
-        <member name="P:AdFormsAssignment.DTO.TodoItemDto.UserId">
-            <summary>
-            UserId
-            </summary>
-        </member>
-        <member name="T:AdFormsAssignment.DTO.TodoListDto">
+        <member name="T:AdFormsAssignment.DTO.ReadTodoListDto">
             <summary>
             To do list information
             </summary>
         </member>
-        <member name="P:AdFormsAssignment.DTO.TodoListDto.TodoListId">
+        <member name="P:AdFormsAssignment.DTO.ReadTodoListDto.TodoListId">
             <summary>
             List unique id
             </summary>
         </member>
-        <member name="P:AdFormsAssignment.DTO.TodoListDto.ExpectedDate">
+        <member name="P:AdFormsAssignment.DTO.ReadTodoListDto.LabelName">
+            <summary>
+            Label Name
+            </summary>
+        </member>
+        <member name="T:AdFormsAssignment.DTO.CreateLabelDto">
+            <summary>
+            Label details 
+            </summary>
+        </member>
+        <member name="P:AdFormsAssignment.DTO.CreateLabelDto.LabelName">
+            <summary>
+            Name of the label
+            </summary>
+        </member>
+        <member name="T:AdFormsAssignment.DTO.CreateTodoItemDto">
+            <summary>
+            to-do item details
+            </summary>
+        </member>
+        <member name="P:AdFormsAssignment.DTO.CreateTodoItemDto.Description">
+            <summary>
+            Description
+            </summary>
+        </member>
+        <member name="P:AdFormsAssignment.DTO.CreateTodoItemDto.TodoListId">
+            <summary>
+            List id
+            </summary>
+        </member>
+        <member name="P:AdFormsAssignment.DTO.CreateTodoItemDto.ExpectedDate">
             <summary>
             ExpectedDate
             </summary>
         </member>
-        <member name="P:AdFormsAssignment.DTO.TodoListDto.LabelId">
+        <member name="P:AdFormsAssignment.DTO.CreateTodoItemDto.LabelId">
             <summary>
             LabelId
             </summary>
         </member>
-        <member name="P:AdFormsAssignment.DTO.TodoListDto.ListName">
+        <member name="T:AdFormsAssignment.DTO.UpdateTodoItemDto">
             <summary>
-            ListName
+            DTO to update a to-do item
             </summary>
         </member>
-        <member name="P:AdFormsAssignment.DTO.TodoListDto.UserId">
+        <member name="P:AdFormsAssignment.DTO.UpdateTodoItemDto.TodoItemId">
             <summary>
-            UserId
+            To-do item unique id
             </summary>
         </member>
-        <member name="T:AdFormsAssignment.DTO.UserDto">
+        <member name="T:AdFormsAssignment.DTO.CreateTodoListDto">
             <summary>
-            User details
+            To do list information
             </summary>
         </member>
-        <member name="P:AdFormsAssignment.DTO.UserDto.UserName">
+        <member name="P:AdFormsAssignment.DTO.CreateTodoListDto.ListName">
+            <summary>
+            Name of the list
+            </summary>
+        </member>
+        <member name="P:AdFormsAssignment.DTO.CreateTodoListDto.ExpectedDate">
+            <summary>
+            ExpectedDate
+            </summary>
+        </member>
+        <member name="P:AdFormsAssignment.DTO.CreateTodoListDto.LabelId">
+            <summary>
+            LabelId
+            </summary>
+        </member>
+        <member name="T:AdFormsAssignment.DTO.UpdateTodoListDto">
+            <summary>
+            DTO to update to-list
+            </summary>
+        </member>
+        <member name="P:AdFormsAssignment.DTO.UpdateTodoListDto.TodoListId">
+            <summary>
+            To-do list unique id
+            </summary>
+        </member>
+        <member name="T:AdFormsAssignment.DTO.PostDto.UserDto">
+            <summary>
+            User dto
+            </summary>
+        </member>
+        <member name="P:AdFormsAssignment.DTO.PostDto.UserDto.Username">
             <summary>
             User name
             </summary>
         </member>
-        <member name="P:AdFormsAssignment.DTO.UserDto.Password">
+        <member name="P:AdFormsAssignment.DTO.PostDto.UserDto.Password">
             <summary>
             Password
             </summary>

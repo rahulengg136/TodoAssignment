@@ -16,7 +16,7 @@ namespace AdFormAssignment.DAL.Implementations
             _dbContext = dbContext;
         }
 
-        public async Task<int> CreateLabel(tblLabel labelInfo)
+        public async Task<int> CreateLabel(TblLabel labelInfo)
         {
             Log.Information($"Going to hit database");
             _dbContext.tblLabel.Add(labelInfo);
@@ -33,14 +33,14 @@ namespace AdFormAssignment.DAL.Implementations
             return labelId;
         }
 
-        public Task<IEnumerable<tblLabel>> GetAllLabels(int PageNumber, int PageSize, string SearchText)
+        public Task<IEnumerable<TblLabel>> GetAllLabels(int PageNumber, int PageSize, string SearchText)
         {
             Log.Information($"Going to hit database");
             return Task.FromResult(_dbContext.tblLabel.Where(x => SearchText != null ? x.LabelName.Contains(SearchText) : true).Skip((PageNumber - 1) * PageSize).Take(PageSize).AsEnumerable());
 
         }
 
-        public Task<tblLabel> GetSingleLabel(int labelId)
+        public Task<TblLabel> GetSingleLabel(int labelId)
         {
             Log.Information($"Going to hit database");
             return Task.FromResult(_dbContext.tblLabel.SingleOrDefault(x => x.LabelId == labelId));

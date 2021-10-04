@@ -8,6 +8,6 @@ namespace AdFormsAssignment.BLL.Contracts
     /// </summary>
     public interface IUserService
     {
-        Task<tblUser> CheckUser(string username, string password);
+        Task<TblUser> CheckUser(string username, string password);
     }
 }

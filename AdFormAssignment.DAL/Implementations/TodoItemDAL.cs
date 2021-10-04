@@ -8,27 +8,27 @@ using System.Threading.Tasks;
 
 namespace AdFormAssignment.DAL.Implementations
 {
-    public class TodoItemDAL : ITodoItemDAL
+    public class TodoItemDal : ITodoItemDal
     {
         private readonly MyProjectContext _dbContext;
-        public TodoItemDAL(MyProjectContext dbContext)
+        public TodoItemDal(MyProjectContext dbContext)
         {
             _dbContext = dbContext;
         }
 
-        public Task<tblTodoItem> GetTodoItem(int todoItemId, int userId)
+        public Task<TblTodoItem> GetTodoItem(int todoItemId, int userId)
         {
             Log.Information($"Going to hit database");
             return Task.FromResult(_dbContext.tblTodoItem.SingleOrDefault(x => x.TodoItemId == todoItemId && x.UserId == userId));
         }
 
-        public Task<IEnumerable<tblTodoItem>> GetAllTodoItems(int PageNumber, int PageSize, string SearchText, int userId)
+        public Task<IEnumerable<TblTodoItem>> GetAllTodoItems(int PageNumber, int PageSize, string SearchText, int userId)
         {
             Log.Information($"Going to hit database");
-            return Task.FromResult(_dbContext.tblTodoItem.Where(x => (SearchText != null ? x.Description.Contains(SearchText) : true) && x.UserId == userId).Skip((PageNumber - 1) * PageSize).Take(PageSize).AsEnumerable());
+            return Task.FromResult(_dbContext.tblTodoItem.Where(x => ((SearchText == null) || x.Description.Contains(SearchText)) && x.UserId == userId).Skip((PageNumber - 1) * PageSize).Take(PageSize).AsEnumerable());
         }
 
-        public async Task<int> CreateTodoItem(tblTodoItem todoItem)
+        public async Task<int> CreateTodoItem(TblTodoItem todoItem)
         {
             Log.Information($"Going to hit database");
             _dbContext.tblTodoItem.Add(todoItem);
@@ -45,7 +45,7 @@ namespace AdFormAssignment.DAL.Implementations
 
         }
 
-        public async Task<int> UpdateTodoItem(tblTodoItem todoItem, int todoItemId)
+        public async Task<int> UpdateTodoItem(TblTodoItem todoItem, int todoItemId)
         {
             Log.Information($"Going to hit database");
             var existingRecord = _dbContext.tblTodoItem.Single(x => x.TodoItemId == todoItemId);

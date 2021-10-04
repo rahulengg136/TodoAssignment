@@ -6,15 +6,15 @@ using System.Threading.Tasks;
 namespace AdFormAssignment.DAL.Contracts
 {
     /// <summary>
-    /// Contract for todo list data access
+    /// Contract for to-do list data access
     /// </summary>
-    public interface ITodoListDAL
+    public interface ITodoListDal
     {
-        Task<int> CreateTodoList(tblTodoList todoList);
-        Task<tblTodoList> GetTodoList(int todoListId, int userId);
-        Task<IEnumerable<tblTodoList>> GetAllTodoLists(int PageNumber, int PageSize, string SearchText, int userId);
+        Task<int> CreateTodoList(TblTodoList todoList);
+        Task<TblTodoList> GetTodoList(int todoListId, int userId);
+        Task<IEnumerable<TblTodoList>> GetAllTodoLists(int PageNumber, int PageSize, string SearchText, int userId);
         Task<int> DeleteTodoList(int todoListId);
-        Task<int> UpdateTodoList(tblTodoList todoList, int todoListId);
+        Task<int> UpdateTodoList(TblTodoList todoList, int todoListId);
         Task<int> UpdatePatchTodoList(JsonPatchDocument todoList, int todoListId);
     }
 

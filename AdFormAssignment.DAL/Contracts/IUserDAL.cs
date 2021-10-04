@@ -6,8 +6,8 @@ namespace AdFormAssignment.DAL.Contracts
     /// <summary>
     /// Contracts for user data access
     /// </summary>
-    public interface IUserDAL
+    public interface IUserDal
     {
-        Task<tblUser> CheckUser(string username, string password);
+        Task<TblUser> CheckUser(string username, string password);
     }
 }

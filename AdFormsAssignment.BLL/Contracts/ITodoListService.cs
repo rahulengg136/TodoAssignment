@@ -10,11 +10,11 @@ namespace AdFormsAssignment.BLL.Contracts
     /// </summary>
     public interface ITodoListService
     {
-        Task<int> CreateToDoList(tblTodoList list);
-        Task<tblTodoList> GetToDoList(int todoListId, int userId);
-        Task<IEnumerable<tblTodoList>> GetAllTodoLists(int PageNumber, int PageSize, string SearchText, int userId);
+        Task<int> CreateToDoList(TblTodoList list);
+        Task<TblTodoList> GetToDoList(int todoListId, int userId);
+        Task<IEnumerable<TblTodoList>> GetAllTodoLists(int PageNumber, int PageSize, string SearchText, int userId);
         Task<int> DeleteTodoList(int todoListId);
-        Task<int> UpdateToDoList(tblTodoList todoList, int todoListId);
+        Task<int> UpdateToDoList(TblTodoList todoList, int todoListId);
         Task<int> UpdatePatchTodoList(JsonPatchDocument todoList, int todoListId);
 
     }

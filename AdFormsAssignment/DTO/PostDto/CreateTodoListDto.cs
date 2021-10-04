@@ -3,22 +3,15 @@
 namespace AdFormsAssignment.DTO
 {
     /// <summary>
-    /// todo item details
+    /// To do list information
     /// </summary>
-    public class TodoItemDto
+    public class CreateTodoListDto
     {
+      
         /// <summary>
-        /// Id
+        /// Name of the list
         /// </summary>
-        public int TodoId { get; set; }
-        /// <summary>
-        /// Description
-        /// </summary>
-        public string Description { get; set; }
-        /// <summary>
-        /// List id
-        /// </summary>
-        public int TodoListId { get; set; }
+        public string ListName { get; set; }
         /// <summary>
         /// ExpectedDate
         /// </summary>
@@ -27,9 +20,17 @@ namespace AdFormsAssignment.DTO
         /// LabelId
         /// </summary>
         public int LabelId { get; set; }
+ 
+    }
+    /// <summary>
+    /// DTO to update to-list
+    /// </summary>
+    public class UpdateTodoListDto: CreateTodoListDto
+    {
         /// <summary>
-        /// UserId
+        /// To-do list unique id
         /// </summary>
-        public int UserId { get; set; }
+        public int TodoListId { get; set; }
+
     }
 }

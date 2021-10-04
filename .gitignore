@@ -1,3 +1,4 @@
 AdFormAssignment.DAL/Database.mdf
 AdFormsAssignment/Logs/
 AdFormsAssignment/obj/
+*.suo

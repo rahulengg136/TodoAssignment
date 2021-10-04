@@ -1,6 +1,8 @@
 ﻿using AdFormsAssignment.DTO;
+using AdFormsAssignment.DTO.PostDto;
 using AdFormsAssignment.Security;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AdFormsAssignment.Controllers
@@ -29,11 +31,13 @@ namespace AdFormsAssignment.Controllers
         [AllowAnonymous]
         // POST api/<MembersController>
         [HttpPost("validateuser")]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(typeof(string),200)]
         public IActionResult ValidateUser([FromBody] UserDto userCredential)
         {
-            var token = jwtAuth.Authentication(userCredential.UserName, userCredential.Password);
+            var token = jwtAuth.Authentication(userCredential.Username, userCredential.Password);
             if (token == null)
-                return Unauthorized();
+                return Unauthorized("Username and password is wrong");
             return Ok(token);
         }
     }

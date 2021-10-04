@@ -10,6 +10,8 @@ using Microsoft.AspNetCore.Mvc;
 using Serilog;
 using Serilog.Context;
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
@@ -23,7 +25,7 @@ namespace AdFormsAssignment.Controllers
     [Authorize]
     [Route("api/v1/[controller]/")]
     [ApiController]
-    public class TodoItemController : ControllerBase
+    public class ToDoItemController : ControllerBase
     {
         private readonly ITodoItemService _toDoService;
         private readonly IMapper _mapper;
@@ -32,7 +34,7 @@ namespace AdFormsAssignment.Controllers
         /// </summary>
         /// <param name="toDoService"> To-Do service instance</param>
         /// <param name="mapper">Automapper instance</param>
-        public TodoItemController(ITodoItemService toDoService, IMapper mapper)
+        public ToDoItemController(ITodoItemService toDoService, IMapper mapper)
         {
             _toDoService = toDoService;
             _mapper = mapper;
@@ -44,10 +46,9 @@ namespace AdFormsAssignment.Controllers
         /// <param name="pageSize">Page size</param>
         /// <param name="SearchText">Any text that may present in description</param>
         /// <returns></returns>
-        [HttpGet("allItems/{pageNumber}/{pageSize}")]
+        [HttpGet("Items")]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        [ProducesResponseType(StatusCodes.Status201Created)]
-        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(IEnumerable<ReadTodoItemDto>), 200)]
         public async Task<IActionResult> GetAllTaskItems(int pageNumber, int pageSize, string SearchText)
         {
             using (LogContext.PushProperty("Correlation Id", RequestInfo.GetCorrelationId(HttpContext.Request)))
@@ -55,8 +56,8 @@ namespace AdFormsAssignment.Controllers
 
                 var allTodoItems = await _toDoService.GetAllTodoItems(pageNumber, pageSize, SearchText, int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value));
                 Log.Information($"Filtered todo items :{MicrosoftJson.Serialize(allTodoItems)}");
-                if (allTodoItems.Count() > 0)
-                    return Ok(allTodoItems);
+                if (allTodoItems.Any())
+                    return Ok(_mapper.Map<IEnumerable<ReadTodoItemDto>>(allTodoItems));
                 else
                     return NoContent();
 
@@ -70,9 +71,8 @@ namespace AdFormsAssignment.Controllers
         /// <returns></returns>
         [HttpGet("{todoItemId}")]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(typeof(ReadTodoItemDto), 200)]
+        [ProducesResponseType(typeof(string), 400)]
 
         public async Task<IActionResult> GetTodoItem(int todoItemId)
         {
@@ -86,9 +86,9 @@ namespace AdFormsAssignment.Controllers
                 var todoItem = await _toDoService.GetToDoItem(todoItemId, int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value));
                 Log.Information($"Filtered todo item :{MicrosoftJson.Serialize(todoItem)}");
                 if (todoItem != null)
-                    return Ok(todoItem);
+                    return Ok(_mapper.Map<ReadTodoItemDto>(todoItem));
                 else
-                    return NoContent();
+                    return BadRequest(new { message = "No resource found with this unique id" });
 
             }
         }
@@ -99,9 +99,10 @@ namespace AdFormsAssignment.Controllers
         /// <returns></returns>
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(StatusCodes.Status201Created)]
-        public async Task<IActionResult> CreateTodoItem([FromBody] TodoItemDto todoItem)
+        [ProducesResponseType(typeof(string), 400)]
+        [ProducesResponseType(typeof(ReadTodoItemDto), 201)]
+
+        public async Task<IActionResult> CreateTodoItem([FromBody] CreateTodoItemDto todoItem)
         {
             using (LogContext.PushProperty("Correlation Id", RequestInfo.GetCorrelationId(HttpContext.Request)))
             {
@@ -110,10 +111,11 @@ namespace AdFormsAssignment.Controllers
                     return BadRequest(new { message = "Description cannot be null or empty" });
                 }
 
-                var item = _mapper.Map<tblTodoItem>(todoItem);
+                var item = _mapper.Map<TblTodoItem>(todoItem);
+                item.UserId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
                 int newRecordId = await _toDoService.CreateToDoItem(item);
                 Log.Information($"Record created successfully :{MicrosoftJson.Serialize(item)}");
-                return Created($"~/api/v1/TodoItem/{newRecordId}", item);
+                return Created($"~/api/v1/TodoItem/{newRecordId}", _mapper.Map<ReadTodoItemDto>(item));
 
             }
         }
@@ -124,7 +126,7 @@ namespace AdFormsAssignment.Controllers
         /// <returns></returns>
         [HttpDelete("{todoItemId}")]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(string), 400)]
         [ProducesResponseType(StatusCodes.Status200OK)]
 
 
@@ -145,7 +147,7 @@ namespace AdFormsAssignment.Controllers
                 {
                     await _toDoService.DeleteTodoItem(todoItemId);
                     Log.Information($"Record deleted successfully : {todoItemId}");
-                    return Ok(todoItemId);
+                    return Ok();
                 }
 
             }
@@ -158,10 +160,10 @@ namespace AdFormsAssignment.Controllers
         /// <returns></returns>
         [HttpPut("{todoItemId}")]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(string), 400)]
         [ProducesResponseType(StatusCodes.Status200OK)]
 
-        public async Task<IActionResult> UpdateTodoItem(int todoItemId, [FromBody] TodoItemDto todoItem)
+        public async Task<IActionResult> UpdateTodoItem(int todoItemId, [FromBody] UpdateTodoItemDto todoItem)
         {
             using (LogContext.PushProperty("Correlation Id", RequestInfo.GetCorrelationId(HttpContext.Request)))
             {
@@ -177,7 +179,7 @@ namespace AdFormsAssignment.Controllers
                 }
                 else
                 {
-                    var item = _mapper.Map<tblTodoItem>(todoItem);
+                    var item = _mapper.Map<TblTodoItem>(todoItem);
                     await _toDoService.UpdateToDoItem(item, todoItemId);
                     Log.Information($"Record updated successfully. New record looks like: {MicrosoftJson.Serialize(item)}");
                     return Ok();
@@ -195,7 +197,7 @@ namespace AdFormsAssignment.Controllers
         /// <returns></returns>
         [HttpPatch("{todoItemId}")]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(string), 400)]
         [ProducesResponseType(StatusCodes.Status200OK)]
 
         public async Task<IActionResult> UpdateTodoItemPatch(int todoItemId, [FromBody] JsonPatchDocument todoItem)

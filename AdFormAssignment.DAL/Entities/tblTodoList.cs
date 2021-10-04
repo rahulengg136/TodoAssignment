@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace AdFormAssignment.DAL.Entities
 {
-    public class tblTodoList
+    public class TblTodoList
     {
         [Key]
         public int TodoListId { get; set; }

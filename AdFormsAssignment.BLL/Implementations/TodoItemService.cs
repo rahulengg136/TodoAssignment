@@ -10,13 +10,13 @@ namespace AdFormsAssignment.BLL.Implementations
 {
     public class TodoItemService : ITodoItemService
     {
-        private readonly ITodoItemDAL _todoDAL;
+        private readonly ITodoItemDal _todoDAL;
 
-        public TodoItemService(ITodoItemDAL todoDAL)
+        public TodoItemService(ITodoItemDal todoDAL)
         {
             _todoDAL = todoDAL;
         }
-        public async Task<int> CreateToDoItem(tblTodoItem todoItem)
+        public async Task<int> CreateToDoItem(TblTodoItem todoItem)
         {
             Log.Information($"Going to hit DAL method");
             return await _todoDAL.CreateTodoItem(todoItem);
@@ -28,13 +28,15 @@ namespace AdFormsAssignment.BLL.Implementations
             return await _todoDAL.DeleteTodoItem(todoItemId);
         }
 
-        public async Task<IEnumerable<tblTodoItem>> GetAllTodoItems(int PageNumber, int PageSize, string SearchText, int userId)
+        public async Task<IEnumerable<TblTodoItem>> GetAllTodoItems(int PageNumber, int PageSize, string SearchText, int userId)
         {
             Log.Information($"Going to hit DAL method");
+            PageNumber = PageNumber == 0 ? 1 : PageNumber;
+            PageSize = PageSize == 0 ? int.MaxValue : PageSize;
             return await _todoDAL.GetAllTodoItems(PageNumber, PageSize, SearchText, userId);
         }
 
-        public async Task<tblTodoItem> GetToDoItem(int todoItemId, int userId)
+        public async Task<TblTodoItem> GetToDoItem(int todoItemId, int userId)
         {
             Log.Information($"Going to hit DAL method");
             return await _todoDAL.GetTodoItem(todoItemId, userId);
@@ -46,7 +48,7 @@ namespace AdFormsAssignment.BLL.Implementations
             return await _todoDAL.UpdatePatchTodoItem(todoItem, todoItemId);
         }
 
-        public async Task<int> UpdateToDoItem(tblTodoItem todoItem, int todoItemId)
+        public async Task<int> UpdateToDoItem(TblTodoItem todoItem, int todoItemId)
         {
             Log.Information($"Going to hit DAL method");
             return await _todoDAL.UpdateTodoItem(todoItem, todoItemId);

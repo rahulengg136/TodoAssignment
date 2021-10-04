@@ -8,9 +8,9 @@ namespace AdFormAssignment.DAL.Entities
         {
 
         }
-        public DbSet<tblTodoList> tblTodoList { get; set; }
-        public DbSet<tblTodoItem> tblTodoItem { get; set; }
-        public DbSet<tblLabel> tblLabel { get; set; }
-        public DbSet<tblUser> tblUser { get; set; }
+        public DbSet<TblTodoList> tblTodoList { get; set; }
+        public DbSet<TblTodoItem> tblTodoItem { get; set; }
+        public DbSet<TblLabel> tblLabel { get; set; }
+        public DbSet<TblUser> tblUser { get; set; }
     }
 }
