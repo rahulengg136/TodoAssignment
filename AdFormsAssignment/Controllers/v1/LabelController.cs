@@ -53,7 +53,7 @@ namespace AdFormsAssignment.Controllers
             {
                 var allLables = await _labelService.GetAllLabels(pageNumber, pageSize, SearchText);
                 Log.Information($"Filtered labels: {MicrosoftJson.Serialize(allLables)}");
-                if (allLables.Any())
+                if (!allLables.Any())
                     return NoContent();
                 return Ok(_mapper.Map<IEnumerable<ReadLabelDto>>(allLables));
             }
@@ -136,7 +136,7 @@ namespace AdFormsAssignment.Controllers
                 {
                     await _labelService.DeleteLabel(labelId);
                     Log.Information($"Label deleted successfully: {labelId}");
-                    return Ok();
+                    return Ok(label);
                 }
                 else
                 {

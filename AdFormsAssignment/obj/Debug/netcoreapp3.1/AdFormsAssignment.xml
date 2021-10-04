@@ -288,7 +288,7 @@
             Id
             </summary>
         </member>
-        <member name="P:AdFormsAssignment.DTO.ReadTodoItemDto.TodoListName">
+        <member name="P:AdFormsAssignment.DTO.ReadTodoItemDto.ListName">
             <summary>
             List name
             </summary>

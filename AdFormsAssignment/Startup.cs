@@ -85,6 +85,7 @@ namespace AdFormsAssignment
             // swagger work
             services.AddSwaggerGen(options =>
             {
+                options.OperationFilter<AddParametersToSwagger>();
                 options.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo
                 {
                     Title = "Swagger API",

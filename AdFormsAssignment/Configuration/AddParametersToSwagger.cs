@@ -24,11 +24,24 @@ namespace AdFormsAssignment
             {
                 operation.Parameters.Add(new OpenApiParameter()
                 {
+                    Name = "x-correlation-id",
+                    In = ParameterLocation.Header,
+                    Description = "",
+                    Required = false
+                });
+                operation.Parameters.Add(new OpenApiParameter()
+                {
                     Name = "Accept",
                     In = ParameterLocation.Header,
                     Description = "",
-                    Required = false,
-
+                    Required = false
+                });
+                operation.Parameters.Add(new OpenApiParameter()
+                {
+                    Name = "content-location",
+                    In = ParameterLocation.Header,
+                    Description = "",
+                    Required = false
                 });
 
 

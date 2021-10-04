@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AdFormAssignment.DAL.Entities;
+using System;
 
 namespace AdFormsAssignment.DTO
 {
@@ -6,12 +7,8 @@ namespace AdFormsAssignment.DTO
     /// to-do item details
     /// </summary>
 
-    public class ReadTodoItemDto: CreateTodoItemDto
+    public class TodoItemDetail: TblTodoItem
     {
-        /// <summary>
-        /// Id
-        /// </summary>
-        public int TodoItemId { get; set; }
         /// <summary>
         /// List name
         /// </summary>

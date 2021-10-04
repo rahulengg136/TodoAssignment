@@ -23,6 +23,16 @@ namespace AdFormsAssignment.AutoMapper
             CreateMap<TblTodoList, ReadTodoListDto>();
             CreateMap<TblTodoItem, ReadTodoItemDto>();
             CreateMap<TblLabel, ReadLabelDto>();
+
+            CreateMap<TblTodoList, CreateTodoListDto>();
+            CreateMap<TblTodoItem, CreateTodoItemDto>();
+            CreateMap<TblLabel, CreateLabelDto>();
+
+            CreateMap<TodoListDetail, ReadTodoListDto>();
+            CreateMap<TodoItemDetail, ReadTodoItemDto>();
+
+            CreateMap<ReadTodoListDto, TodoListDetail>();
+            CreateMap<ReadTodoItemDto, TodoItemDetail>();
         }
     }
 }

@@ -48,6 +48,7 @@ namespace AdFormsAssignment.Controllers
         /// <returns>Returns list of items</returns>
         [HttpGet("Items")]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(typeof(IEnumerable<ReadTodoItemDto>), 200)]
         public async Task<IActionResult> GetAllTaskItems(int pageNumber, int pageSize, string SearchText)
         {
@@ -86,7 +87,9 @@ namespace AdFormsAssignment.Controllers
                 var todoItem = await _toDoService.GetToDoItem(todoItemId, int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value));
                 Log.Information($"Filtered todo item :{MicrosoftJson.Serialize(todoItem)}");
                 if (todoItem != null)
+                {
                     return Ok(_mapper.Map<ReadTodoItemDto>(todoItem));
+                }
                 else
                     return NoContent();
 
@@ -147,7 +150,7 @@ namespace AdFormsAssignment.Controllers
                 {
                     await _toDoService.DeleteTodoItem(todoItemId);
                     Log.Information($"Record deleted successfully : {todoItemId}");
-                    return Ok();
+                    return Ok(existingTodoItem);
                 }
 
             }
@@ -182,7 +185,7 @@ namespace AdFormsAssignment.Controllers
                     var item = _mapper.Map<TblTodoItem>(todoItem);
                     await _toDoService.UpdateToDoItem(item, todoItemId);
                     Log.Information($"Record updated successfully. New record looks like: {MicrosoftJson.Serialize(item)}");
-                    return Ok();
+                    return Ok(await _toDoService.GetToDoItem(todoItemId, int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value)));
                 }
             }
 
@@ -219,7 +222,7 @@ namespace AdFormsAssignment.Controllers
                 {
                     await _toDoService.UpdatePatchTodoItem(todoItem, todoItemId);
                     Log.Information($"Record patched successfully. Info was: {MicrosoftJson.Serialize(todoItem.Operations)}");
-                    return Ok();
+                    return Ok(await _toDoService.GetToDoItem(todoItemId, int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value)));
                 }
             }
         }

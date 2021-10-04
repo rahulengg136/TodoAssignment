@@ -33,6 +33,8 @@ namespace CorrelationId.CorrelationIdWork
         public async Task Invoke(HttpContext httpContext)
         {
             string correlationId = null;
+            httpContext.Request.Headers.Add("Accept",
+               "application/xml");
             if (httpContext.Request.Headers.TryGetValue(CorrelationIdHeaderKey, out StringValues correlationIds))
             {
                 correlationId = correlationIds.FirstOrDefault(k =>

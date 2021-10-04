@@ -159,7 +159,7 @@ namespace AdFormsAssignment.Controllers
                 {
                     await _toDoService.DeleteTodoList(todoListId);
                     Log.Information($"Delete to do list : {MicrosoftJson.Serialize(list)}");
-                    return Ok();
+                    return Ok(list);
                 }
 
 
@@ -196,7 +196,7 @@ namespace AdFormsAssignment.Controllers
                     var list = _mapper.Map<TblTodoList>(todoList);
                     await _toDoService.UpdateToDoList(list, todoListId);
                     Log.Information($"Updated todo list {MicrosoftJson.Serialize(todoList)}");
-                    return Ok();
+                    return Ok(await _toDoService.GetToDoList(todoListId, int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value)));
                 }
 
             }
@@ -232,7 +232,7 @@ namespace AdFormsAssignment.Controllers
                 {
                     await _toDoService.UpdatePatchTodoList(todoList, todoListId);
                     Log.Information($"Update todo list id {todoListId} with patch {MicrosoftJson.Serialize(todoList)}");
-                    return Ok();
+                    return Ok(await _toDoService.GetToDoList(todoListId, int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value)));
                 }
 
             }

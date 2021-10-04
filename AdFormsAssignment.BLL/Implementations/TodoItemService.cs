@@ -1,6 +1,7 @@
 ﻿using AdFormAssignment.DAL.Contracts;
 using AdFormAssignment.DAL.Entities;
 using AdFormsAssignment.BLL.Contracts;
+using AdFormsAssignment.DTO;
 using Microsoft.AspNetCore.JsonPatch;
 using Serilog;
 using System.Collections.Generic;
@@ -28,7 +29,7 @@ namespace AdFormsAssignment.BLL.Implementations
             return await _todoDAL.DeleteTodoItem(todoItemId);
         }
 
-        public async Task<IEnumerable<TblTodoItem>> GetAllTodoItems(int PageNumber, int PageSize, string SearchText, int userId)
+        public async Task<IEnumerable<TodoItemDetail>> GetAllTodoItems(int PageNumber, int PageSize, string SearchText, int userId)
         {
             Log.Information($"Going to hit DAL method");
             PageNumber = PageNumber == 0 ? 1 : PageNumber;
@@ -36,7 +37,7 @@ namespace AdFormsAssignment.BLL.Implementations
             return await _todoDAL.GetAllTodoItems(PageNumber, PageSize, SearchText, userId);
         }
 
-        public async Task<TblTodoItem> GetToDoItem(int todoItemId, int userId)
+        public async Task<TodoItemDetail> GetToDoItem(int todoItemId, int userId)
         {
             Log.Information($"Going to hit DAL method");
             return await _todoDAL.GetTodoItem(todoItemId, userId);

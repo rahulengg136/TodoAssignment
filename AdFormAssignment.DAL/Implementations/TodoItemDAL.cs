@@ -1,9 +1,11 @@
 ﻿using AdFormAssignment.DAL.Contracts;
 using AdFormAssignment.DAL.Entities;
+using AdFormsAssignment.DTO;
 using Microsoft.AspNetCore.JsonPatch;
 using Serilog;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace AdFormAssignment.DAL.Implementations
@@ -16,16 +18,51 @@ namespace AdFormAssignment.DAL.Implementations
             _dbContext = dbContext;
         }
 
-        public Task<TblTodoItem> GetTodoItem(int todoItemId, int userId)
+        public Task<TodoItemDetail> GetTodoItem(int todoItemId, int userId)
         {
             Log.Information($"Going to hit database");
-            return Task.FromResult(_dbContext.tblTodoItem.SingleOrDefault(x => x.TodoItemId == todoItemId && x.UserId == userId));
+
+            var data = _dbContext.tblTodoItem
+                   .Join(_dbContext.tblTodoList, items => items.TodoListId, lists => lists.TodoListId, (items, lists) => new { items, lists })
+                    .Join(_dbContext.tblLabel, itemsList => itemsList.items.LabelId, labels => labels.LabelId, (itemsList, labels) => new
+                    {
+                        itemsList.items.Description,
+                        itemsList.items.ExpectedDate,
+                        itemsList.items.LabelId,
+                        itemsList.items.TodoItemId,
+                        itemsList.items.TodoListId,
+                        itemsList.items.UserId,
+                        itemsList.lists.ListName,
+                        labels.LabelName
+                    })
+                   .Single(x => x.TodoItemId == todoItemId);
+
+            TodoItemDetail todoItemDetail = JsonSerializer.Deserialize<TodoItemDetail>(JsonSerializer.Serialize(data));
+            return Task.FromResult(todoItemDetail);
         }
 
-        public Task<IEnumerable<TblTodoItem>> GetAllTodoItems(int PageNumber, int PageSize, string SearchText, int userId)
+        public Task<IEnumerable<TodoItemDetail>> GetAllTodoItems(int PageNumber, int PageSize, string SearchText, int userId)
         {
             Log.Information($"Going to hit database");
-            return Task.FromResult(_dbContext.tblTodoItem.Where(x => ((SearchText == null) || x.Description.Contains(SearchText)) && x.UserId == userId).Skip((PageNumber - 1) * PageSize).Take(PageSize).AsEnumerable());
+
+            var data = _dbContext.tblTodoItem
+                   .Join(_dbContext.tblTodoList, items => items.TodoListId, lists => lists.TodoListId, (items, lists) => new { items, lists })
+                    .Join(_dbContext.tblLabel, itemsList => itemsList.items.LabelId, labels => labels.LabelId, (itemsList, labels) => new
+                    {
+                        itemsList.items.Description,
+                        itemsList.items.ExpectedDate,
+                        itemsList.items.LabelId,
+                        itemsList.items.TodoItemId,
+                        itemsList.items.TodoListId,
+                        itemsList.items.UserId,
+                        itemsList.lists.ListName,
+                        labels.LabelName
+                    })
+                   .Where(x => ((SearchText == null) || x.Description.Contains(SearchText)) && x.UserId == userId)
+                   .Skip((PageNumber - 1) * PageSize).Take(PageSize);
+
+            IEnumerable<TodoItemDetail> todoItemsDetail = JsonSerializer.Deserialize<IEnumerable<TodoItemDetail>>(JsonSerializer.Serialize(data));
+            return Task.FromResult(todoItemsDetail);
         }
 
         public async Task<int> CreateTodoItem(TblTodoItem todoItem)
