@@ -1,6 +1,7 @@
 ﻿using AdFormAssignment.DAL.Entities;
 using Microsoft.IdentityModel.Tokens;
 using System;
+using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
@@ -13,17 +14,21 @@ namespace AdFormsAssignment.Security
     public class JwtAuth : IJwtAuth
     {
         private readonly string _key;
-        //private readonly IUserService _userService;
-       /// <summary>
-       /// Constructor takes key that helps in generating unique token for different clients
-       /// </summary>
-       /// <param name="key">A string value</param>
-        public JwtAuth(string key 
-            //IUserService userService
+
+        private readonly List<tblUser> validUsers = new List<tblUser>(){
+            new tblUser { UserId = 1, UserName = "rahul", Password = "rahul123" },
+             new tblUser { UserId = 2, UserName = "ajay", Password = "ajay123" },
+              new tblUser { UserId = 3, UserName = "pooja", Password = "pooja123" } };
+
+
+        /// <summary>
+        /// Constructor takes key that helps in generating unique token for different clients
+        /// </summary>
+        /// <param name="key">A string value</param>
+        public JwtAuth(string key
             )
         {
             _key = key;
-            //_userService = userService;
         }
         /// <summary>
         /// This method check user and provides token
@@ -33,9 +38,8 @@ namespace AdFormsAssignment.Security
         /// <returns></returns>
         public string Authentication(string username, string password)
         {
-            //  var user = _userService.CheckUser(username, password);
-            var user = new tblUser();
-            user.UserId = 3;
+
+            tblUser user = validUsers.Find(x => x.UserName == username && x.Password == password);
             if (user == null)
             {
                 return null;
