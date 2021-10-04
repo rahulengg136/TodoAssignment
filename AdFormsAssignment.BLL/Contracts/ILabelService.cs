@@ -4,6 +4,9 @@ using System.Threading.Tasks;
 
 namespace AdFormsAssignment.BLL.Contracts
 {
+    /// <summary>
+    /// Contract for label service
+    /// </summary>
     public interface ILabelService
     {
         Task<int> CreateLabel(tblLabel label);

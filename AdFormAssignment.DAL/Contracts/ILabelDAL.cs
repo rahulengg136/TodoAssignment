@@ -4,6 +4,9 @@ using System.Threading.Tasks;
 
 namespace AdFormAssignment.DAL.Contracts
 {
+    /// <summary>
+    /// Contract for labels data access
+    /// </summary>
     public interface ILabelDAL
     {
         Task<int> CreateLabel(tblLabel label);

@@ -5,6 +5,9 @@ using System.Threading.Tasks;
 
 namespace AdFormsAssignment.BLL.Contracts
 {
+    /// <summary>
+    /// Contract for todo item service
+    /// </summary>
     public interface ITodoItemService
     {
         Task<int> CreateToDoItem(tblTodoItem todoItem);

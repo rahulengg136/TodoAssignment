@@ -5,6 +5,9 @@ using System.Threading.Tasks;
 
 namespace AdFormAssignment.DAL.Contracts
 {
+    /// <summary>
+    /// Contracts for todo items data access
+    /// </summary>
     public interface ITodoItemDAL
     {
         Task<int> CreateTodoItem(tblTodoItem todoItem);
