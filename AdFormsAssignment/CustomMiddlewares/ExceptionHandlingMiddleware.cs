@@ -27,7 +27,6 @@ namespace AdFormsAssignment.CustomMiddlewares
         /// Invoke method of middleware
         /// </summary>
         /// <param name="context"></param>
-        /// <returns></returns>
         public async Task Invoke(HttpContext context)
         {
             try

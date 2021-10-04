@@ -32,7 +32,6 @@ namespace AdFormsAssignment.CustomMiddlewares
         /// Invoke method of the middleware
         /// </summary>
         /// <param name="context">Current Http Context</param>
-        /// <returns></returns>
         public async Task Invoke(HttpContext context)
         {
             await LogRequest(context);
@@ -122,7 +121,6 @@ namespace AdFormsAssignment.CustomMiddlewares
         /// Setting up logging-request-response middleware to the application
         /// </summary>
         /// <param name="builder"></param>
-        /// <returns></returns>
         public static IApplicationBuilder UseRequestResponseLogging(this IApplicationBuilder builder)
         {
             return builder.UseMiddleware<LogRequestResponseMiddleware>();

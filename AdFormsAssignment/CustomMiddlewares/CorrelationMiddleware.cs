@@ -30,7 +30,6 @@ namespace CorrelationId.CorrelationIdWork
         /// Invoke method of correlation id middleware
         /// </summary>
         /// <param name="httpContext"></param>
-        /// <returns></returns>
         public async Task Invoke(HttpContext httpContext)
         {
             string correlationId = null;

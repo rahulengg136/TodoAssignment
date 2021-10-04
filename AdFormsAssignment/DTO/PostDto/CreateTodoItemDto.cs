@@ -26,15 +26,5 @@ namespace AdFormsAssignment.DTO
         public int LabelId { get; set; }
      
     }
-    /// <summary>
-    /// DTO to update a to-do item
-    /// </summary>
-    public class UpdateTodoItemDto:CreateTodoItemDto
-    {
-        /// <summary>
-        /// To-do item unique id
-        /// </summary>
-        public int TodoItemId { get; set; }
-    }
 
 }

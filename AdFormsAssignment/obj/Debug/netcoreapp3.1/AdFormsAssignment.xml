@@ -67,28 +67,28 @@
             <param name="pageNumber">Page number</param>
             <param name="pageSize"> Page size- This will be the number of records accessable at one time</param>
             <param name="SearchText">Any substring that may present in label name</param>
-            <returns></returns>
+            <returns>Returns list of labels</returns>
         </member>
         <member name="M:AdFormsAssignment.Controllers.LabelController.GetSingleLabelInfo(System.Int32)">
             <summary>
             This method gives details of a single label
             </summary>
             <param name="labelId">Unique label id</param>
-            <returns></returns>
+            <returns>Returns details of single label</returns>
         </member>
         <member name="M:AdFormsAssignment.Controllers.LabelController.CreateLabel(AdFormsAssignment.DTO.CreateLabelDto)">
             <summary>
             This method is to create a new label
             </summary>
             <param name="labelDto">Label info in json format should be posted</param>
-            <returns></returns>
+            <returns>Return success in case label created successfully</returns>
         </member>
         <member name="M:AdFormsAssignment.Controllers.LabelController.DeleteTodoLabel(System.Int32)">
             <summary>
             This method is to delete a label
             </summary>
             <param name="labelId">Label id that needs to be deleted</param>
-            <returns></returns>
+            <returns>Returns success if label gets deleted successfully</returns>
         </member>
         <member name="T:AdFormsAssignment.Controllers.LoginController">
             <summary>
@@ -106,7 +106,7 @@
             This method validates user and provides token for 1 hour
             </summary>
             <param name="userCredential">Need to pass username and password in body</param>
-            <returns></returns>
+            <returns>Returns token</returns>
         </member>
         <member name="T:AdFormsAssignment.Controllers.ToDoItemController">
             <summary>
@@ -127,36 +127,36 @@
             <param name="pageNumber">Page number</param>
             <param name="pageSize">Page size</param>
             <param name="SearchText">Any text that may present in description</param>
-            <returns></returns>
+            <returns>Returns list of items</returns>
         </member>
         <member name="M:AdFormsAssignment.Controllers.ToDoItemController.GetTodoItem(System.Int32)">
             <summary>
             This method returns detail of a single to-do item
             </summary>
             <param name="todoItemId">To-Do item unique id</param>
-            <returns></returns>
+            <returns>Returns detail of single to-do item</returns>
         </member>
         <member name="M:AdFormsAssignment.Controllers.ToDoItemController.CreateTodoItem(AdFormsAssignment.DTO.CreateTodoItemDto)">
             <summary>
             This method creates a new to-do item
             </summary>
             <param name="todoItem">New item data</param>
-            <returns></returns>
+            <returns>Returns success if item gets created successfully</returns>
         </member>
         <member name="M:AdFormsAssignment.Controllers.ToDoItemController.DeleteTodoItem(System.Int32)">
             <summary>
             This method deletes to do item
             </summary>
             <param name="todoItemId">to-do item unique id</param>
-            <returns></returns>
+            <returns>Returns success if item gets deleted successfully</returns>
         </member>
-        <member name="M:AdFormsAssignment.Controllers.ToDoItemController.UpdateTodoItem(System.Int32,AdFormsAssignment.DTO.UpdateTodoItemDto)">
+        <member name="M:AdFormsAssignment.Controllers.ToDoItemController.UpdateTodoItem(System.Int32,AdFormsAssignment.DTO.CreateTodoItemDto)">
             <summary>
             This method updates any existing to-do item
             </summary>
             <param name="todoItemId">Unique to-do item id</param>
             <param name="todoItem">Item data</param>
-            <returns></returns>
+            <returns>Returns success if item gets updated successfully</returns>
         </member>
         <member name="M:AdFormsAssignment.Controllers.ToDoItemController.UpdateTodoItemPatch(System.Int32,Microsoft.AspNetCore.JsonPatch.JsonPatchDocument)">
             <summary>
@@ -164,7 +164,7 @@
             </summary>
             <param name="todoItemId">Unique to-do item id</param>
             <param name="todoItem">Patches info</param>
-            <returns></returns>
+            <returns>Returns success if item gets patched successfulyy</returns>
         </member>
         <member name="T:AdFormsAssignment.Controllers.ToDoListController">
             <summary>
@@ -185,36 +185,36 @@
             <param name="pageNumber">Page number</param>
             <param name="pageSize">Page size</param>
             <param name="SearchText">Search text</param>
-            <returns></returns>
+            <returns>Returns list of task lists</returns>
         </member>
         <member name="M:AdFormsAssignment.Controllers.ToDoListController.GetTodoList(System.Int32)">
             <summary>
             This method gives details of single to-do list
             </summary>
             <param name="todoListId">To-do list id</param>
-            <returns></returns>
+            <returns>Returns detail of single to-do item</returns>
         </member>
         <member name="M:AdFormsAssignment.Controllers.ToDoListController.CreateList(AdFormsAssignment.DTO.CreateTodoListDto)">
             <summary>
             This method creates new to-do list
             </summary>
             <param name="todoList">list information</param>
-            <returns></returns>
+            <returns>Returns success if to-do list gets created successfully</returns>
         </member>
         <member name="M:AdFormsAssignment.Controllers.ToDoListController.DeleteTodoList(System.Int32)">
             <summary>
             This method deletes a to-do list
             </summary>
             <param name="todoListId">to-do list id</param>
-            <returns></returns>
+            <returns>Returns success if to-do list gets deleted successfully</returns>
         </member>
-        <member name="M:AdFormsAssignment.Controllers.ToDoListController.UpdateTodoList(System.Int32,AdFormsAssignment.DTO.UpdateTodoListDto)">
+        <member name="M:AdFormsAssignment.Controllers.ToDoListController.UpdateTodoList(System.Int32,AdFormsAssignment.DTO.CreateTodoListDto)">
             <summary>
             This method updates to-do list
             </summary>
             <param name="todoListId">To-do list id</param>
             <param name="todoList">Updated details of list</param>
-            <returns></returns>
+            <returns>Returns success if to-do list gets updated successfully</returns>
         </member>
         <member name="M:AdFormsAssignment.Controllers.ToDoListController.UpdateTodoListPatch(System.Int32,Microsoft.AspNetCore.JsonPatch.JsonPatchDocument)">
             <summary>
@@ -222,7 +222,7 @@
             </summary>
             <param name="todoListId">to-do list id</param>
             <param name="todoList">Patches information</param>
-            <returns></returns>
+            <returns>Returns success if to-do list gets patched successfully</returns>
         </member>
         <member name="T:AdFormsAssignment.CustomMiddlewares.ExceptionHandlingMiddleware">
             <summary>
@@ -240,7 +240,6 @@
             Invoke method of middleware
             </summary>
             <param name="context"></param>
-            <returns></returns>
         </member>
         <member name="T:AdFormsAssignment.CustomMiddlewares.LogRequestResponseMiddleware">
             <summary>
@@ -257,7 +256,6 @@
             Invoke method of the middleware
             </summary>
             <param name="context">Current Http Context</param>
-            <returns></returns>
         </member>
         <member name="T:AdFormsAssignment.CustomMiddlewares.RequestResponseLoggingMiddlewareExtensions">
             <summary>
@@ -269,7 +267,6 @@
             Setting up logging-request-response middleware to the application
             </summary>
             <param name="builder"></param>
-            <returns></returns>
         </member>
         <member name="T:AdFormsAssignment.DTO.ReadLabelDto">
             <summary>
@@ -351,16 +348,6 @@
             LabelId
             </summary>
         </member>
-        <member name="T:AdFormsAssignment.DTO.UpdateTodoItemDto">
-            <summary>
-            DTO to update a to-do item
-            </summary>
-        </member>
-        <member name="P:AdFormsAssignment.DTO.UpdateTodoItemDto.TodoItemId">
-            <summary>
-            To-do item unique id
-            </summary>
-        </member>
         <member name="T:AdFormsAssignment.DTO.CreateTodoListDto">
             <summary>
             To do list information
@@ -379,16 +366,6 @@
         <member name="P:AdFormsAssignment.DTO.CreateTodoListDto.LabelId">
             <summary>
             LabelId
-            </summary>
-        </member>
-        <member name="T:AdFormsAssignment.DTO.UpdateTodoListDto">
-            <summary>
-            DTO to update to-list
-            </summary>
-        </member>
-        <member name="P:AdFormsAssignment.DTO.UpdateTodoListDto.TodoListId">
-            <summary>
-            To-do list unique id
             </summary>
         </member>
         <member name="T:AdFormsAssignment.DTO.PostDto.UserDto">
@@ -422,7 +399,6 @@
             CreateHostBuilder method
             </summary>
             <param name="args"></param>
-            <returns></returns>
         </member>
         <member name="T:AdFormsAssignment.Security.IJwtAuth">
             <summary>
@@ -435,7 +411,6 @@
             </summary>
             <param name="username">User name</param>
             <param name="password">Password</param>
-            <returns></returns>
         </member>
         <member name="T:AdFormsAssignment.Security.JwtAuth">
             <summary>
@@ -454,7 +429,7 @@
             </summary>
             <param name="username">Username</param>
             <param name="password">Password</param>
-            <returns></returns>
+            <returns>Returns token</returns>
         </member>
         <member name="T:AdFormsAssignment.Startup">
             <summary>
@@ -502,7 +477,6 @@
             Invoke method of correlation id middleware
             </summary>
             <param name="httpContext"></param>
-            <returns></returns>
         </member>
     </members>
 </doc>

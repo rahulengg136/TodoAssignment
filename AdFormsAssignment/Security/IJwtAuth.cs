@@ -10,7 +10,6 @@
         /// </summary>
         /// <param name="username">User name</param>
         /// <param name="password">Password</param>
-        /// <returns></returns>
         string Authentication(string username, string password);
     }
 }

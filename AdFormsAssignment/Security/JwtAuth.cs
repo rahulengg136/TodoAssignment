@@ -35,7 +35,7 @@ namespace AdFormsAssignment.Security
         /// </summary>
         /// <param name="username">Username</param>
         /// <param name="password">Password</param>
-        /// <returns></returns>
+        /// <returns>Returns token</returns>
         public string Authentication(string username, string password)
         {
 

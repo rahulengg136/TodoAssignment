@@ -45,7 +45,7 @@ namespace AdFormsAssignment.Controllers
         /// <param name="pageNumber">Page number</param>
         /// <param name="pageSize">Page size</param>
         /// <param name="SearchText">Any text that may present in description</param>
-        /// <returns></returns>
+        /// <returns>Returns list of items</returns>
         [HttpGet("Items")]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(typeof(IEnumerable<ReadTodoItemDto>), 200)]
@@ -68,7 +68,7 @@ namespace AdFormsAssignment.Controllers
         /// This method returns detail of a single to-do item
         /// </summary>
         /// <param name="todoItemId">To-Do item unique id</param>
-        /// <returns></returns>
+        /// <returns>Returns detail of single to-do item</returns>
         [HttpGet("{todoItemId}")]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(typeof(ReadTodoItemDto), 200)]
@@ -88,7 +88,7 @@ namespace AdFormsAssignment.Controllers
                 if (todoItem != null)
                     return Ok(_mapper.Map<ReadTodoItemDto>(todoItem));
                 else
-                    return BadRequest(new { message = "No resource found with this unique id" });
+                    return NoContent();
 
             }
         }
@@ -96,7 +96,7 @@ namespace AdFormsAssignment.Controllers
         /// This method creates a new to-do item
         /// </summary>
         /// <param name="todoItem">New item data</param>
-        /// <returns></returns>
+        /// <returns>Returns success if item gets created successfully</returns>
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(typeof(string), 400)]
@@ -123,7 +123,7 @@ namespace AdFormsAssignment.Controllers
         /// This method deletes to do item
         /// </summary>
         /// <param name="todoItemId">to-do item unique id</param>
-        /// <returns></returns>
+        /// <returns>Returns success if item gets deleted successfully</returns>
         [HttpDelete("{todoItemId}")]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(typeof(string), 400)]
@@ -157,13 +157,13 @@ namespace AdFormsAssignment.Controllers
         /// </summary>
         /// <param name="todoItemId">Unique to-do item id</param>
         /// <param name="todoItem">Item data</param>
-        /// <returns></returns>
+        /// <returns>Returns success if item gets updated successfully</returns>
         [HttpPut("{todoItemId}")]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(typeof(string), 400)]
         [ProducesResponseType(StatusCodes.Status200OK)]
 
-        public async Task<IActionResult> UpdateTodoItem(int todoItemId, [FromBody] UpdateTodoItemDto todoItem)
+        public async Task<IActionResult> UpdateTodoItem(int todoItemId, [FromBody] CreateTodoItemDto todoItem)
         {
             using (LogContext.PushProperty("Correlation Id", RequestInfo.GetCorrelationId(HttpContext.Request)))
             {
@@ -194,7 +194,7 @@ namespace AdFormsAssignment.Controllers
         /// </summary>
         /// <param name="todoItemId">Unique to-do item id</param>
         /// <param name="todoItem">Patches info</param>
-        /// <returns></returns>
+        /// <returns>Returns success if item gets patched successfulyy</returns>
         [HttpPatch("{todoItemId}")]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(typeof(string), 400)]

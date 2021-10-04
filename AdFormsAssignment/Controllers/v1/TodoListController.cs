@@ -47,7 +47,7 @@ namespace AdFormsAssignment.Controllers
         /// <param name="pageNumber">Page number</param>
         /// <param name="pageSize">Page size</param>
         /// <param name="SearchText">Search text</param>
-        /// <returns></returns>
+        /// <returns>Returns list of task lists</returns>
         [HttpGet("Lists")]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
@@ -75,7 +75,7 @@ namespace AdFormsAssignment.Controllers
         /// This method gives details of single to-do list
         /// </summary>
         /// <param name="todoListId">To-do list id</param>
-        /// <returns></returns>
+        /// <returns>Returns detail of single to-do item</returns>
         [HttpGet("{todoListId}")]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
@@ -100,7 +100,7 @@ namespace AdFormsAssignment.Controllers
                 }
                 else
                 {
-                    return BadRequest(new { message = "No resource found with this unique id" });
+                    return NoContent();
                 }
 
             }
@@ -109,7 +109,7 @@ namespace AdFormsAssignment.Controllers
         /// This method creates new to-do list
         /// </summary>
         /// <param name="todoList">list information</param>
-        /// <returns></returns>
+        /// <returns>Returns success if to-do list gets created successfully</returns>
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(typeof(ReadTodoListDto),201)]
@@ -136,7 +136,7 @@ namespace AdFormsAssignment.Controllers
         /// This method deletes a to-do list
         /// </summary>
         /// <param name="todoListId">to-do list id</param>
-        /// <returns></returns>
+        /// <returns>Returns success if to-do list gets deleted successfully</returns>
         [HttpDelete("{todoListId}")]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status200OK)]
@@ -170,12 +170,12 @@ namespace AdFormsAssignment.Controllers
         /// </summary>
         /// <param name="todoListId">To-do list id</param>
         /// <param name="todoList">Updated details of list</param>
-        /// <returns></returns>
+        /// <returns>Returns success if to-do list gets updated successfully</returns>
         [HttpPut("{todoListId}")]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(string), 400)]
-        public async Task<IActionResult> UpdateTodoList(int todoListId, [FromBody] UpdateTodoListDto todoList)
+        public async Task<IActionResult> UpdateTodoList(int todoListId, [FromBody] CreateTodoListDto todoList)
         {
             using (LogContext.PushProperty("Correlation Id", RequestInfo.GetCorrelationId(HttpContext.Request)))
             {
@@ -208,7 +208,7 @@ namespace AdFormsAssignment.Controllers
         /// </summary>
         /// <param name="todoListId">to-do list id</param>
         /// <param name="todoList">Patches information</param>
-        /// <returns></returns>
+        /// <returns>Returns success if to-do list gets patched successfully</returns>
         [HttpPatch("{todoListId}")]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status200OK)]
