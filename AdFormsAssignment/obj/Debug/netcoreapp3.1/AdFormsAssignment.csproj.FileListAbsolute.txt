@@ -210,3 +210,11 @@ C:\Users\Rahul\source\repos\GitClone\TodoAssignment\AdFormsAssignment\obj\Debug\
 C:\Users\Rahul\source\repos\GitClone\TodoAssignment\AdFormsAssignment\obj\Debug\netcoreapp3.1\AdFormsAssignment.genruntimeconfig.cache
 C:\Users\Rahul\source\repos\GitClone\TodoAssignment\AdFormsAssignment\bin\Debug\netcoreapp3.1\AdFormsAssignment.xml
 C:\Users\Rahul\source\repos\GitClone\TodoAssignment\AdFormsAssignment\obj\Debug\netcoreapp3.1\AdFormsAssignment.xml
+C:\Users\Rahul\source\repos\GitClone\TodoAssignment\AdFormsAssignment\bin\Debug\netcoreapp3.1\GraphQL.dll
+C:\Users\Rahul\source\repos\GitClone\TodoAssignment\AdFormsAssignment\bin\Debug\netcoreapp3.1\GraphQL-Parser.dll
+C:\Users\Rahul\source\repos\GitClone\TodoAssignment\AdFormsAssignment\bin\Debug\netcoreapp3.1\GraphQL.Server.Core.dll
+C:\Users\Rahul\source\repos\GitClone\TodoAssignment\AdFormsAssignment\bin\Debug\netcoreapp3.1\GraphQL.Server.Transports.AspNetCore.dll
+C:\Users\Rahul\source\repos\GitClone\TodoAssignment\AdFormsAssignment\bin\Debug\netcoreapp3.1\GraphQL.Server.Ui.Playground.dll
+C:\Users\Rahul\source\repos\GitClone\TodoAssignment\AdFormsAssignment\bin\Debug\netcoreapp3.1\System.Reactive.Core.dll
+C:\Users\Rahul\source\repos\GitClone\TodoAssignment\AdFormsAssignment\bin\Debug\netcoreapp3.1\System.Reactive.Interfaces.dll
+C:\Users\Rahul\source\repos\GitClone\TodoAssignment\AdFormsAssignment\bin\Debug\netcoreapp3.1\System.Reactive.Linq.dll

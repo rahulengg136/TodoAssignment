@@ -1,11 +1,13 @@
 ﻿using AdFormAssignment.DAL.Contracts;
 using AdFormAssignment.DAL.Entities;
+using AdFormsAssignment.DTO;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.Extensions.Configuration;
 using Serilog;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace AdFormAssignment.DAL
@@ -18,15 +20,41 @@ namespace AdFormAssignment.DAL
             _dbContext = dbContext;
         }
 
-        public Task<TblTodoList> GetTodoList(int todoListId, int userId)
+        public Task<TodoListDetail> GetTodoList(int todoListId, int userId)
         {
-            return Task.FromResult(_dbContext.tblTodoList.SingleOrDefault(x => x.TodoListId == todoListId && x.UserId == userId));
+            var data = _dbContext.tblTodoList
+                   .Join(_dbContext.tblLabel, lists => lists.LabelId, labels => labels.LabelId, (lists, labels) => new
+                   {
+                      lists.ExpectedDate,
+                      lists.LabelId,
+                      lists.ListName,
+                      lists.TodoListId,
+                      lists.UserId,
+                       labels.LabelName
+                   })
+                  .Single(x => x.TodoListId == todoListId);
+
+            TodoListDetail todoListDetail = JsonSerializer.Deserialize<TodoListDetail>(JsonSerializer.Serialize(data));
+            return Task.FromResult(todoListDetail);
         }
 
-        public Task<IEnumerable<TblTodoList>> GetAllTodoLists(int PageNumber, int PageSize, string SearchText, int userId)
+        public Task<IEnumerable<TodoListDetail>> GetAllTodoLists(int PageNumber, int PageSize, string SearchText, int userId)
         {
             Log.Information("Going to hit database");
-            return Task.FromResult(_dbContext.tblTodoList.Where(x => ((SearchText == null) || x.ListName.Contains(SearchText)) && x.UserId == userId).Skip((PageNumber - 1) * PageSize).Take(PageSize).AsEnumerable());
+            var data = _dbContext.tblTodoList
+                  .Join(_dbContext.tblLabel, lists => lists.LabelId, labels => labels.LabelId, (lists, labels) => new
+                  {
+                      lists.ExpectedDate,
+                      lists.LabelId,
+                      lists.ListName,
+                      lists.TodoListId,
+                      lists.UserId,
+                      labels.LabelName
+                  })
+                 .Where(x => ((SearchText == null) || x.ListName.Contains(SearchText)) && x.UserId == userId).Skip((PageNumber - 1) * PageSize).Take(PageSize).AsEnumerable();
+
+            IEnumerable<TodoListDetail> todoListsDetail = JsonSerializer.Deserialize<IEnumerable<TodoListDetail>>(JsonSerializer.Serialize(data));
+            return Task.FromResult(todoListsDetail);
         }
 
         public async Task<int> CreateTodoList(TblTodoList todoList)

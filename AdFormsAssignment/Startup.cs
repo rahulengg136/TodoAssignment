@@ -7,12 +7,17 @@ using AdFormsAssignment.BLL.Contracts;
 using AdFormsAssignment.BLL.Implementations;
 using AdFormsAssignment.Configuration;
 using AdFormsAssignment.CustomMiddlewares;
+using AdFormsAssignment.GraphQL;
 using AdFormsAssignment.Security;
 using CorrelationId.CorrelationIdWork;
+using GraphQL;
+using GraphQL.Server;
+using GraphQL.Server.Ui.Playground;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.ApplicationModels;
+using Microsoft.AspNetCore.Server.Kestrel.Core;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -128,7 +133,7 @@ namespace AdFormsAssignment
             // registering services
             services.AddScoped<ITodoListDal, TodoListDal>();
             services.AddScoped<ITodoItemDal, TodoItemDal>();
-            services.AddScoped<ILabelDAL, LabelDAL>();
+            services.AddScoped<ILabelDAL, LabelDal>();
             services.AddScoped<IUserDal, UserDal>();
 
             services.AddScoped<ITodoListService, ToDoListService>();
@@ -139,6 +144,17 @@ namespace AdFormsAssignment
             services.TryAddEnumerable(ServiceDescriptor.Transient<IApplicationModelProvider, ProduceResponseTypeModelProvider>());
             //auto mapper
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
+            // graphQL
+            services.Configure<KestrelServerOptions>(options => options.AllowSynchronousIO = true);
+            services.Configure<IISServerOptions>(options => options.AllowSynchronousIO = true);
+            services.AddScoped<IDependencyResolver>(s => new FuncDependencyResolver(
+               s.GetRequiredService
+               ));
+            services.AddScoped<GraphQLSchema>();
+            services.AddGraphQL(o => { o.ExposeExceptions = true; })
+                .AddGraphTypes(ServiceLifetime.Scoped)
+                ;
 
         }
         /// <summary>
@@ -152,6 +168,9 @@ namespace AdFormsAssignment
             {
                 app.UseDeveloperExceptionPage();
             }
+            app.UseGraphQL<GraphQLSchema>();
+            app.UseGraphQLPlayground(new GraphQLPlaygroundOptions());
+
             app.UseRequestResponseLogging();
             app.UseMiddleware<CorrelationMiddleware>();
             app.UseMiddleware<ExceptionHandlingMiddleware>();

@@ -383,6 +383,56 @@
             Password
             </summary>
         </member>
+        <member name="T:AdFormsAssignment.GraphQL.GraphQLSchema">
+            <summary>
+            GraphQL schema
+            </summary>
+        </member>
+        <member name="M:AdFormsAssignment.GraphQL.GraphQLSchema.#ctor(GraphQL.IDependencyResolver)">
+            <summary>
+            GraphQL schema
+            </summary>
+        </member>
+        <member name="T:AdFormsAssignment.GraphQL.Queries">
+            <summary>
+            GraphQL queries
+            </summary>
+        </member>
+        <member name="M:AdFormsAssignment.GraphQL.Queries.#ctor(AdFormsAssignment.BLL.Contracts.ILabelService,AdFormsAssignment.BLL.Contracts.ITodoItemService,AdFormsAssignment.BLL.Contracts.ITodoListService)">
+            <summary>
+            GraphQL queries
+            </summary>
+        </member>
+        <member name="T:AdFormsAssignment.GraphQL.LabelType">
+            <summary>
+            GraphQL type : Label
+            </summary>
+        </member>
+        <member name="M:AdFormsAssignment.GraphQL.LabelType.#ctor">
+            <summary>
+            GraphQL type : Label
+            </summary>
+        </member>
+        <member name="T:AdFormsAssignment.GraphQL.Types.ToDoItemType">
+            <summary>
+            GraphQL type : To-do item
+            </summary>
+        </member>
+        <member name="M:AdFormsAssignment.GraphQL.Types.ToDoItemType.#ctor">
+            <summary>
+            GraphQL type : to-do item
+            </summary>
+        </member>
+        <member name="T:AdFormsAssignment.GraphQL.Types.ToDoListType">
+            <summary>
+            GraphQL type : to-do list
+            </summary>
+        </member>
+        <member name="M:AdFormsAssignment.GraphQL.Types.ToDoListType.#ctor">
+            <summary>
+            GraphQL type : to-do list
+            </summary>
+        </member>
         <member name="T:AdFormsAssignment.Program">
             <summary>
             Program class of the application

@@ -1,6 +1,7 @@
 ﻿using AdFormAssignment.DAL.Contracts;
 using AdFormAssignment.DAL.Entities;
 using AdFormsAssignment.BLL.Contracts;
+using AdFormsAssignment.DTO;
 using Microsoft.AspNetCore.JsonPatch;
 using Serilog;
 using System.Collections.Generic;
@@ -17,11 +18,11 @@ namespace AdFormsAssignment.BLL
         {
             _todoDAL = todoDAL;
         }
-        public async Task<TblTodoList> GetToDoList(int todoListId, int userId)
+        public async Task<TodoListDetail> GetToDoList(int todoListId, int userId)
         {
             return await _todoDAL.GetTodoList(todoListId,userId);
         }
-        public async Task<IEnumerable<TblTodoList>> GetAllTodoLists(int PageNumber, int PageSize, string SearchText, int userId)
+        public async Task<IEnumerable<TodoListDetail>> GetAllTodoLists(int PageNumber, int PageSize, string SearchText, int userId)
         {
             Log.Information($"Going to hit DAL method with info = Pagenumber:{PageNumber},Pagesize:{PageSize},SearchText:{SearchText}, UserId:{userId} ");
             PageNumber = PageNumber == 0 ? 1 : PageNumber;
