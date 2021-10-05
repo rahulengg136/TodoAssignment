@@ -35,7 +35,6 @@ namespace AdFormsAssignment.Configuration
             {
                 foreach (ActionModel action in controller.Actions)
                 {
-
                     action.Filters.Add(new ProducesResponseTypeAttribute(StatusCodes.Status500InternalServerError));
                     action.Filters.Add(new ProducesResponseTypeAttribute(typeof(string),401));
                 }

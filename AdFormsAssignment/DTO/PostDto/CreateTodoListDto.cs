@@ -3,11 +3,10 @@
 namespace AdFormsAssignment.DTO
 {
     /// <summary>
-    /// To do list information
+    /// To-Do list common properties that must be used in any extensions
     /// </summary>
-    public class CreateTodoListDto
+    public class ToDoListCommonProperties
     {
-      
         /// <summary>
         /// Name of the list
         /// </summary>
@@ -16,10 +15,17 @@ namespace AdFormsAssignment.DTO
         /// ExpectedDate
         /// </summary>
         public DateTime ExpectedDate { get; set; }
+    }
+
+    /// <summary>
+    /// To do list information
+    /// </summary>
+    public class CreateTodoListDto : ToDoListCommonProperties
+    {
         /// <summary>
         /// LabelId
         /// </summary>
-        public int LabelId { get; set; }
+        public int[] LabelIds { get; set; }
  
     }
   

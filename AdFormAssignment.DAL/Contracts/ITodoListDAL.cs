@@ -11,11 +11,11 @@ namespace AdFormAssignment.DAL.Contracts
     /// </summary>
     public interface ITodoListDal
     {
-        Task<int> CreateTodoList(TblTodoList todoList);
+        Task<int> CreateTodoList(TblTodoList todoList, IEnumerable<TblLabelMapping> mappings);
         Task<TodoListDetail> GetTodoList(int todoListId, int userId);
         Task<IEnumerable<TodoListDetail>> GetAllTodoLists(int PageNumber, int PageSize, string SearchText, int userId);
         Task<int> DeleteTodoList(int todoListId);
-        Task<int> UpdateTodoList(TblTodoList todoList, int todoListId);
+        Task<int> UpdateTodoList(TblTodoList todoList, int todoListId, IEnumerable<TblLabelMapping> mappings);
         Task<int> UpdatePatchTodoList(JsonPatchDocument todoList, int todoListId);
     }
 

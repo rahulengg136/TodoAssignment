@@ -18,7 +18,6 @@ namespace AdFormsAssignment.GraphQL.Types
         public ToDoListType()
         {
             Field(x => x.ExpectedDate);
-            Field(x => x.LabelId);
             Field(x => x.ListName);
             Field(x => x.TodoListId);
             Field(x => x.UserId);

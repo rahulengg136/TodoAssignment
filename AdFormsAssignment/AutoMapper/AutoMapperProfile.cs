@@ -16,23 +16,19 @@ namespace AdFormsAssignment.AutoMapper
         public AutoMapperProfile()
         {
           
-            CreateMap<CreateTodoListDto, TblTodoList>();
-            CreateMap<CreateTodoItemDto, TblTodoItem>();
-            CreateMap<CreateLabelDto, TblLabel>();
+            CreateMap<CreateTodoListDto, TblTodoList>().ReverseMap();
+            CreateMap<CreateTodoItemDto, TblTodoItem>().ReverseMap();
+            CreateMap<CreateLabelDto, TblLabel>().ReverseMap();
 
-            CreateMap<TblTodoList, ReadTodoListDto>();
-            CreateMap<TblTodoItem, ReadTodoItemDto>();
-            CreateMap<TblLabel, ReadLabelDto>();
+            CreateMap<TblTodoList, ReadTodoListDto>().ReverseMap();
+            CreateMap<TblTodoItem, ReadTodoItemDto>().ReverseMap();
+            CreateMap<TblLabel, ReadLabelDto>().ReverseMap();
 
-            CreateMap<TblTodoList, CreateTodoListDto>();
-            CreateMap<TblTodoItem, CreateTodoItemDto>();
-            CreateMap<TblLabel, CreateLabelDto>();
+            CreateMap<TodoListDetail, ReadTodoListDto>().ReverseMap();
+            CreateMap<TodoItemDetail, ReadTodoItemDto>().ReverseMap();
 
-            CreateMap<TodoListDetail, ReadTodoListDto>();
-            CreateMap<TodoItemDetail, ReadTodoItemDto>();
-
-            CreateMap<ReadTodoListDto, TodoListDetail>();
-            CreateMap<ReadTodoItemDto, TodoItemDetail>();
+            CreateMap<TblTodoItemExtension, CreateTodoItemDto>().ReverseMap();
+            CreateMap<TblTodoListExtension, CreateTodoListDto>().ReverseMap();
         }
     }
 }

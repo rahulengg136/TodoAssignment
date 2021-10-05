@@ -17,10 +17,30 @@ namespace AdFormsAssignment.BLL.Implementations
         {
             _todoDAL = todoDAL;
         }
-        public async Task<int> CreateToDoItem(TblTodoItem todoItem)
+        public async Task<int> CreateToDoItem(TblTodoItemExtension todoItem, int userId)
         {
             Log.Information($"Going to hit DAL method");
-            return await _todoDAL.CreateTodoItem(todoItem);
+            // again convert it to tbl one and save 
+            TblTodoItem tblTodoItem = new TblTodoItem()
+            {
+                Description = todoItem.Description,
+                ExpectedDate = todoItem.ExpectedDate,
+                TodoItemId = todoItem.TodoItemId,
+                TodoListId = todoItem.TodoListId,
+                UserId = userId
+            };
+
+            List<TblLabelMapping> labelMappings = new List<TblLabelMapping>();
+            foreach (int labelId in todoItem.LabelIds)
+            {
+                TblLabelMapping mapping = new TblLabelMapping();
+                mapping.LabelId = labelId;
+                mapping.RecordId = todoItem.TodoItemId;
+                mapping.TodoTypeId = 2;
+                labelMappings.Add(mapping);
+            }
+
+            return await _todoDAL.CreateTodoItem(tblTodoItem, labelMappings);
         }
 
         public async Task<int> DeleteTodoItem(int todoItemId)
@@ -49,10 +69,31 @@ namespace AdFormsAssignment.BLL.Implementations
             return await _todoDAL.UpdatePatchTodoItem(todoItem, todoItemId);
         }
 
-        public async Task<int> UpdateToDoItem(TblTodoItem todoItem, int todoItemId)
+        public async Task<int> UpdateToDoItem(TblTodoItemExtension todoItem, int todoItemId, int userId)
         {
             Log.Information($"Going to hit DAL method");
-            return await _todoDAL.UpdateTodoItem(todoItem, todoItemId);
+
+            TblTodoItem tblTodoItem = new TblTodoItem()
+            {
+                Description = todoItem.Description,
+                ExpectedDate = todoItem.ExpectedDate,
+                TodoItemId = todoItem.TodoItemId,
+                TodoListId = todoItem.TodoListId,
+                UserId = userId
+            };
+
+            List<TblLabelMapping> labelMappings = new List<TblLabelMapping>();
+            foreach (int labelId in todoItem.LabelIds)
+            {
+                TblLabelMapping mapping = new TblLabelMapping();
+                mapping.LabelId = labelId;
+                mapping.RecordId = todoItem.TodoItemId;
+                mapping.TodoTypeId = 2;
+                labelMappings.Add(mapping);
+            }
+            return await _todoDAL.UpdateTodoItem(tblTodoItem,todoItemId, labelMappings);
         }
+
+      
     }
 }

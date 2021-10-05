@@ -1,5 +1,6 @@
 ﻿using AdFormAssignment.DAL.Entities;
 using System;
+using System.Collections.Generic;
 
 namespace AdFormsAssignment.DTO
 {
@@ -9,11 +10,11 @@ namespace AdFormsAssignment.DTO
 
     public class TodoListDetail: TblTodoList
     {
-      
+
         /// <summary>
         /// Label Name
         /// </summary>
-        public string LabelName { get; set; }
-       
+        public List<TblLabel> Labels { get; set; }
+
     }
 }

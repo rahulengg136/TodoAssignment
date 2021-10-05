@@ -19,7 +19,6 @@ namespace AdFormsAssignment.GraphQL.Types
         {
             Field(x => x.Description);
             Field(x => x.ExpectedDate);
-            Field(x => x.LabelId);
             Field(x => x.TodoItemId);
             Field(x => x.TodoListId);
             Field(x => x.UserId);

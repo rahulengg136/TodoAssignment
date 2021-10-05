@@ -124,11 +124,13 @@ namespace AdFormsAssignment.Controllers
                     return BadRequest(new { message = "List name and user id is mandatory" });
                 }
 
-                var list = _mapper.Map<TblTodoList>(todoList);
-                list.UserId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
-                int newRecordId = await _toDoService.CreateToDoList(list);
+                var list = _mapper.Map<TblTodoListExtension>(todoList);
+                var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
+                int newRecordId = await _toDoService.CreateToDoList(list,userId);
                 Log.Information($"Newly created todo list {MicrosoftJson.Serialize(todoList)}");
-                return Created($"~/api/v1/TODO/{newRecordId}", _mapper.Map<ReadTodoListDto>(list));
+
+                var newlyCreatedRecord = await _toDoService.GetToDoList(newRecordId, int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value));
+                return Created($"~/api/v1/TODO/{newRecordId}", newlyCreatedRecord);
 
             }
         }
@@ -193,8 +195,9 @@ namespace AdFormsAssignment.Controllers
                 }
                 else
                 {
-                    var list = _mapper.Map<TblTodoList>(todoList);
-                    await _toDoService.UpdateToDoList(list, todoListId);
+                    var list = _mapper.Map<TblTodoListExtension>(todoList);
+                    var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
+                    await _toDoService.UpdateToDoList(list, todoListId,userId);
                     Log.Information($"Updated todo list {MicrosoftJson.Serialize(todoList)}");
                     return Ok(await _toDoService.GetToDoList(todoListId, int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value)));
                 }

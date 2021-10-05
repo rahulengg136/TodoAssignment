@@ -12,5 +12,6 @@ namespace AdFormAssignment.DAL.Entities
         public DbSet<TblTodoItem> tblTodoItem { get; set; }
         public DbSet<TblLabel> tblLabel { get; set; }
         public DbSet<TblUser> tblUser { get; set; }
+        public DbSet<TblLabelMapping> tblLabelMapping { get; set; }
     }
 }

@@ -114,11 +114,12 @@ namespace AdFormsAssignment.Controllers
                     return BadRequest(new { message = "Description cannot be null or empty" });
                 }
 
-                var item = _mapper.Map<TblTodoItem>(todoItem);
-                item.UserId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
-                int newRecordId = await _toDoService.CreateToDoItem(item);
+                var item = _mapper.Map<TblTodoItemExtension>(todoItem);
+                var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
+                int newRecordId = await _toDoService.CreateToDoItem(item, userId);
                 Log.Information($"Record created successfully :{MicrosoftJson.Serialize(item)}");
-                return Created($"~/api/v1/TodoItem/{newRecordId}", _mapper.Map<ReadTodoItemDto>(item));
+                var newlyCreatedRecord = await _toDoService.GetToDoItem(newRecordId, int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value));
+                return Created($"~/api/v1/TodoItem/{newRecordId}", newlyCreatedRecord);
 
             }
         }
@@ -182,8 +183,9 @@ namespace AdFormsAssignment.Controllers
                 }
                 else
                 {
-                    var item = _mapper.Map<TblTodoItem>(todoItem);
-                    await _toDoService.UpdateToDoItem(item, todoItemId);
+                    var item = _mapper.Map<TblTodoItemExtension>(todoItem);
+                    var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
+                    await _toDoService.UpdateToDoItem(item, todoItemId,userId);
                     Log.Information($"Record updated successfully. New record looks like: {MicrosoftJson.Serialize(item)}");
                     return Ok(await _toDoService.GetToDoItem(todoItemId, int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value)));
                 }

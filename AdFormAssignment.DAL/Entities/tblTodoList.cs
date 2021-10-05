@@ -10,7 +10,11 @@ namespace AdFormAssignment.DAL.Entities
         public int TodoListId { get; set; }
         public string ListName { get; set; }
         public DateTime ExpectedDate { get; set; }
-        public int LabelId { get; set; }
         public int UserId { get; set; }
+    }
+
+    public class TblTodoListExtension : TblTodoList
+    {
+        public int[] LabelIds { get; set; }
     }
 }
