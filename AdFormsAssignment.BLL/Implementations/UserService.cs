@@ -9,16 +9,13 @@ namespace AdFormsAssignment.BLL.Implementations
     public class UserService : IUserService
     {
         private readonly IUserDal _userDAL;
-        private readonly ILogger<UserService> _logger;
-
-        public UserService(IUserDal userDAL, ILogger<UserService> logger)
+        public UserService(IUserDal userDAL)
         {
             _userDAL = userDAL;
-            _logger = logger;
         }
         public async Task<TblUser> CheckUser(string username, string password)
         {
-            return await _userDAL.CheckUser(username,password);
+            return await _userDAL.CheckUser(username, password);
         }
     }
 }

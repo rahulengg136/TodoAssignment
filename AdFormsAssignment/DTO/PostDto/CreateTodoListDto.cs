@@ -26,7 +26,5 @@ namespace AdFormsAssignment.DTO
         /// LabelId
         /// </summary>
         public int[] LabelIds { get; set; }
- 
     }
-  
 }

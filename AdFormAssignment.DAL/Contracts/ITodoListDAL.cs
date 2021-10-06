@@ -17,6 +17,6 @@ namespace AdFormAssignment.DAL.Contracts
         Task<int> DeleteTodoList(int todoListId);
         Task<int> UpdateTodoList(TblTodoList todoList, int todoListId, IEnumerable<TblLabelMapping> mappings);
         Task<int> UpdatePatchTodoList(JsonPatchDocument todoList, int todoListId);
+        List<TblLabel> GetListLabels(int todoListId);
     }
-
 }

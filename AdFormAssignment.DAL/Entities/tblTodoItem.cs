@@ -13,7 +13,7 @@ namespace AdFormAssignment.DAL.Entities
         public int UserId { get; set; }
     }
 
-    public class TblTodoItemExtension:TblTodoItem
+    public class TblTodoItemExtension : TblTodoItem
     {
         public int[] LabelIds { get; set; }
     }

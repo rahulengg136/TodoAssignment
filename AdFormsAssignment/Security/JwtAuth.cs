@@ -14,19 +14,16 @@ namespace AdFormsAssignment.Security
     public class JwtAuth : IJwtAuth
     {
         private readonly string _key;
-
         private readonly List<TblUser> validUsers = new List<TblUser>(){
             new TblUser { UserId = 1, UserName = "rahul", Password = "rahul123" },
-             new TblUser { UserId = 2, UserName = "ajay", Password = "ajay123" },
-              new TblUser { UserId = 3, UserName = "pooja", Password = "pooja123" } };
-
+            new TblUser { UserId = 2, UserName = "ajay", Password = "ajay123" },
+            new TblUser { UserId = 3, UserName = "pooja", Password = "pooja123" } };
 
         /// <summary>
         /// Constructor takes key that helps in generating unique token for different clients
         /// </summary>
         /// <param name="key">A string value</param>
-        public JwtAuth(string key
-            )
+        public JwtAuth(string key)
         {
             _key = key;
         }
@@ -38,8 +35,7 @@ namespace AdFormsAssignment.Security
         /// <returns>Returns token</returns>
         public string Authentication(string username, string password)
         {
-
-            TblUser user = validUsers.Find(x => x.UserName == username.ToLower().Replace(" ","") && x.Password == password.ToLower().Replace(" ", ""));
+            TblUser user = validUsers.Find(x => x.UserName == username.ToLower().Replace(" ", "") && x.Password == password.ToLower().Replace(" ", ""));
             if (user == null)
             {
                 return null;

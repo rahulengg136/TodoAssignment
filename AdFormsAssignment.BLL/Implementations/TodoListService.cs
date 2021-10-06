@@ -9,11 +9,9 @@ using System.Threading.Tasks;
 
 namespace AdFormsAssignment.BLL
 {
-
     public class ToDoListService : ITodoListService
     {
         private readonly ITodoListDal _todoDAL;
-
         public ToDoListService(ITodoListDal todoDAL)
         {
             _todoDAL = todoDAL;
@@ -45,13 +43,14 @@ namespace AdFormsAssignment.BLL
             List<TblLabelMapping> labelMappings = new List<TblLabelMapping>();
             foreach (int labelId in list.LabelIds)
             {
-                TblLabelMapping mapping = new TblLabelMapping();
-                mapping.LabelId = labelId;
-                mapping.RecordId = list.TodoListId;
-                mapping.TodoTypeId = 1;
+                TblLabelMapping mapping = new TblLabelMapping()
+                {
+                    LabelId = labelId,
+                    RecordId = list.TodoListId,
+                    TodoTypeId = 1
+                };
                 labelMappings.Add(mapping);
             }
-
             return await _todoDAL.CreateTodoList(tblTodoList, labelMappings);
         }
 
@@ -63,7 +62,6 @@ namespace AdFormsAssignment.BLL
         public async Task<int> UpdateToDoList(TblTodoListExtension todoList, int todoListId, int userId)
         {
             Log.Information($"Going to hit DAL method");
-
             TblTodoList tblTodoList = new TblTodoList()
             {
                 ExpectedDate = todoList.ExpectedDate,
@@ -75,10 +73,12 @@ namespace AdFormsAssignment.BLL
             List<TblLabelMapping> labelMappings = new List<TblLabelMapping>();
             foreach (int labelId in todoList.LabelIds)
             {
-                TblLabelMapping mapping = new TblLabelMapping();
-                mapping.LabelId = labelId;
-                mapping.RecordId = todoList.TodoListId;
-                mapping.TodoTypeId = 1;
+                TblLabelMapping mapping = new TblLabelMapping()
+                {
+                    LabelId = labelId,
+                    RecordId = todoList.TodoListId,
+                    TodoTypeId = 1
+                };
                 labelMappings.Add(mapping);
             }
             return await _todoDAL.UpdateTodoList(tblTodoList, todoListId, labelMappings);
@@ -88,6 +88,10 @@ namespace AdFormsAssignment.BLL
         {
             Log.Information($"Going to hit DAL method");
             return await _todoDAL.UpdatePatchTodoList(todoList, todoListId);
+        }
+        public List<TblLabel> GetListLabels(int todoListId)
+        {
+            return _todoDAL.GetListLabels(todoListId);
         }
     }
 }

@@ -47,8 +47,6 @@ namespace CorrelationId.CorrelationIdWork
                 httpContext.Request.Headers.Add(CorrelationIdHeaderKey,
                 correlationId);
                 _logger.LogInformation($"Generated CorrelationId:{ correlationId}");
-
-
             }
             httpContext.Response.OnStarting(() =>
             {

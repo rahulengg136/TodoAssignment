@@ -3,8 +3,7 @@
     /// <summary>
     /// Label details 
     /// </summary>
-   
-    public class ReadLabelDto:CreateLabelDto
+    public class ReadLabelDto : CreateLabelDto
     {
         /// <summary>
         /// Unique id of the label

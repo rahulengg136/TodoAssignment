@@ -54,8 +54,11 @@ namespace AdFormsAssignment.Controllers
                 var allLables = await _labelService.GetAllLabels(pageNumber, pageSize, SearchText);
                 Log.Information($"Filtered labels: {MicrosoftJson.Serialize(allLables)}");
                 if (!allLables.Any())
+                {
                     return NoContent();
-                return Ok(_mapper.Map<IEnumerable<ReadLabelDto>>(allLables));
+                }
+                var filteredLables = _mapper.Map<IEnumerable<ReadLabelDto>>(allLables);
+                return Ok(filteredLables);
             }
         }
         /// <summary>
@@ -124,7 +127,7 @@ namespace AdFormsAssignment.Controllers
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(string), 400)]
-        public async Task<IActionResult> DeleteTodoLabel(int labelId)
+        public async Task<IActionResult> DeleteLabel(int labelId)
         {
             using (LogContext.PushProperty("Correlation Id", RequestInfo.GetCorrelationId(HttpContext.Request)))
             {
@@ -142,9 +145,7 @@ namespace AdFormsAssignment.Controllers
                 {
                     return BadRequest("No resource found with this label id");
                 }
-
             }
-
         }
     }
 }

@@ -2,7 +2,6 @@
 
 namespace AdFormsAssignment.DTO
 {
-
     /// <summary>
     /// To-do item common properties that must be used in any extension of this class
     /// </summary>
@@ -25,14 +24,11 @@ namespace AdFormsAssignment.DTO
     /// <summary>
     /// to-do item details
     /// </summary>
-    public class CreateTodoItemDto:ToDoItemCommonProperties
+    public class CreateTodoItemDto : ToDoItemCommonProperties
     {
-       
         /// <summary>
         /// LabelId
         /// </summary>
         public int[] LabelIds { get; set; }
-     
     }
-
 }

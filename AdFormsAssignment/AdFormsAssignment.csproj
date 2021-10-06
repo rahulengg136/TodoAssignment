@@ -8,6 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Controllers\v1\GraphQLController.cs" />
     <Compile Remove="Security\BasicAuthenticationAttribute.cs" />
   </ItemGroup>
 

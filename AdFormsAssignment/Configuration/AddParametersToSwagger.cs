@@ -10,16 +10,14 @@ namespace AdFormsAssignment
     /// </summary>
     public class AddParametersToSwagger : IOperationFilter
     {
-     /// <summary>
-     /// Written Apply method
-     /// </summary>
-     /// <param name="operation"></param>
-     /// <param name="context"></param>
+        /// <summary>
+        /// Written Apply method
+        /// </summary>
+        /// <param name="operation"></param>
+        /// <param name="context"></param>
         public void Apply(OpenApiOperation operation, OperationFilterContext context)
         {
             if (operation.Parameters == null) operation.Parameters = new List<OpenApiParameter>();
-
-
             if (context.ApiDescription.ActionDescriptor is ControllerActionDescriptor)
             {
                 operation.Parameters.Add(new OpenApiParameter()
@@ -43,8 +41,6 @@ namespace AdFormsAssignment
                     Description = "",
                     Required = false
                 });
-
-
             }
         }
     }

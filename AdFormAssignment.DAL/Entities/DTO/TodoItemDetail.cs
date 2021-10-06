@@ -1,5 +1,4 @@
 ﻿using AdFormAssignment.DAL.Entities;
-using System;
 using System.Collections.Generic;
 
 namespace AdFormsAssignment.DTO
@@ -7,8 +6,7 @@ namespace AdFormsAssignment.DTO
     /// <summary>
     /// to-do item details
     /// </summary>
-
-    public class TodoItemDetail: TblTodoItem
+    public class TodoItemDetail : TblTodoItem
     {
         /// <summary>
         /// List name
@@ -19,7 +17,5 @@ namespace AdFormsAssignment.DTO
         /// Label name
         /// </summary>
         public List<TblLabel> Labels { get; set; }
-
-
     }
 }

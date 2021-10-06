@@ -19,8 +19,7 @@ namespace AdFormsAssignment.CustomMiddlewares
         /// <summary>
         /// Middleware that logs request and response
         /// </summary>
-        public LogRequestResponseMiddleware(RequestDelegate next,
-                                                ILoggerFactory loggerFactory)
+        public LogRequestResponseMiddleware(RequestDelegate next, ILoggerFactory loggerFactory)
         {
             _next = next;
             _logger = loggerFactory
@@ -37,10 +36,7 @@ namespace AdFormsAssignment.CustomMiddlewares
             await LogRequest(context);
             await _next(context);
             await LogResponse(context);
-
         }
-
-
         private async Task LogRequest(HttpContext context)
         {
             context.Request.EnableBuffering();
@@ -87,28 +83,20 @@ namespace AdFormsAssignment.CustomMiddlewares
 
             return textWriter.ToString();
         }
-
         private async Task LogResponse(HttpContext context)
         {
-           
-
             var originalBodyStream = context.Response.Body;
-           
-
             await using var responseBody = _recyclableMemoryStreamManager.GetStream();
             context.Response.Body = responseBody;
-
             context.Response.Body.Seek(0, SeekOrigin.Begin);
             var text = await new StreamReader(context.Response.Body).ReadToEndAsync();
             context.Response.Body.Seek(0, SeekOrigin.Begin);
-
             _logger.LogInformation($"Http Response Information:{Environment.NewLine}" +
                                    $"Schema:{context.Request.Scheme} " +
                                    $"Host: {context.Request.Host} " +
                                    $"Path: {context.Request.Path} " +
                                    $"QueryString: {context.Request.QueryString} " +
                                    $"Response Body: {text}");
-
             await responseBody.CopyToAsync(originalBodyStream);
         }
     }

@@ -1,10 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ApplicationModels;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace AdFormsAssignment.Configuration
 {
@@ -36,7 +32,7 @@ namespace AdFormsAssignment.Configuration
                 foreach (ActionModel action in controller.Actions)
                 {
                     action.Filters.Add(new ProducesResponseTypeAttribute(StatusCodes.Status500InternalServerError));
-                    action.Filters.Add(new ProducesResponseTypeAttribute(typeof(string),401));
+                    action.Filters.Add(new ProducesResponseTypeAttribute(typeof(string), 401));
                 }
             }
         }

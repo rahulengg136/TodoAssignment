@@ -1,5 +1,4 @@
-﻿using AdFormsAssignment.DTO;
-using AdFormsAssignment.DTO.PostDto;
+﻿using AdFormsAssignment.DTO.PostDto;
 using AdFormsAssignment.Security;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;

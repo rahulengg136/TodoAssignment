@@ -1,5 +1,4 @@
 ﻿using AdFormAssignment.DAL.Entities;
-using System;
 using System.Collections.Generic;
 
 namespace AdFormsAssignment.DTO
@@ -8,7 +7,7 @@ namespace AdFormsAssignment.DTO
     /// To do list information
     /// </summary>
 
-    public class ReadTodoListDto: ToDoListCommonProperties
+    public class ReadTodoListDto : ToDoListCommonProperties
     {
         /// <summary>
         /// List unique id
@@ -18,6 +17,5 @@ namespace AdFormsAssignment.DTO
         /// Label Name
         /// </summary>
         public List<TblLabel> Labels { get; set; }
-
     }
 }

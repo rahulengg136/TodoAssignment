@@ -17,6 +17,6 @@ namespace AdFormsAssignment.BLL.Contracts
         Task<int> DeleteTodoList(int todoListId);
         Task<int> UpdateToDoList(TblTodoListExtension todoList, int todoListId, int userId);
         Task<int> UpdatePatchTodoList(JsonPatchDocument todoList, int todoListId);
-
+        List<TblLabel> GetListLabels(int todoListId);
     }
 }

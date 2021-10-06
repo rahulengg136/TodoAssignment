@@ -7,7 +7,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;
 using System.Threading.Tasks;
-using System.Transactions;
 
 namespace AdFormAssignment.DAL.Implementations
 {
@@ -23,8 +22,8 @@ namespace AdFormAssignment.DAL.Implementations
         {
             Log.Information($"Going to hit database");
 
-            var data = _dbContext.tblTodoItem
-                   .Join(_dbContext.tblTodoList, items => items.TodoListId, lists => lists.TodoListId, (items, lists) => new
+            var data = _dbContext.TblTodoItem
+                   .Join(_dbContext.TblTodoList, items => items.TodoListId, lists => lists.TodoListId, (items, lists) => new
                    {
                        items.Description,
                        items.ExpectedDate,
@@ -38,11 +37,9 @@ namespace AdFormAssignment.DAL.Implementations
 
             if (data != null)
             {
-
                 TodoItemDetail todoItemDetail = JsonSerializer.Deserialize<TodoItemDetail>(JsonSerializer.Serialize(data));
-                int[] recordRelevantLabelsIds = _dbContext.tblLabelMapping.Where(x => x.RecordId == todoItemId && x.TodoTypeId == 2).Select(x => x.LabelId).ToArray();
-                todoItemDetail.Labels = _dbContext.tblLabel.Where(x => recordRelevantLabelsIds.Contains(x.LabelId)).ToList();
-
+                int[] recordRelevantLabelsIds = _dbContext.TblLabelMapping.Where(x => x.RecordId == todoItemId && x.TodoTypeId == 2).Select(x => x.LabelId).ToArray();
+                todoItemDetail.Labels = _dbContext.TblLabel.Where(x => recordRelevantLabelsIds.Contains(x.LabelId)).ToList();
                 return Task.FromResult(todoItemDetail);
             }
             else
@@ -55,9 +52,8 @@ namespace AdFormAssignment.DAL.Implementations
         {
             Log.Information($"Going to hit database");
 
-
-            var data = _dbContext.tblTodoItem
-                 .Join(_dbContext.tblTodoList, items => items.TodoListId, lists => lists.TodoListId, (items, lists) => new
+            var data = _dbContext.TblTodoItem
+                 .Join(_dbContext.TblTodoList, items => items.TodoListId, lists => lists.TodoListId, (items, lists) => new
                  {
                      items.Description,
                      items.ExpectedDate,
@@ -70,14 +66,11 @@ namespace AdFormAssignment.DAL.Implementations
                  .Where(x => ((SearchText == null) || x.Description.Contains(SearchText)) && x.UserId == userId)
                    .Skip((PageNumber - 1) * PageSize).Take(PageSize);
 
-
             IEnumerable<TodoItemDetail> todoItemsDetail = JsonSerializer.Deserialize<IEnumerable<TodoItemDetail>>(JsonSerializer.Serialize(data));
-
             int[] allItemsId = data.Select(x => x.TodoItemId).ToArray();
-
-            List<TblLabelMapping> mappingsOfAllItems = _dbContext.tblLabelMapping.Where(x => allItemsId.Contains(x.RecordId) && x.TodoTypeId == 2).ToList();
-            int[] allRequiredLabelIds = _dbContext.tblLabelMapping.Where(x => allItemsId.Contains(x.RecordId) && x.TodoTypeId == 2).Select(x => x.LabelId).ToArray();
-            List<TblLabel> allLabelsRequired = _dbContext.tblLabel.Where(x => allRequiredLabelIds.Contains(x.LabelId)).ToList();
+            List<TblLabelMapping> mappingsOfAllItems = _dbContext.TblLabelMapping.Where(x => allItemsId.Contains(x.RecordId) && x.TodoTypeId == 2).ToList();
+            int[] allRequiredLabelIds = _dbContext.TblLabelMapping.Where(x => allItemsId.Contains(x.RecordId) && x.TodoTypeId == 2).Select(x => x.LabelId).ToArray();
+            List<TblLabel> allLabelsRequired = _dbContext.TblLabel.Where(x => allRequiredLabelIds.Contains(x.LabelId)).ToList();
 
             foreach (var itemDetail in todoItemsDetail)
             {
@@ -91,39 +84,37 @@ namespace AdFormAssignment.DAL.Implementations
         {
             Log.Information($"Going to hit database");
 
-            _dbContext.tblTodoItem.Add(todoItem);
+            _dbContext.TblTodoItem.Add(todoItem);
             await _dbContext.SaveChangesAsync();
 
             mappings.ToList().ForEach(x => x.RecordId = todoItem.TodoItemId);
-            _dbContext.tblLabelMapping.AddRange(mappings);
+            _dbContext.TblLabelMapping.AddRange(mappings);
             await _dbContext.SaveChangesAsync();
 
             return todoItem.TodoItemId;
-
         }
         public async Task<int> DeleteTodoItem(int todoItemId)
         {
             Log.Information($"Going to hit database");
-            var itemToDelete = _dbContext.tblTodoItem.Single(x => x.TodoItemId == todoItemId);
-            _dbContext.tblTodoItem.Remove(itemToDelete);
+            var itemToDelete = _dbContext.TblTodoItem.Single(x => x.TodoItemId == todoItemId);
+            _dbContext.TblTodoItem.Remove(itemToDelete);
             await _dbContext.SaveChangesAsync();
             return todoItemId;
-
         }
 
         public async Task<int> UpdateTodoItem(TblTodoItem todoItem, int todoItemId, IEnumerable<TblLabelMapping> mappings)
         {
             Log.Information($"Going to hit database");
-            var existingRecord = _dbContext.tblTodoItem.Single(x => x.TodoItemId == todoItemId);
+            var existingRecord = _dbContext.TblTodoItem.Single(x => x.TodoItemId == todoItemId);
             existingRecord.ExpectedDate = todoItem.ExpectedDate;
             existingRecord.Description = todoItem.Description;
 
-            var relatedLabelsData = _dbContext.tblLabelMapping.Where(x => x.RecordId == todoItemId && x.TodoTypeId == 2);
-            _dbContext.tblLabelMapping.RemoveRange(relatedLabelsData);
+            var relatedLabelsData = _dbContext.TblLabelMapping.Where(x => x.RecordId == todoItemId && x.TodoTypeId == 2);
+            _dbContext.TblLabelMapping.RemoveRange(relatedLabelsData);
             await _dbContext.SaveChangesAsync();
 
             mappings.ToList().ForEach(x => x.RecordId = todoItemId);
-            _dbContext.tblLabelMapping.AddRange(mappings);
+            _dbContext.TblLabelMapping.AddRange(mappings);
             await _dbContext.SaveChangesAsync();
 
             return todoItemId;
@@ -132,13 +123,19 @@ namespace AdFormAssignment.DAL.Implementations
         public async Task<int> UpdatePatchTodoItem(JsonPatchDocument todoItem, int todoItemId)
         {
             Log.Information($"Going to hit database");
-            var item = await _dbContext.tblTodoItem.FindAsync(todoItemId);
+            var item = await _dbContext.TblTodoItem.FindAsync(todoItemId);
             if (item != null)
             {
                 todoItem.ApplyTo(item);
                 await _dbContext.SaveChangesAsync();
             }
             return todoItemId;
+        }
+        public List<TblLabel> GetItemLabels(int todoItemId)
+        {
+            int[] recordRelevantLabelsIds = _dbContext.TblLabelMapping.Where(x => x.RecordId == todoItemId && x.TodoTypeId == 2).Select(x => x.LabelId).ToArray();
+            var labels = _dbContext.TblLabel.Where(x => recordRelevantLabelsIds.Contains(x.LabelId)).ToList();
+            return labels;
         }
     }
 }

@@ -9,8 +9,6 @@ using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using Serilog;
 using Serilog.Context;
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
@@ -54,15 +52,12 @@ namespace AdFormsAssignment.Controllers
         {
             using (LogContext.PushProperty("Correlation Id", RequestInfo.GetCorrelationId(HttpContext.Request)))
             {
-
                 var allTodoItems = await _toDoService.GetAllTodoItems(pageNumber, pageSize, SearchText, int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value));
                 Log.Information($"Filtered todo items :{MicrosoftJson.Serialize(allTodoItems)}");
                 if (allTodoItems.Any())
                     return Ok(_mapper.Map<IEnumerable<ReadTodoItemDto>>(allTodoItems));
                 else
                     return NoContent();
-
-
             }
         }
         /// <summary>
@@ -83,7 +78,6 @@ namespace AdFormsAssignment.Controllers
                 {
                     return BadRequest(new { message = "To do item Id cannot be zero or null" });
                 }
-
                 var todoItem = await _toDoService.GetToDoItem(todoItemId, int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value));
                 Log.Information($"Filtered todo item :{MicrosoftJson.Serialize(todoItem)}");
                 if (todoItem != null)
@@ -92,7 +86,6 @@ namespace AdFormsAssignment.Controllers
                 }
                 else
                     return NoContent();
-
             }
         }
         /// <summary>
@@ -113,14 +106,12 @@ namespace AdFormsAssignment.Controllers
                 {
                     return BadRequest(new { message = "Description cannot be null or empty" });
                 }
-
                 var item = _mapper.Map<TblTodoItemExtension>(todoItem);
                 var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
                 int newRecordId = await _toDoService.CreateToDoItem(item, userId);
                 Log.Information($"Record created successfully :{MicrosoftJson.Serialize(item)}");
                 var newlyCreatedRecord = await _toDoService.GetToDoItem(newRecordId, int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value));
                 return Created($"~/api/v1/TodoItem/{newRecordId}", newlyCreatedRecord);
-
             }
         }
         /// <summary>
@@ -132,9 +123,6 @@ namespace AdFormsAssignment.Controllers
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(typeof(string), 400)]
         [ProducesResponseType(StatusCodes.Status200OK)]
-
-
-
         public async Task<IActionResult> DeleteTodoItem(int todoItemId)
         {
             using (LogContext.PushProperty("Correlation Id", RequestInfo.GetCorrelationId(HttpContext.Request)))
@@ -153,7 +141,6 @@ namespace AdFormsAssignment.Controllers
                     Log.Information($"Record deleted successfully : {todoItemId}");
                     return Ok(existingTodoItem);
                 }
-
             }
         }
         /// <summary>
@@ -185,12 +172,11 @@ namespace AdFormsAssignment.Controllers
                 {
                     var item = _mapper.Map<TblTodoItemExtension>(todoItem);
                     var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
-                    await _toDoService.UpdateToDoItem(item, todoItemId,userId);
+                    await _toDoService.UpdateToDoItem(item, todoItemId, userId);
                     Log.Information($"Record updated successfully. New record looks like: {MicrosoftJson.Serialize(item)}");
                     return Ok(await _toDoService.GetToDoItem(todoItemId, int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value)));
                 }
             }
-
         }
 
 
@@ -213,8 +199,6 @@ namespace AdFormsAssignment.Controllers
                 {
                     return BadRequest(new { message = "To do item id cannot be zero" });
                 }
-
-
                 var existingTodoItem = await _toDoService.GetToDoItem(todoItemId, int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value));
                 if (existingTodoItem == null)
                 {

@@ -14,9 +14,8 @@ namespace AdFormAssignment.DAL.Implementations
         }
         public Task<TblUser> CheckUser(string username, string password)
         {
-            var user = Task.FromResult(_dbContext.tblUser.SingleOrDefault(x => x.UserName == username && x.Password == password));
+            var user = Task.FromResult(_dbContext.TblUser.SingleOrDefault(x => x.UserName == username && x.Password == password));
             return user;
         }
     }
-
 }

@@ -1,7 +1,6 @@
 ﻿using AdFormAssignment.DAL.Entities;
 using AdFormsAssignment.DTO;
 using AutoMapper;
-using System.Collections.Generic;
 
 namespace AdFormsAssignment.AutoMapper
 {
@@ -15,18 +14,14 @@ namespace AdFormsAssignment.AutoMapper
         /// </summary>
         public AutoMapperProfile()
         {
-          
             CreateMap<CreateTodoListDto, TblTodoList>().ReverseMap();
             CreateMap<CreateTodoItemDto, TblTodoItem>().ReverseMap();
             CreateMap<CreateLabelDto, TblLabel>().ReverseMap();
-
             CreateMap<TblTodoList, ReadTodoListDto>().ReverseMap();
             CreateMap<TblTodoItem, ReadTodoItemDto>().ReverseMap();
             CreateMap<TblLabel, ReadLabelDto>().ReverseMap();
-
             CreateMap<TodoListDetail, ReadTodoListDto>().ReverseMap();
             CreateMap<TodoItemDetail, ReadTodoItemDto>().ReverseMap();
-
             CreateMap<TblTodoItemExtension, CreateTodoItemDto>().ReverseMap();
             CreateMap<TblTodoListExtension, CreateTodoListDto>().ReverseMap();
         }

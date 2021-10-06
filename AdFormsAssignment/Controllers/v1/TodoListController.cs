@@ -7,11 +7,8 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json.Linq;
 using Serilog;
 using Serilog.Context;
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
@@ -56,7 +53,6 @@ namespace AdFormsAssignment.Controllers
         {
             using (LogContext.PushProperty("Correlation Id", RequestInfo.GetCorrelationId(HttpContext.Request)))
             {
-
                 Log.Information($"Entered GetAllTaskLists method with pageNumber {pageNumber}, pageSize {pageSize}, searchText {SearchText}");
                 var allTodoLists = await _toDoService.GetAllTodoLists(pageNumber, pageSize, SearchText, int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value));
                 Log.Information($"List of filtered to dos :{MicrosoftJson.Serialize(allTodoLists)}");
@@ -68,7 +64,6 @@ namespace AdFormsAssignment.Controllers
                 {
                     return NoContent();
                 }
-
             }
         }
         /// <summary>
@@ -81,8 +76,6 @@ namespace AdFormsAssignment.Controllers
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(typeof(ReadTodoListDto), 200)]
         [ProducesResponseType(typeof(string), 400)]
-
-
         public async Task<IActionResult> GetTodoList(int todoListId)
         {
             using (LogContext.PushProperty("Correlation Id", RequestInfo.GetCorrelationId(HttpContext.Request)))
@@ -91,7 +84,6 @@ namespace AdFormsAssignment.Controllers
                 {
                     return BadRequest(new { message = "To do list id cannot be zero" });
                 }
-
                 var list = await _toDoService.GetToDoList(todoListId, int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value));
                 Log.Information($"Found todo list. list id {todoListId} , {MicrosoftJson.Serialize(list)}");
                 if (list != null)
@@ -102,7 +94,6 @@ namespace AdFormsAssignment.Controllers
                 {
                     return NoContent();
                 }
-
             }
         }
         /// <summary>
@@ -112,8 +103,8 @@ namespace AdFormsAssignment.Controllers
         /// <returns>Returns success if to-do list gets created successfully</returns>
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        [ProducesResponseType(typeof(ReadTodoListDto),201)]
-        [ProducesResponseType(typeof(string),400)]
+        [ProducesResponseType(typeof(ReadTodoListDto), 201)]
+        [ProducesResponseType(typeof(string), 400)]
         public async Task<IActionResult> CreateList([FromBody] CreateTodoListDto todoList)
         {
             using (LogContext.PushProperty("Correlation Id", RequestInfo.GetCorrelationId(HttpContext.Request)))
@@ -123,15 +114,13 @@ namespace AdFormsAssignment.Controllers
                 {
                     return BadRequest(new { message = "List name and user id is mandatory" });
                 }
-
                 var list = _mapper.Map<TblTodoListExtension>(todoList);
                 var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
-                int newRecordId = await _toDoService.CreateToDoList(list,userId);
+                int newRecordId = await _toDoService.CreateToDoList(list, userId);
                 Log.Information($"Newly created todo list {MicrosoftJson.Serialize(todoList)}");
 
                 var newlyCreatedRecord = await _toDoService.GetToDoList(newRecordId, int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value));
                 return Created($"~/api/v1/TODO/{newRecordId}", newlyCreatedRecord);
-
             }
         }
         /// <summary>
@@ -152,7 +141,6 @@ namespace AdFormsAssignment.Controllers
                     return BadRequest(new { message = "To do list id cannot be zero" });
 
                 var list = await _toDoService.GetToDoList(todoListId, int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value));
-
                 if (list == null)
                 {
                     return BadRequest("Resource not found with this unique id");
@@ -163,8 +151,6 @@ namespace AdFormsAssignment.Controllers
                     Log.Information($"Delete to do list : {MicrosoftJson.Serialize(list)}");
                     return Ok(list);
                 }
-
-
             }
         }
         /// <summary>
@@ -186,9 +172,7 @@ namespace AdFormsAssignment.Controllers
                 {
                     return BadRequest(new { message = "to do list id cannot be zero. List name cannot be empty in body" });
                 }
-
                 var existingList = await _toDoService.GetToDoList(todoListId, int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value));
-
                 if (existingList == null)
                 {
                     return BadRequest("Resource not found with this unique id");
@@ -197,15 +181,13 @@ namespace AdFormsAssignment.Controllers
                 {
                     var list = _mapper.Map<TblTodoListExtension>(todoList);
                     var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
-                    await _toDoService.UpdateToDoList(list, todoListId,userId);
+                    await _toDoService.UpdateToDoList(list, todoListId, userId);
                     Log.Information($"Updated todo list {MicrosoftJson.Serialize(todoList)}");
                     return Ok(await _toDoService.GetToDoList(todoListId, int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value)));
                 }
-
             }
-
-
         }
+
         /// <summary>
         /// This method patches a to-do list
         /// </summary>
@@ -226,7 +208,6 @@ namespace AdFormsAssignment.Controllers
                 }
 
                 var existingList = await _toDoService.GetToDoList(todoListId, int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value));
-
                 if (existingList == null)
                 {
                     return BadRequest("Resource not found with this unique id");
@@ -237,9 +218,7 @@ namespace AdFormsAssignment.Controllers
                     Log.Information($"Update todo list id {todoListId} with patch {MicrosoftJson.Serialize(todoList)}");
                     return Ok(await _toDoService.GetToDoList(todoListId, int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value)));
                 }
-
             }
-
         }
     }
 }

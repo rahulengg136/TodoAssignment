@@ -1,9 +1,6 @@
 ﻿using AdFormAssignment.DAL.Entities;
+using AdFormsAssignment.BLL.Contracts;
 using GraphQL.Types;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace AdFormsAssignment.GraphQL.Types
 {
@@ -15,12 +12,17 @@ namespace AdFormsAssignment.GraphQL.Types
         /// <summary>
         /// GraphQL type : to-do list
         /// </summary>
-        public ToDoListType()
+        public ToDoListType(ITodoListService todoListService)
         {
             Field(x => x.ExpectedDate);
             Field(x => x.ListName);
             Field(x => x.TodoListId);
             Field(x => x.UserId);
+
+            Field<ListGraphType<LabelType>>(
+                "labels",
+                resolve: context => todoListService.GetListLabels(context.Source.TodoListId)
+                );
         }
     }
 }

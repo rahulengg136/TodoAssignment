@@ -55,7 +55,7 @@ namespace AdFormsAssignment
         /// This method gets called by the runtime. Use this method to add services to the container.
         /// </summary>
         /// <param name="services"></param>
-      
+
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers(
@@ -133,7 +133,7 @@ namespace AdFormsAssignment
             // registering services
             services.AddScoped<ITodoListDal, TodoListDal>();
             services.AddScoped<ITodoItemDal, TodoItemDal>();
-            services.AddScoped<ILabelDAL, LabelDal>();
+            services.AddScoped<ILabelDal, LabelDal>();
             services.AddScoped<IUserDal, UserDal>();
 
             services.AddScoped<ITodoListService, ToDoListService>();
@@ -153,8 +153,8 @@ namespace AdFormsAssignment
                ));
             services.AddScoped<GraphQLSchema>();
             services.AddGraphQL(o => { o.ExposeExceptions = true; })
-                .AddGraphTypes(ServiceLifetime.Scoped)
-                ;
+                .AddGraphTypes(ServiceLifetime.Scoped).AddDataLoader()
+                .AddUserContextBuilder(httppcontext => httppcontext.User);
 
         }
         /// <summary>
@@ -190,7 +190,6 @@ namespace AdFormsAssignment
             {
                 options.SwaggerEndpoint("/swagger/v1/swagger.json", "Swagger API");
             });
-
         }
     }
 }

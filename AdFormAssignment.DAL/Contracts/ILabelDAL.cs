@@ -7,7 +7,7 @@ namespace AdFormAssignment.DAL.Contracts
     /// <summary>
     /// Contract for labels data access
     /// </summary>
-    public interface ILabelDAL
+    public interface ILabelDal
     {
         Task<int> CreateLabel(TblLabel label);
         Task<TblLabel> GetSingleLabel(int labelId);
