@@ -1,12 +1,12 @@
 ﻿using AdFormAssignment.DAL.Entities;
+using AdFormsAssignment.DTO.PostDto;
 using System.Collections.Generic;
 
-namespace AdFormsAssignment.DTO
+namespace AdFormsAssignment.DTO.GetDto
 {
     /// <summary>
     /// to-do item details
     /// </summary>
-
     public class ReadTodoItemDto : ToDoItemCommonProperties
     {
         /// <summary>
@@ -17,7 +17,6 @@ namespace AdFormsAssignment.DTO
         /// List name
         /// </summary>
         public string ListName { get; set; }
-
         /// <summary>
         /// Label name
         /// </summary>

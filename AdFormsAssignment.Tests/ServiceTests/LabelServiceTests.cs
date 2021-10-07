@@ -30,7 +30,7 @@ namespace AdFormsAssignment.Tests.ServiceTests
             var service = GetLabelService();
 
             //Act
-            IEnumerable<TblLabel> labels = service.GetAllLabels(pageNumber, pageSize, searchText).GetAwaiter().GetResult();
+            IEnumerable<TblLabel> labels = service.GetAllLabels(pageNumber, pageSize, null).GetAwaiter().GetResult();
 
             //Assert
             Assert.NotNull(labels);
@@ -50,7 +50,7 @@ namespace AdFormsAssignment.Tests.ServiceTests
             var service = GetLabelService();
 
             //Act
-            IEnumerable<TblLabel> labels = service.GetAllLabels(pageNumber, pageSize, searchText).GetAwaiter().GetResult();
+            IEnumerable<TblLabel> labels = service.GetAllLabels(pageNumber, pageSize, null).GetAwaiter().GetResult();
 
             //Assert
             Assert.Empty(labels);
@@ -71,7 +71,6 @@ namespace AdFormsAssignment.Tests.ServiceTests
 
             //Assert
             Assert.NotNull(labelInfo);
-
         }
 
         [Fact]

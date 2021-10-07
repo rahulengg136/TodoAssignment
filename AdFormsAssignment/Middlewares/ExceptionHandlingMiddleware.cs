@@ -4,7 +4,7 @@ using Serilog;
 using System;
 using System.Threading.Tasks;
 
-namespace AdFormsAssignment.CustomMiddlewares
+namespace AdFormsAssignment.Middlewares
 {
     /// <summary>
     /// Exception handling middleware

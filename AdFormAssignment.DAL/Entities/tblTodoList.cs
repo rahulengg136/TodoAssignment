@@ -1,7 +1,6 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 
-
 namespace AdFormAssignment.DAL.Entities
 {
     public class TblTodoList

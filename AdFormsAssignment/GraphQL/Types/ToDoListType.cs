@@ -18,7 +18,6 @@ namespace AdFormsAssignment.GraphQL.Types
             Field(x => x.ListName);
             Field(x => x.TodoListId);
             Field(x => x.UserId);
-
             Field<ListGraphType<LabelType>>(
                 "labels",
                 resolve: context => todoListService.GetListLabels(context.Source.TodoListId)

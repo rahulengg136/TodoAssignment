@@ -1,11 +1,13 @@
 ﻿using AdFormAssignment.DAL.Entities;
-using AdFormsAssignment.DTO;
+using AdFormAssignment.DAL.Entities.DTO;
+using AdFormsAssignment.DTO.GetDto;
+using AdFormsAssignment.DTO.PostDto;
 using AutoMapper;
 
 namespace AdFormsAssignment.AutoMapper
 {
     /// <summary>
-    /// Automapper profile
+    /// AutoMapper profile
     /// </summary>
     public class AutoMapperProfile : Profile
     {
@@ -24,6 +26,8 @@ namespace AdFormsAssignment.AutoMapper
             CreateMap<TodoItemDetail, ReadTodoItemDto>().ReverseMap();
             CreateMap<TblTodoItemExtension, CreateTodoItemDto>().ReverseMap();
             CreateMap<TblTodoListExtension, CreateTodoListDto>().ReverseMap();
+            CreateMap<TodoItemDetail, object>().ReverseMap();
+            CreateMap<TodoListDetail, TblTodoList>().ReverseMap();
         }
     }
 }

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace AdFormsAssignment.DTO
+namespace AdFormsAssignment.DTO.PostDto
 {
     /// <summary>
     /// To-Do list common properties that must be used in any extensions

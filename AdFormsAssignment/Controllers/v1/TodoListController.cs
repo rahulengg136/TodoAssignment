@@ -1,7 +1,10 @@
 ﻿using AdFormAssignment.DAL.Common;
 using AdFormAssignment.DAL.Entities;
+using AdFormAssignment.DAL.Entities.DTO;
 using AdFormsAssignment.BLL.Contracts;
-using AdFormsAssignment.DTO;
+using AdFormsAssignment.DTO.Common;
+using AdFormsAssignment.DTO.GetDto;
+using AdFormsAssignment.DTO.PostDto;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -15,7 +18,7 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using MicrosoftJson = System.Text.Json.JsonSerializer;
 
-namespace AdFormsAssignment.Controllers
+namespace AdFormsAssignment.Controllers.v1
 {
     /// <summary>
     /// This controller deals with CRUD operations of to-do lists
@@ -31,7 +34,7 @@ namespace AdFormsAssignment.Controllers
         /// To do list controller
         /// </summary>
         /// <param name="toDoService">to-do service instance</param>
-        /// <param name="mapper">Automapper instance</param>
+        /// <param name="mapper">AutoMapper instance</param>
         public ToDoListController(ITodoListService toDoService, IMapper mapper)
         {
             _toDoService = toDoService;
@@ -43,20 +46,21 @@ namespace AdFormsAssignment.Controllers
         /// </summary>
         /// <param name="pageNumber">Page number</param>
         /// <param name="pageSize">Page size</param>
-        /// <param name="SearchText">Search text</param>
+        /// <param name="searchText">Search text</param>
         /// <returns>Returns list of task lists</returns>
         [HttpGet("Lists")]
-        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(typeof(UnauthorizedInfo), StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(typeof(IEnumerable<ReadTodoListDto>), 200)]
-        public async Task<IActionResult> GetAllTaskLists(int pageNumber, int pageSize, string SearchText)
+        public async Task<IActionResult> GetAllTaskLists(int pageNumber, int pageSize, string searchText)
         {
             using (LogContext.PushProperty("Correlation Id", RequestInfo.GetCorrelationId(HttpContext.Request)))
             {
-                Log.Information($"Entered GetAllTaskLists method with pageNumber {pageNumber}, pageSize {pageSize}, searchText {SearchText}");
-                var allTodoLists = await _toDoService.GetAllTodoLists(pageNumber, pageSize, SearchText, int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value));
-                Log.Information($"List of filtered to dos :{MicrosoftJson.Serialize(allTodoLists)}");
-                if (allTodoLists.Any())
+                Log.Information($"Entered GetAllTaskLists method with pageNumber {pageNumber}, pageSize {pageSize}, searchText {searchText}");
+                var allTodoLists = await _toDoService.GetAllTodoLists(pageNumber, pageSize, searchText, int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value));
+                var todoListDetails = allTodoLists.ToList();
+                Log.Information($"List of filtered to dos :{MicrosoftJson.Serialize(todoListDetails)}");
+                if (todoListDetails.Any())
                 {
                     return Ok(_mapper.Map<IEnumerable<ReadTodoListDto>>(allTodoLists));
                 }
@@ -72,10 +76,10 @@ namespace AdFormsAssignment.Controllers
         /// <param name="todoListId">To-do list id</param>
         /// <returns>Returns detail of single to-do item</returns>
         [HttpGet("{todoListId}")]
-        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(typeof(UnauthorizedInfo), StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(typeof(ReadTodoListDto), 200)]
-        [ProducesResponseType(typeof(string), 400)]
+        [ProducesResponseType(typeof(BadRequestInfo), 400)]
         public async Task<IActionResult> GetTodoList(int todoListId)
         {
             using (LogContext.PushProperty("Correlation Id", RequestInfo.GetCorrelationId(HttpContext.Request)))
@@ -102,9 +106,9 @@ namespace AdFormsAssignment.Controllers
         /// <param name="todoList">list information</param>
         /// <returns>Returns success if to-do list gets created successfully</returns>
         [HttpPost]
-        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(typeof(UnauthorizedInfo), StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(typeof(ReadTodoListDto), 201)]
-        [ProducesResponseType(typeof(string), 400)]
+        [ProducesResponseType(typeof(BadRequestInfo), 400)]
         public async Task<IActionResult> CreateList([FromBody] CreateTodoListDto todoList)
         {
             using (LogContext.PushProperty("Correlation Id", RequestInfo.GetCorrelationId(HttpContext.Request)))
@@ -118,7 +122,6 @@ namespace AdFormsAssignment.Controllers
                 var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
                 int newRecordId = await _toDoService.CreateToDoList(list, userId);
                 Log.Information($"Newly created todo list {MicrosoftJson.Serialize(todoList)}");
-
                 var newlyCreatedRecord = await _toDoService.GetToDoList(newRecordId, int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value));
                 return Created($"~/api/v1/TODO/{newRecordId}", newlyCreatedRecord);
             }
@@ -129,9 +132,9 @@ namespace AdFormsAssignment.Controllers
         /// <param name="todoListId">to-do list id</param>
         /// <returns>Returns success if to-do list gets deleted successfully</returns>
         [HttpDelete("{todoListId}")]
-        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(typeof(string), 400)]
+        [ProducesResponseType(typeof(UnauthorizedInfo), StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(typeof(TodoListDetail), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(BadRequestInfo), 400)]
 
         public async Task<IActionResult> DeleteTodoList(int todoListId)
         {
@@ -139,11 +142,10 @@ namespace AdFormsAssignment.Controllers
             {
                 if (todoListId == 0)
                     return BadRequest(new { message = "To do list id cannot be zero" });
-
                 var list = await _toDoService.GetToDoList(todoListId, int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value));
                 if (list == null)
                 {
-                    return BadRequest("Resource not found with this unique id");
+                    return BadRequest(new { message = "Resource not found with this unique id" });
                 }
                 else
                 {
@@ -160,9 +162,9 @@ namespace AdFormsAssignment.Controllers
         /// <param name="todoList">Updated details of list</param>
         /// <returns>Returns success if to-do list gets updated successfully</returns>
         [HttpPut("{todoListId}")]
-        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(typeof(string), 400)]
+        [ProducesResponseType(typeof(UnauthorizedInfo), StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(typeof(TodoListDetail), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(BadRequestInfo), 400)]
         public async Task<IActionResult> UpdateTodoList(int todoListId, [FromBody] CreateTodoListDto todoList)
         {
             using (LogContext.PushProperty("Correlation Id", RequestInfo.GetCorrelationId(HttpContext.Request)))
@@ -175,7 +177,7 @@ namespace AdFormsAssignment.Controllers
                 var existingList = await _toDoService.GetToDoList(todoListId, int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value));
                 if (existingList == null)
                 {
-                    return BadRequest("Resource not found with this unique id");
+                    return BadRequest(new { Message = "Resource not found with this unique id" });
                 }
                 else
                 {
@@ -195,16 +197,16 @@ namespace AdFormsAssignment.Controllers
         /// <param name="todoList">Patches information</param>
         /// <returns>Returns success if to-do list gets patched successfully</returns>
         [HttpPatch("{todoListId}")]
-        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(typeof(string), 400)]
+        [ProducesResponseType(typeof(UnauthorizedInfo), StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(typeof(TodoListDetail), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(BadRequestInfo), 400)]
         public async Task<IActionResult> UpdateTodoListPatch(int todoListId, [FromBody] JsonPatchDocument todoList)
         {
             using (LogContext.PushProperty("Correlation Id", RequestInfo.GetCorrelationId(HttpContext.Request)))
             {
                 if (todoListId == 0 || todoList == null || todoList.Operations.Count == 0)
                 {
-                    return BadRequest(new { message = "To do list id cannot be zero. There should be atleast one operation" });
+                    return BadRequest(new { message = "To do list id cannot be zero. There should be at least one operation" });
                 }
 
                 var existingList = await _toDoService.GetToDoList(todoListId, int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value));

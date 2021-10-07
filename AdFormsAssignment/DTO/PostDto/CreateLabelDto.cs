@@ -1,4 +1,4 @@
-﻿namespace AdFormsAssignment.DTO
+﻿namespace AdFormsAssignment.DTO.PostDto
 {
     /// <summary>
     /// Label details 

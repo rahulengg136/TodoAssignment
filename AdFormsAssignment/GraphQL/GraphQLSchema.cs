@@ -6,12 +6,12 @@ namespace AdFormsAssignment.GraphQL
     /// <summary>
     /// GraphQL schema
     /// </summary>
-    public class GraphQLSchema : Schema
+    public class GraphQlSchema : Schema
     {
         /// <summary>
         /// GraphQL schema
         /// </summary>
-        public GraphQLSchema(IDependencyResolver resolver) : base(resolver)
+        public GraphQlSchema(IDependencyResolver resolver) : base(resolver)
         {
             Query = resolver.Resolve<Queries>();
         }

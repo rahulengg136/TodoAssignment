@@ -1,4 +1,6 @@
-﻿namespace AdFormsAssignment.DTO
+﻿using AdFormsAssignment.DTO.PostDto;
+
+namespace AdFormsAssignment.DTO.GetDto
 {
     /// <summary>
     /// Label details 

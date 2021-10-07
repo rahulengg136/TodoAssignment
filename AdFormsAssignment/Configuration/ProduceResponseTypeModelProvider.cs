@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using AdFormsAssignment.DTO.Common;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ApplicationModels;
 
@@ -31,8 +31,7 @@ namespace AdFormsAssignment.Configuration
             {
                 foreach (ActionModel action in controller.Actions)
                 {
-                    action.Filters.Add(new ProducesResponseTypeAttribute(StatusCodes.Status500InternalServerError));
-                    action.Filters.Add(new ProducesResponseTypeAttribute(typeof(string), 401));
+                    action.Filters.Add(new ProducesResponseTypeAttribute(typeof(UnauthorizedInfo), 401));
                 }
             }
         }

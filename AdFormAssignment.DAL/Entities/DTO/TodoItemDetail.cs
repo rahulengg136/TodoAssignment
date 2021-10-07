@@ -1,7 +1,6 @@
-﻿using AdFormAssignment.DAL.Entities;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
-namespace AdFormsAssignment.DTO
+namespace AdFormAssignment.DAL.Entities.DTO
 {
     /// <summary>
     /// to-do item details

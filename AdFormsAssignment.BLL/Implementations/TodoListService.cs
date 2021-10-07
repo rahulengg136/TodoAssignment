@@ -1,36 +1,36 @@
 ﻿using AdFormAssignment.DAL.Contracts;
 using AdFormAssignment.DAL.Entities;
+using AdFormAssignment.DAL.Entities.DTO;
 using AdFormsAssignment.BLL.Contracts;
-using AdFormsAssignment.DTO;
 using Microsoft.AspNetCore.JsonPatch;
 using Serilog;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace AdFormsAssignment.BLL
+namespace AdFormsAssignment.BLL.Implementations
 {
     public class ToDoListService : ITodoListService
     {
-        private readonly ITodoListDal _todoDAL;
-        public ToDoListService(ITodoListDal todoDAL)
+        private readonly ITodoListDal _todoDal;
+        public ToDoListService(ITodoListDal todoDal)
         {
-            _todoDAL = todoDAL;
+            _todoDal = todoDal;
         }
         public async Task<TodoListDetail> GetToDoList(int todoListId, int userId)
         {
-            return await _todoDAL.GetTodoList(todoListId, userId);
+            return await _todoDal.GetTodoList(todoListId, userId);
         }
-        public async Task<IEnumerable<TodoListDetail>> GetAllTodoLists(int PageNumber, int PageSize, string SearchText, int userId)
+        public async Task<IEnumerable<TodoListDetail>> GetAllTodoLists(int pageNumber, int pageSize, string searchText, int userId)
         {
-            Log.Information($"Going to hit DAL method with info = Pagenumber:{PageNumber},Pagesize:{PageSize},SearchText:{SearchText}, UserId:{userId} ");
-            PageNumber = PageNumber == 0 ? 1 : PageNumber;
-            PageSize = PageSize == 0 ? int.MaxValue : PageSize;
-            return await _todoDAL.GetAllTodoLists(PageNumber, PageSize, SearchText, userId);
+            Log.Information($"Going to hit DAL method with info = PageNumber:{pageNumber},PageSize:{pageSize},SearchText:{searchText}, UserId:{userId} ");
+            pageNumber = pageNumber == 0 ? 1 : pageNumber;
+            pageSize = pageSize == 0 ? int.MaxValue : pageSize;
+            return await _todoDal.GetAllTodoLists(pageNumber, pageSize, searchText, userId);
         }
 
         public async Task<int> CreateToDoList(TblTodoListExtension list, int userId)
         {
-            Log.Information($"Going to hit DAL method");
+            Log.Information("Going to hit DAL method");
             // again convert it to tbl one and save 
             TblTodoList tblTodoList = new TblTodoList()
             {
@@ -39,7 +39,6 @@ namespace AdFormsAssignment.BLL
                 ExpectedDate = list.ExpectedDate,
                 UserId = userId
             };
-
             List<TblLabelMapping> labelMappings = new List<TblLabelMapping>();
             foreach (int labelId in list.LabelIds)
             {
@@ -51,17 +50,16 @@ namespace AdFormsAssignment.BLL
                 };
                 labelMappings.Add(mapping);
             }
-            return await _todoDAL.CreateTodoList(tblTodoList, labelMappings);
+            return await _todoDal.CreateTodoList(tblTodoList, labelMappings);
         }
-
         public async Task<int> DeleteTodoList(int todoListId)
         {
-            Log.Information($"Going to hit DAL method");
-            return await _todoDAL.DeleteTodoList(todoListId);
+            Log.Information("Going to hit DAL method");
+            return await _todoDal.DeleteTodoList(todoListId);
         }
         public async Task<int> UpdateToDoList(TblTodoListExtension todoList, int todoListId, int userId)
         {
-            Log.Information($"Going to hit DAL method");
+            Log.Information("Going to hit DAL method");
             TblTodoList tblTodoList = new TblTodoList()
             {
                 ExpectedDate = todoList.ExpectedDate,
@@ -81,17 +79,18 @@ namespace AdFormsAssignment.BLL
                 };
                 labelMappings.Add(mapping);
             }
-            return await _todoDAL.UpdateTodoList(tblTodoList, todoListId, labelMappings);
+            return await _todoDal.UpdateTodoList(tblTodoList, todoListId, labelMappings);
         }
 
         public async Task<int> UpdatePatchTodoList(JsonPatchDocument todoList, int todoListId)
         {
-            Log.Information($"Going to hit DAL method");
-            return await _todoDAL.UpdatePatchTodoList(todoList, todoListId);
+            Log.Information("Going to hit DAL method");
+            return await _todoDal.UpdatePatchTodoList(todoList, todoListId);
         }
+
         public List<TblLabel> GetListLabels(int todoListId)
         {
-            return _todoDAL.GetListLabels(todoListId);
+            return _todoDal.GetListLabels(todoListId);
         }
     }
 }

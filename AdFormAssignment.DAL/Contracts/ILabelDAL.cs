@@ -11,7 +11,7 @@ namespace AdFormAssignment.DAL.Contracts
     {
         Task<int> CreateLabel(TblLabel label);
         Task<TblLabel> GetSingleLabel(int labelId);
-        Task<IEnumerable<TblLabel>> GetAllLabels(int PageNumber, int PageSize, string SearchText);
+        Task<IEnumerable<TblLabel>> GetAllLabels(int pageNumber, int pageSize, string searchText);
         Task<int> DeleteLabel(int labelId);
     }
 }

@@ -1,26 +1,26 @@
-﻿using AdFormsAssignment.DTO.PostDto;
+﻿using AdFormsAssignment.DTO.Common;
+using AdFormsAssignment.DTO.PostDto;
 using AdFormsAssignment.Security;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
-namespace AdFormsAssignment.Controllers
+namespace AdFormsAssignment.Controllers.v1
 {
     /// <summary>
-    /// This controller performs taks related to login and Security
+    /// This controller performs tasks related to login and Security
     /// </summary>
     [Route("api/[controller]")]
     [ApiController]
     public class LoginController : ControllerBase
     {
-        private readonly IJwtAuth jwtAuth;
+        private readonly IJwtAuth _jwtAuth;
         /// <summary>
         /// Login controller 
         /// </summary>
         /// <param name="jwtAuth"></param>
         public LoginController(IJwtAuth jwtAuth)
         {
-            this.jwtAuth = jwtAuth;
+            this._jwtAuth = jwtAuth;
         }
         /// <summary>
         /// This method validates user and provides token for 1 hour
@@ -29,16 +29,15 @@ namespace AdFormsAssignment.Controllers
         /// <returns>Returns token</returns>
         [AllowAnonymous]
         // POST api/<MembersController>
-        [HttpPost("validateuser")]
-        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        [ProducesResponseType(typeof(string),200)]
-        [ProducesResponseType(typeof(string), 400)]
+        [HttpPost("validate")]
+        [ProducesResponseType(typeof(ValidatedUserToken), 200)]
+        [ProducesResponseType(typeof(BadRequestInfo), 400)]
         public IActionResult ValidateUser([FromBody] UserDto userCredential)
         {
-            var token = jwtAuth.Authentication(userCredential.Username, userCredential.Password);
+            var token = _jwtAuth.Authentication(userCredential.Username, userCredential.Password);
             if (token == null)
-                return BadRequest("Username and password is wrong");
-            return Ok(token);
+                return BadRequest(new BadRequestInfo() { Message = "Username and password is wrong" });
+            return Ok(new { Message = token });
         }
     }
 }

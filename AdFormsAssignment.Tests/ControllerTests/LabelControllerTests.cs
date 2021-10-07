@@ -1,8 +1,9 @@
 using AdFormAssignment.DAL.Entities;
 using AdFormsAssignment.AutoMapper;
 using AdFormsAssignment.BLL.Contracts;
-using AdFormsAssignment.Controllers;
-using AdFormsAssignment.DTO;
+using AdFormsAssignment.Controllers.v1;
+using AdFormsAssignment.DTO.GetDto;
+using AdFormsAssignment.DTO.PostDto;
 using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -12,7 +13,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace AdFormsAssignment.Tests
+namespace AdFormsAssignment.Tests.ControllerTests
 {
     public class LabelControllerTests
     {
@@ -45,9 +46,9 @@ namespace AdFormsAssignment.Tests
             var controller = GetLabelController();
 
             //Act
-            var actionResult = controller.GetAllLabels(pageNumber, pageSize, searchText);
+            var actionResult = controller.GetAllLabels(pageNumber, pageSize, null);
             var result = actionResult.Result as OkObjectResult;
-            var actual = result.Value as IEnumerable<ReadLabelDto>;
+            var actual = result != null ? (result.Value as IEnumerable<ReadLabelDto>) : new List<ReadLabelDto>();
 
             //Assert
             Assert.IsType<OkObjectResult>(result);
@@ -67,7 +68,7 @@ namespace AdFormsAssignment.Tests
             var controller = GetLabelController();
 
             //Act
-            var actionResult = controller.GetAllLabels(pageNumber, pageSize, searchText);
+            var actionResult = controller.GetAllLabels(pageNumber, pageSize, null);
             var result = actionResult.Result as NoContentResult;
 
             //Assert
@@ -213,7 +214,7 @@ namespace AdFormsAssignment.Tests
         /// <summary>
         /// Set UP
         /// </summary>
-        /// <returns>retuns controller</returns>
+        /// <returns>returns controller</returns>
         private LabelController GetLabelController()
         {
             var httpContext = new DefaultHttpContext();
@@ -235,7 +236,6 @@ namespace AdFormsAssignment.Tests
         /// Mock DATA
         /// </summary>
         /// <returns></returns>
-
         private Task<IEnumerable<TblLabel>> GetSampleLabels()
         {
             return Task.FromResult(new List<TblLabel>() {

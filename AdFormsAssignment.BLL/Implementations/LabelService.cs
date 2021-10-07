@@ -9,34 +9,34 @@ namespace AdFormsAssignment.BLL.Implementations
 {
     public class LabelService : ILabelService
     {
-        private readonly ILabelDal _labelDAL;
+        private readonly ILabelDal _labelDal;
 
-        public LabelService(ILabelDal labelDAL)
+        public LabelService(ILabelDal labelDal)
         {
-            _labelDAL = labelDAL;
+            _labelDal = labelDal;
         }
         public async Task<int> CreateLabel(TblLabel label)
         {
-            Log.Information($"Going to hit DAL method");
-            return await _labelDAL.CreateLabel(label);
+            Log.Information("Going to hit DAL method");
+            return await _labelDal.CreateLabel(label);
         }
         public async Task<int> DeleteLabel(int labelId)
         {
-            Log.Information($"Going to hit DAL method");
-            return await _labelDAL.DeleteLabel(labelId);
+            Log.Information("Going to hit DAL method");
+            return await _labelDal.DeleteLabel(labelId);
         }
-        public async Task<IEnumerable<TblLabel>> GetAllLabels(int PageNumber, int PageSize, string SearchText)
+        public async Task<IEnumerable<TblLabel>> GetAllLabels(int pageNumber, int pageSize, string searchText)
         {
-            Log.Information($"Going to hit DAL method");
-            PageNumber = PageNumber == 0 ? 1 : PageNumber;
-            PageSize = PageSize == 0 ? int.MaxValue : PageSize;
-            return await _labelDAL.GetAllLabels(PageNumber, PageSize, SearchText);
+            Log.Information("Going to hit DAL method");
+            pageNumber = pageNumber == 0 ? 1 : pageNumber;
+            pageSize = pageSize == 0 ? int.MaxValue : pageSize;
+            return await _labelDal.GetAllLabels(pageNumber, pageSize, searchText);
         }
 
         public async Task<TblLabel> GetSingleLabelInfo(int labelId)
         {
-            Log.Information($"Going to hit DAL method");
-            var label = await _labelDAL.GetSingleLabel(labelId);
+            Log.Information("Going to hit DAL method");
+            var label = await _labelDal.GetSingleLabel(labelId);
             return label;
         }
     }

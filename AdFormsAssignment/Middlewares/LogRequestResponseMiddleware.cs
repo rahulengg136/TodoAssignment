@@ -5,7 +5,7 @@ using System;
 using System.IO;
 using System.Threading.Tasks;
 
-namespace AdFormsAssignment.CustomMiddlewares
+namespace AdFormsAssignment.Middlewares
 {
     /// <summary>
     /// Middleware that logs request and response
@@ -40,15 +40,12 @@ namespace AdFormsAssignment.CustomMiddlewares
         private async Task LogRequest(HttpContext context)
         {
             context.Request.EnableBuffering();
-
             context.Request.Headers.TryGetValue("x-correlation-id", out var traceValue);
-
             if (string.IsNullOrWhiteSpace(traceValue))
             {
                 traceValue = Guid.NewGuid().ToString();
                 context.Request.Headers.Add("x-correlation-id", traceValue);
             }
-
             await using var requestStream = _recyclableMemoryStreamManager.GetStream();
             await context.Request.Body.CopyToAsync(requestStream);
             _logger.LogInformation($"Http Request Information:{Environment.NewLine}" +
@@ -61,18 +58,14 @@ namespace AdFormsAssignment.CustomMiddlewares
             context.Request.Body.Position = 0;
         }
 
-        private static string ReadStreamInChunks(System.IO.Stream stream)
+        private static string ReadStreamInChunks(Stream stream)
         {
             const int readChunkBufferLength = 4096;
-
-            stream.Seek(0, System.IO.SeekOrigin.Begin);
-
+            stream.Seek(0, SeekOrigin.Begin);
             using var textWriter = new StringWriter();
             using var reader = new StreamReader(stream);
-
             var readChunk = new char[readChunkBufferLength];
             int readChunkLength;
-
             do
             {
                 readChunkLength = reader.ReadBlock(readChunk,

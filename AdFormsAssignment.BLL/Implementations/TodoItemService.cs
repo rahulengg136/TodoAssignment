@@ -1,7 +1,7 @@
 ﻿using AdFormAssignment.DAL.Contracts;
 using AdFormAssignment.DAL.Entities;
+using AdFormAssignment.DAL.Entities.DTO;
 using AdFormsAssignment.BLL.Contracts;
-using AdFormsAssignment.DTO;
 using Microsoft.AspNetCore.JsonPatch;
 using Serilog;
 using System.Collections.Generic;
@@ -11,15 +11,15 @@ namespace AdFormsAssignment.BLL.Implementations
 {
     public class TodoItemService : ITodoItemService
     {
-        private readonly ITodoItemDal _todoDAL;
+        private readonly ITodoItemDal _todoDal;
 
-        public TodoItemService(ITodoItemDal todoDAL)
+        public TodoItemService(ITodoItemDal todoDal)
         {
-            _todoDAL = todoDAL;
+            _todoDal = todoDal;
         }
         public async Task<int> CreateToDoItem(TblTodoItemExtension todoItem, int userId)
         {
-            Log.Information($"Going to hit DAL method");
+            Log.Information("Going to hit DAL method");
             // again convert it to tbl one and save 
             TblTodoItem tblTodoItem = new TblTodoItem()
             {
@@ -29,7 +29,6 @@ namespace AdFormsAssignment.BLL.Implementations
                 TodoListId = todoItem.TodoListId,
                 UserId = userId
             };
-
             List<TblLabelMapping> labelMappings = new List<TblLabelMapping>();
             foreach (int labelId in todoItem.LabelIds)
             {
@@ -41,37 +40,37 @@ namespace AdFormsAssignment.BLL.Implementations
                 };
                 labelMappings.Add(mapping);
             }
-            return await _todoDAL.CreateTodoItem(tblTodoItem, labelMappings);
+            return await _todoDal.CreateTodoItem(tblTodoItem, labelMappings);
         }
 
         public async Task<int> DeleteTodoItem(int todoItemId)
         {
-            Log.Information($"Going to hit DAL method");
-            return await _todoDAL.DeleteTodoItem(todoItemId);
+            Log.Information("Going to hit DAL method");
+            return await _todoDal.DeleteTodoItem(todoItemId);
         }
 
-        public async Task<IEnumerable<TodoItemDetail>> GetAllTodoItems(int PageNumber, int PageSize, string SearchText, int userId)
+        public async Task<IEnumerable<TodoItemDetail>> GetAllTodoItems(int pageNumber, int pageSize, string searchText, int userId)
         {
-            Log.Information($"Going to hit DAL method");
-            PageNumber = PageNumber == 0 ? 1 : PageNumber;
-            PageSize = PageSize == 0 ? int.MaxValue : PageSize;
-            return await _todoDAL.GetAllTodoItems(PageNumber, PageSize, SearchText, userId);
+            Log.Information("Going to hit DAL method");
+            pageNumber = pageNumber == 0 ? 1 : pageNumber;
+            pageSize = pageSize == 0 ? int.MaxValue : pageSize;
+            return await _todoDal.GetAllTodoItems(pageNumber, pageSize, searchText, userId);
         }
         public async Task<TodoItemDetail> GetToDoItem(int todoItemId, int userId)
         {
-            Log.Information($"Going to hit DAL method");
-            return await _todoDAL.GetTodoItem(todoItemId, userId);
+            Log.Information("Going to hit DAL method");
+            return await _todoDal.GetTodoItem(todoItemId, userId);
         }
 
         public async Task<int> UpdatePatchTodoItem(JsonPatchDocument todoItem, int todoItemId)
         {
-            Log.Information($"Going to hit DAL method");
-            return await _todoDAL.UpdatePatchTodoItem(todoItem, todoItemId);
+            Log.Information("Going to hit DAL method");
+            return await _todoDal.UpdatePatchTodoItem(todoItem, todoItemId);
         }
 
         public async Task<int> UpdateToDoItem(TblTodoItemExtension todoItem, int todoItemId, int userId)
         {
-            Log.Information($"Going to hit DAL method");
+            Log.Information("Going to hit DAL method");
             TblTodoItem tblTodoItem = new TblTodoItem()
             {
                 Description = todoItem.Description,
@@ -91,12 +90,12 @@ namespace AdFormsAssignment.BLL.Implementations
                 };
                 labelMappings.Add(mapping);
             }
-            return await _todoDAL.UpdateTodoItem(tblTodoItem, todoItemId, labelMappings);
+            return await _todoDal.UpdateTodoItem(tblTodoItem, todoItemId, labelMappings);
         }
 
         public List<TblLabel> GetItemLabels(int todoItemId)
         {
-            return _todoDAL.GetItemLabels(todoItemId);
+            return _todoDal.GetItemLabels(todoItemId);
         }
     }
 }

@@ -5,7 +5,7 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace CorrelationId.CorrelationIdWork
+namespace AdFormsAssignment.Middlewares
 {
     /// <summary>
     /// Middle ware that appends correlation id to a request header
@@ -32,7 +32,7 @@ namespace CorrelationId.CorrelationIdWork
         /// <param name="httpContext"></param>
         public async Task Invoke(HttpContext httpContext)
         {
-            string correlationId = null;
+            string correlationId;
             httpContext.Request.Headers.Add("Accept",
                "application/xml");
             if (httpContext.Request.Headers.TryGetValue(CorrelationIdHeaderKey, out StringValues correlationIds))

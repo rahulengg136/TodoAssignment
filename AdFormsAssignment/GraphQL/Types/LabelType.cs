@@ -1,7 +1,7 @@
 ﻿using AdFormAssignment.DAL.Entities;
 using GraphQL.Types;
 
-namespace AdFormsAssignment.GraphQL
+namespace AdFormsAssignment.GraphQL.Types
 {
     /// <summary>
     /// GraphQL type : Label

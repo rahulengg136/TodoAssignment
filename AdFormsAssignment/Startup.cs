@@ -1,15 +1,12 @@
-using AdFormAssignment.DAL;
 using AdFormAssignment.DAL.Contracts;
 using AdFormAssignment.DAL.Entities;
 using AdFormAssignment.DAL.Implementations;
-using AdFormsAssignment.BLL;
 using AdFormsAssignment.BLL.Contracts;
 using AdFormsAssignment.BLL.Implementations;
 using AdFormsAssignment.Configuration;
-using AdFormsAssignment.CustomMiddlewares;
 using AdFormsAssignment.GraphQL;
+using AdFormsAssignment.Middlewares;
 using AdFormsAssignment.Security;
-using CorrelationId.CorrelationIdWork;
 using GraphQL;
 using GraphQL.Server;
 using GraphQL.Server.Ui.Playground;
@@ -76,7 +73,7 @@ namespace AdFormsAssignment
             {
                 x.RequireHttpsMetadata = false;
                 x.SaveToken = true;
-                x.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters
+                x.TokenValidationParameters = new TokenValidationParameters
                 {
                     ValidateIssuerSigningKey = true,
                     ValidateIssuer = false,
@@ -91,7 +88,8 @@ namespace AdFormsAssignment
             services.AddSwaggerGen(options =>
             {
                 options.OperationFilter<AddParametersToSwagger>();
-                options.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo
+                options.SchemaFilter<ExampleSchemaFilter>();
+                options.SwaggerDoc("v1", new OpenApiInfo
                 {
                     Title = "Swagger API",
                     Description = "API for swagger",
@@ -101,17 +99,17 @@ namespace AdFormsAssignment
                 var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
                 options.IncludeXmlComments(xmlPath);
 
-                options.AddSecurityDefinition("Bearer", new Microsoft.OpenApi.Models.OpenApiSecurityScheme
+                options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
                 {
-                    In = Microsoft.OpenApi.Models.ParameterLocation.Header,
+                    In = ParameterLocation.Header,
                     Description = "Enter token here",
                     Name = "Authorization",
-                    Type = Microsoft.OpenApi.Models.SecuritySchemeType.Http,
+                    Type = SecuritySchemeType.Http,
                     BearerFormat = "JWT",
                     Scheme = "bearer"
                 });
 
-                options.AddSecurityRequirement(new Microsoft.OpenApi.Models.OpenApiSecurityRequirement{
+                options.AddSecurityRequirement(new OpenApiSecurityRequirement{
                     {
                         new OpenApiSecurityScheme{
                         Reference=new OpenApiReference{
@@ -125,21 +123,19 @@ namespace AdFormsAssignment
 
             });
 
-            var ConnectionString = Configuration.GetConnectionString("MyConn");
+            var connectionString = Configuration.GetConnectionString("MyConn");
 
             //Entity Framework  
-            services.AddDbContext<MyProjectContext>(options => options.UseSqlServer(ConnectionString));
+            services.AddDbContext<MyProjectContext>(options => options.UseSqlServer(connectionString));
 
             // registering services
             services.AddScoped<ITodoListDal, TodoListDal>();
             services.AddScoped<ITodoItemDal, TodoItemDal>();
             services.AddScoped<ILabelDal, LabelDal>();
-            services.AddScoped<IUserDal, UserDal>();
 
             services.AddScoped<ITodoListService, ToDoListService>();
             services.AddScoped<ITodoItemService, TodoItemService>();
             services.AddScoped<ILabelService, LabelService>();
-            services.AddScoped<IUserService, UserService>();
 
             services.TryAddEnumerable(ServiceDescriptor.Transient<IApplicationModelProvider, ProduceResponseTypeModelProvider>());
             //auto mapper
@@ -151,10 +147,10 @@ namespace AdFormsAssignment
             services.AddScoped<IDependencyResolver>(s => new FuncDependencyResolver(
                s.GetRequiredService
                ));
-            services.AddScoped<GraphQLSchema>();
+            services.AddScoped<GraphQlSchema>();
             services.AddGraphQL(o => { o.ExposeExceptions = true; })
                 .AddGraphTypes(ServiceLifetime.Scoped).AddDataLoader()
-                .AddUserContextBuilder(httppcontext => httppcontext.User);
+                .AddUserContextBuilder(contextmenu => contextmenu.User);
 
         }
         /// <summary>
@@ -168,7 +164,7 @@ namespace AdFormsAssignment
             {
                 app.UseDeveloperExceptionPage();
             }
-            app.UseGraphQL<GraphQLSchema>();
+            app.UseGraphQL<GraphQlSchema>();
             app.UseGraphQLPlayground(new GraphQLPlaygroundOptions());
 
             app.UseRequestResponseLogging();

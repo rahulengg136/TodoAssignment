@@ -3,7 +3,7 @@ using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.SwaggerGen;
 using System.Collections.Generic;
 
-namespace AdFormsAssignment
+namespace AdFormsAssignment.Configuration
 {
     /// <summary>
     /// Class that add parameters to swagger request
@@ -17,7 +17,7 @@ namespace AdFormsAssignment
         /// <param name="context"></param>
         public void Apply(OpenApiOperation operation, OperationFilterContext context)
         {
-            if (operation.Parameters == null) operation.Parameters = new List<OpenApiParameter>();
+            operation.Parameters ??= new List<OpenApiParameter>();
             if (context.ApiDescription.ActionDescriptor is ControllerActionDescriptor)
             {
                 operation.Parameters.Add(new OpenApiParameter()

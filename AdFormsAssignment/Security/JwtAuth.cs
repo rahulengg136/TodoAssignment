@@ -14,7 +14,7 @@ namespace AdFormsAssignment.Security
     public class JwtAuth : IJwtAuth
     {
         private readonly string _key;
-        private readonly List<TblUser> validUsers = new List<TblUser>(){
+        private readonly List<TblUser> _validUsers = new List<TblUser>(){
             new TblUser { UserId = 1, UserName = "rahul", Password = "rahul123" },
             new TblUser { UserId = 2, UserName = "ajay", Password = "ajay123" },
             new TblUser { UserId = 3, UserName = "pooja", Password = "pooja123" } };
@@ -35,7 +35,7 @@ namespace AdFormsAssignment.Security
         /// <returns>Returns token</returns>
         public string Authentication(string username, string password)
         {
-            TblUser user = validUsers.Find(x => x.UserName == username.ToLower().Replace(" ", "") && x.Password == password.ToLower().Replace(" ", ""));
+            TblUser user = _validUsers.Find(x => x.UserName == username.ToLower().Replace(" ", "") && x.Password == password.ToLower().Replace(" ", ""));
             if (user == null)
             {
                 return null;
@@ -45,7 +45,7 @@ namespace AdFormsAssignment.Security
             var tokenDescriptor = new SecurityTokenDescriptor()
             {
                 Subject = new ClaimsIdentity(
-                    new Claim[]
+                    new[]
                     {
                         new Claim(ClaimTypes.NameIdentifier, user.UserId.ToString()),
                     }),

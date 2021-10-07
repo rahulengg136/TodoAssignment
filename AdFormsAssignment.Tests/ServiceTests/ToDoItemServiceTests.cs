@@ -1,8 +1,8 @@
 ﻿using AdFormAssignment.DAL.Contracts;
 using AdFormAssignment.DAL.Entities;
+using AdFormAssignment.DAL.Entities.DTO;
 using AdFormsAssignment.BLL.Contracts;
 using AdFormsAssignment.BLL.Implementations;
-using AdFormsAssignment.DTO;
 using Moq;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,10 +13,10 @@ namespace AdFormsAssignment.Tests.ServiceTests
 {
     public class ToDoItemServiceTests
     {
-        private readonly Mock<ITodoItemDal> _mockToDoItemDAL;
+        private readonly Mock<ITodoItemDal> _mockToDoItemDal;
         public ToDoItemServiceTests()
         {
-            _mockToDoItemDAL = new Mock<ITodoItemDal>();
+            _mockToDoItemDal = new Mock<ITodoItemDal>();
         }
         [Fact]
         public void GetAllTodoItems_ItemsAvailable_ReturnsItemList()
@@ -27,12 +27,12 @@ namespace AdFormsAssignment.Tests.ServiceTests
             string searchText = null;
             int userId = 1;
 
-            _mockToDoItemDAL.Setup(x => x.GetAllTodoItems(pageNumber, pageSize, searchText, userId))
+            _mockToDoItemDal.Setup(x => x.GetAllTodoItems(pageNumber, pageSize, searchText, userId))
                       .Returns(GetSampleItems);
             var service = GetToDoItemService();
 
             //Act
-            IEnumerable<TblTodoItem> items = service.GetAllTodoItems(pageNumber, pageSize, searchText, userId).GetAwaiter().GetResult();
+            IEnumerable<TblTodoItem> items = service.GetAllTodoItems(pageNumber, pageSize, null, userId).GetAwaiter().GetResult();
 
             //Assert
             Assert.NotNull(items);
@@ -48,12 +48,12 @@ namespace AdFormsAssignment.Tests.ServiceTests
             string searchText = null;
             int userId = 1;
 
-            _mockToDoItemDAL.Setup(x => x.GetAllTodoItems(pageNumber, pageSize, searchText, userId))
+            _mockToDoItemDal.Setup(x => x.GetAllTodoItems(pageNumber, pageSize, searchText, userId))
                       .Returns(Task.FromResult((new List<TodoItemDetail>()).AsEnumerable()));
             var service = GetToDoItemService();
 
             //Act
-            IEnumerable<TblTodoItem> items = service.GetAllTodoItems(pageNumber, pageSize, searchText, userId).GetAwaiter().GetResult();
+            IEnumerable<TblTodoItem> items = service.GetAllTodoItems(pageNumber, pageSize, null, userId).GetAwaiter().GetResult();
 
             //Assert
             Assert.Empty(items);
@@ -66,7 +66,7 @@ namespace AdFormsAssignment.Tests.ServiceTests
         /// <returns>returns service</returns>
         private ITodoItemService GetToDoItemService()
         {
-            return new TodoItemService(_mockToDoItemDAL.Object);
+            return new TodoItemService(_mockToDoItemDal.Object);
         }
         #endregion
 

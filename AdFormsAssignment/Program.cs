@@ -17,13 +17,12 @@ namespace AdFormsAssignment
         public static void Main(string[] args)
         {
             ConfigureLogger();
-
-            Serilog.Log.Information("Application started");
+            Log.Information("Application started");
             try
             {
                 CreateHostBuilder(args).Build().Run();
             }
-            catch(Exception exp)
+            catch (Exception exp)
             {
                 Log.Error($"Something went wrong in starting the app . Message {exp.Message}. Stacktrace : {exp.StackTrace}");
             }
@@ -33,10 +32,8 @@ namespace AdFormsAssignment
         {
             Log.Logger = new LoggerConfiguration()
                              .Enrich.FromLogContext()
-                             //.WriteTo.Console(new RenderedCompactJsonFormatter())
-                             //.WriteTo.Debug(outputTemplate: DateTime.Now.ToString("dd MMM yyyy hh:mm:ss tt"))
-                             .WriteTo.File(path: @"Logs/Applog.txt", rollingInterval: RollingInterval.Day, outputTemplate:
-        "{NewLine}{Timestamp:dd MMM yyyy hh:mm:ss tt} [{Level:u3}] Scope: {Properties:j} {Message:lj}{NewLine}{Exception}")
+                             .WriteTo.File(path: @"Logs/App-log.txt", rollingInterval: RollingInterval.Day, outputTemplate:
+                                                 "{NewLine}{Timestamp:dd MMM yyyy hh:mm:ss tt} [{Level:u3}] Scope: {Properties:j} {Message:lj}{NewLine}{Exception}")
                              .CreateLogger();
         }
 
